@@ -1,0 +1,20 @@
+# Dependency directories
+node_modules/
+
+# Webpack output
+dist
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+.vscode
+.vim
+
+# dotenv environment variables file
+.env
+.env.test
