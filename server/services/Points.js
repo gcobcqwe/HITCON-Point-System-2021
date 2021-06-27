@@ -47,10 +47,20 @@ class Points {
    * @return {Object}
    */
   async generateCode(uid, points) {
-    // TODO: Implement generateCode method.
-    // users.findByPk(uid)
-    // users.decrement('points', {by: points, where: {uid}})
-    // redeem_codes.create({issuer: uid, points})
+    const transaction = await this._db.sequelize.transaction();
+    try {
+      const userReturning = await this._db.users.findByPk(uid);
+      if (userReturning.points < points) throw new Error('The balance is not enough.');
+      await this._db.users.decrement('points', {by: points, transaction, where: {uid}});
+      const result = await this._db.redeem_codes.create(
+        {issuer: uid, points},
+        {transaction});
+      await transaction.commit();
+      return result;
+    } catch (e) {
+      await transaction.rollback();
+      throw e;
+    }
   }
 
   /**
@@ -60,12 +70,23 @@ class Points {
    * @return {Object}
    */
   async redeemCode(uid, code) {
-    // TODO: Implement redeemCode method.
-    // redeem_codes.findByPk(code)
-    // users.increment('points', {by: points, where: {uid}})
-    // redeem_codes.destroy(code)
-    // transactions.create({sender: issuer, receiver: uid, points, type: "redeem_code"})
-    // * Optimized: Use trigger function: keep_transactions
+    const transaction = await this._db.sequelize.transaction();
+    try {
+      const codeReturning = await this._db.redeem_codes.findByPk(code);
+      if (!codeReturning) throw new Error('The code is not found.');
+      await this._db.users.increment('points', {by: codeReturning.points, transaction, where: {uid}});
+      await this._db.transactions.create({
+        sender: codeReturning.issuer,
+        receiver: uid,
+        points: codeReturning.points,
+        type: 'redeem_code'});
+      await this._db.redeem_codes.destroy({where: {code}});
+      await transaction.commit();
+      return {points: codeReturning.points};
+    } catch (e) {
+      await transaction.rollback();
+      throw e;
+    }
   }
 
   /**
@@ -76,12 +97,19 @@ class Points {
    * @return {Boolean}
    */
   async transactions(sender, receiver, points) {
-    // TODO: Implement transactions method.
-    // users.findByPk(sender)
-    // users.decrement('points', {by: points, transaction, where: {uid: sender}})
-    // users.increment('points', {by: points, transaction, where: {uid: receiver}});
-    // transactions.create({sender, receiver, points, type: "transactions"})
-    // * Optimized: Use trigger function: keep_transactions
+    const transaction = await this._db.sequelize.transaction();
+    try {
+      const senderReturning = await this._db.users.findByPk(sender);
+      if (senderReturning.points < points) throw new Error('The balance is not enough.');
+      await this._db.users.decrement('points', {by: points, transaction, where: {uid: sender}});
+      await this._db.users.increment('points', {by: points, transaction, where: {uid: receiver}});
+      await this._db.transactions.create({sender, receiver, points, type: 'transactions'});
+      await transaction.commit();
+      return true;
+    } catch (e) {
+      await transaction.rollback();
+      throw e;
+    }
   }
 
   /**
@@ -90,8 +118,14 @@ class Points {
    * @return {Promise<{success: boolean, error: *}|{success: boolean, data: *}>}
    */
   async transactionsHistory(uid) {
-    // TODO: Implement transactionsHistory method.
-    // transactions.findAll()
+    return this._db.transactions.findAll({
+      where: {
+        [this._db.Sequelize.Op.or]: [
+          {sender: uid},
+          {receiver: uid}
+        ]
+      }
+    });
   }
 }
 
