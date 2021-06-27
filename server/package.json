@@ -12,6 +12,9 @@
     "test:coverage": "jest --verbose --runInBand --forceExit --config ./__tests__/config/coverage.config.js"
   },
   "dependencies": {},
+    "pg": "^8.6.0",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
