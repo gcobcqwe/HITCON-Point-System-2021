@@ -45,8 +45,7 @@ class Users {
    * @return {Promise}
    */
   async find(uid) {
-    // TODO: Implement find method.
-    // users.findByPk(uid)
+    return this._db.users.findByPk(uid);
   }
 
   /**
@@ -54,8 +53,7 @@ class Users {
    * @return {Promise}
    */
   async findAll() {
-    // TODO: Implement findAll method.
-    // users.findAll()
+    return this._db.users.findAll();
   }
 
   /**
@@ -66,8 +64,7 @@ class Users {
    * @return {Promise}
    */
   async add(uid, role, points=0) {
-    // TODO: Implement add method.
-    // users.create(uid, role, points)
+    return this._db.users.create({uid, role, points});
   }
 
   /**
@@ -78,8 +75,7 @@ class Users {
    * @return {Promise}
    */
   async update(uid, role, points) {
-    // TODO: Implement update method.
-    // users.update(uid, role, points)
+    return this._db.users.update({role, points}, {where: {uid}});
   }
 
   /**
@@ -88,8 +84,7 @@ class Users {
    * @return {Promise}
    */
   async destroy(uid) {
-    // TODO: Implement destroy method.
-    // users.destroy(uid)
+    return this._db.users.destroy({where: {uid}});
   }
 }
 
