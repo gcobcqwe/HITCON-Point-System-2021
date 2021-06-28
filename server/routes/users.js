@@ -25,35 +25,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const config = {
-  server_port: process.env.SERVER_PORT || 4000,
-  cors_options: {
-    credentials: true,
-    origin: process.env.WEB_ENDPOINT,
-    optionsSuccessStatus: 200
-  },
-  server_auth_secret: process.env.SERVER_AUTH_SECRET || 'server_auth_secret',
-  cookie_secret: process.env.COOKIE_SECRET || 'cookie_secret',
-  cookie_max_age: 86400 * 1000 * 30 * 2,
-  [`database-${process.env.ENV}`]: {
-    migrationStorageTableName: 'sequelize_meta',
-    username: process.env.DATABASE_USERNAME || 'database_username',
-    password: process.env.DATABASE_PASSWORD || 'database_password',
-    database: process.env.DATABASE_NAME || 'postgres',
-    host: process.env.DATABASE_HOST || '127.0.0.1',
-    dialect: 'postgres',
-    logging: process.env.ENV === 'prod'? true: false,
-    pool: {
-      max: 10,
-      min: 0,
-      acquire: 30 * 1000,
-      idle: 10 * 1000
-    },
-    define: {
-      createdAt: 'created_at',
-      updatedAt: 'updated_at'
-    }
-  }
-};
+const express = require('express');
+const users = require('../controllers/users');
+const router = express.Router();
+const {isAdmin} = require('../middlewares/auth');
 
-module.exports = config;
+router.get('/me', users.me);
+router.get('/', isAdmin, users.findAll);
+router.post('/', isAdmin, users.add);
+router.put('/', isAdmin, users.update);
+router.delete('/', isAdmin, users.destroy);
+
+module.exports = router;
