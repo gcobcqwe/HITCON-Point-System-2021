@@ -1,0 +1,25 @@
+{
+  "name": "HITCON-Point-System-2021",
+  "version": "1.0.0",
+  "license": "BSD 2-Clause",
+  "description": "",
+  "author": "",
+  "main": "server.js",
+  "scripts": {
+    "lint": "eslint --fix --ext .js .",
+    "inspect": "node --inspect-brk server.js",
+    "test:unit": "jest --verbose --runInBand --forceExit --config ./__tests__/config/unit.config.js",
+    "test:coverage": "jest --verbose --runInBand --forceExit --config ./__tests__/config/coverage.config.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.4",
+    "typescript": "^4.2.4"
+  }
+}
