@@ -24,7 +24,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-// TODO: Points controller
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const logger = require('../util/logger');
 const db = require('../models');
@@ -36,8 +35,6 @@ const pointsServiceInstance = new PointsService(db);
  * @param {Response} res
  */
 async function generateCode( req, res ) {
-  // TODO
-  // pointsServiceInstance.generateCode(uid, points)
   try {
     const uid = req.token.payload.sub;
     const points = req.body.points;
@@ -55,8 +52,6 @@ async function generateCode( req, res ) {
  * @param {Response} res
  */
 async function redeemCode( req, res ) {
-  // TODO
-  // pointsServiceInstance.redeemCode(uid, code)
   try {
     const uid = req.token.payload.sub;
     const code = req.body.code;
@@ -75,8 +70,6 @@ async function redeemCode( req, res ) {
  * @return {Promise<*>}
  */
 async function transactions( req, res ) {
-  // TODO
-  // pointsServiceInstance.transactions(sender, receiver, points);
   try {
     const sender = req.token.payload.sub;
     const receiver = req.body.receiver;
@@ -96,8 +89,6 @@ async function transactions( req, res ) {
  * @return {Promise<*>}
  */
 async function transactionsHistory( req, res ) {
-  // TODO
-  // pointsServiceInstance.transactionsHistory(uid);
   try {
     const uid = req.token.payload.sub;
     const result = await pointsServiceInstance.transactionsHistory(uid);
