@@ -24,7 +24,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-// TODO: Users controller
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const logger = require('../util/logger');
 const db = require('../models');
@@ -36,8 +35,6 @@ const usersServiceInstance = new UsersService(db);
  * @param {Response} res
  */
 async function me( req, res ) {
-  // TODO
-  // usersServiceInstance.find(uid)
   try {
     const uid = req.token.payload.sub;
     const result = await usersServiceInstance.find(uid);
@@ -55,8 +52,6 @@ async function me( req, res ) {
  * @param {Response} res
  */
 async function findAll( req, res ) {
-  // TODO
-  // usersServiceInstance.findAll()
   try {
     const result = await usersServiceInstance.findAll();
     res.status(StatusCodes.OK).send(result);
@@ -72,8 +67,6 @@ async function findAll( req, res ) {
    * @param {Response} res
    */
 async function add( req, res ) {
-  // TODO
-  // usersServiceInstance.add(uid, role, points)
   try {
     const uid = req.body.uid;
     const role = req.body.role;
@@ -92,8 +85,6 @@ async function add( req, res ) {
    * @param {Response} res
    */
 async function update( req, res ) {
-  // TODO
-  // usersServiceInstance.update(uid, role, points)
   try {
     const uid = req.body.uid;
     const role = req.body.role;
@@ -112,8 +103,6 @@ async function update( req, res ) {
    * @param {Response} res
    */
 async function destroy( req, res ) {
-  // TODO
-  // usersServiceInstance.destroy(uid)
   try {
     const uid = req.body.uid;
     await usersServiceInstance.destroy(uid);
