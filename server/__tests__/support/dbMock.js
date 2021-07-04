@@ -125,6 +125,13 @@ const db = {
         }
       ]);
     }
+  },
+  events: {
+    findByPk() {
+      return Promise.resolve({
+        point_system_token: 'TEST_TOKEN1'
+      });
+    }
   }
 };
 
