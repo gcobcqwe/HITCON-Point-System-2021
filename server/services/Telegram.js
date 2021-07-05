@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -49,8 +50,13 @@ class Telegram {
    * @return {String|undefined}
    */
   async token(code) {
-    // Get the code in the codeCache
-    // Delete the code in the codeCache
+    try {
+      const token = await this.codeCache.get(code);
+      await this.codeCache.del(code);
+      return token;
+    } catch (e) {
+      throw e;
+    }
   }
 
   /**
@@ -59,10 +65,15 @@ class Telegram {
    * @return {String}
    */
   async generateCode(uid) {
-    // Generate a unique code
-    // Get point_system_token by uid
-    // Set {code: token}
-    // Return code
+    try {
+      const code = await this.codeGenerator.issue();
+      const eventsReturning = await this._db.events.findByPk(uid, {attributes: ['point_system_token']});
+      const token = eventsReturning.point_system_token;
+      await this.codeCache.set(code, token);
+      return code;
+    } catch (e) {
+      throw e;
+    }
   }
 }
 
