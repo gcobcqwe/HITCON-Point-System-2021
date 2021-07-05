@@ -24,16 +24,49 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+const {ReasonPhrases, StatusCodes} = require('http-status-codes');
+const logger = require('../util/logger');
+const Cache = require('../util/Cache');
+const CodeGenerator = require('../util/CodeGenerator');
+const db = require('../models');
+const codeCache = new Cache({stdTTL: 600, checkperiod: 60});
+const codeGenerator = new CodeGenerator();
+const TelegramService = require('../services/Telegram');
+const telegramServiceInstance = new TelegramService(codeCache, codeGenerator, db);
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
+/**
+ * @description
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function generateCode( req, res ) {
+  try {
+    const uid = req.token.payload.sub;
+    const code = await telegramServiceInstance.generateCode(uid);
+    res.status(StatusCodes.OK).send({code});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+  }
+}
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/tg', telegram);
+/**
+ * @description
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function token( req, res ) {
+  try {
+    const code = req.body.code;
+    const token = await telegramServiceInstance.token(code);
+    res.status(StatusCodes.OK).send({token});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+  }
+}
 
-module.exports = router;
+module.exports = {
+  generateCode,
+  token
+};

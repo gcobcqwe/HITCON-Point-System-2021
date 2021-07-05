@@ -26,14 +26,11 @@
  */
 
 const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
+const telegram = require('../controllers/telegram');
 const router = express.Router();
+const {checkAuth} = require('../middlewares/auth');
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/tg', telegram);
+router.post('/generate-code', checkAuth, telegram.generateCode);
+router.post('/token', telegram.token);
 
 module.exports = router;
