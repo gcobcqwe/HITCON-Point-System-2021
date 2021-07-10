@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -30,7 +31,7 @@ const db = require('../models');
 const UsersService = require('../services/Users');
 const usersServiceInstance = new UsersService(db);
 /**
- * @description
+ * @description Attempt to get the user information using uid.
  * @param {Request} req
  * @param {Response} res
  */
@@ -47,7 +48,7 @@ async function me( req, res ) {
 }
 
 /**
- * @description
+ * @description Attempt to get all user information. Only admin is allowed to use it.
  * @param {Request} req
  * @param {Response} res
  */
@@ -62,7 +63,7 @@ async function findAll( req, res ) {
 }
 
 /**
-   * @description
+   * @description Attempt to add a new user. Only admin is allowed to use it.
    * @param {Request} req
    * @param {Response} res
    */
@@ -71,6 +72,7 @@ async function add( req, res ) {
     const uid = req.body.uid;
     const role = req.body.role;
     const points = req.body.points;
+    if (typeof uid !== 'string' || typeof role !== 'string' || typeof points !== 'number') throw new Error('The request parameter is invalid.');
     await usersServiceInstance.add(uid, role, points);
     res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
   } catch (e) {
@@ -80,7 +82,7 @@ async function add( req, res ) {
 }
 
 /**
-   * @description
+   * @description Attempt to update the user. Only admin is allowed to use it.
    * @param {Request} req
    * @param {Response} res
    */
@@ -89,6 +91,7 @@ async function update( req, res ) {
     const uid = req.body.uid;
     const role = req.body.role;
     const points = req.body.points;
+    if (typeof uid !== 'string' || typeof role !== 'string' || typeof points !== 'number') throw new Error('The request parameter is invalid.');
     await usersServiceInstance.update(uid, role, points);
     res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
   } catch (e) {
@@ -98,13 +101,14 @@ async function update( req, res ) {
 }
 
 /**
-   * @description
+   * @description Attempt to destroy the user. Only admin is allowed to use it.
    * @param {Request} req
    * @param {Response} res
    */
 async function destroy( req, res ) {
   try {
     const uid = req.body.uid;
+    if (typeof uid !== 'string') throw new Error('The request parameter is invalid.');
     await usersServiceInstance.destroy(uid);
     res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
   } catch (e) {
