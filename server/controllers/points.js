@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -30,7 +31,7 @@ const db = require('../models');
 const PointsService = require('../services/Points');
 const pointsServiceInstance = new PointsService(db);
 /**
- * @description
+ * @description Attempt to subtract points in the user wallet and generate a redeem code.
  * @param {Request} req
  * @param {Response} res
  */
@@ -38,6 +39,7 @@ async function generateCode( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const points = req.body.points;
+    if (typeof points !== 'number') throw new Error('The request parameter is invalid.');
     const result = await pointsServiceInstance.generateCode(uid, points);
     res.status(StatusCodes.OK).send(result);
   } catch (e) {
@@ -47,7 +49,7 @@ async function generateCode( req, res ) {
 }
 
 /**
- * @description
+ * @description Use the redeem code to get points then deposit points in the use wallet.
  * @param {Request} req
  * @param {Response} res
  */
@@ -55,6 +57,7 @@ async function redeemCode( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const code = req.body.code;
+    if (typeof code !== 'string') throw new Error('The request parameter is invalid.');
     const result = await pointsServiceInstance.redeemCode(uid, code);
     res.status(StatusCodes.OK).send(result);
   } catch (e) {
@@ -64,7 +67,7 @@ async function redeemCode( req, res ) {
 }
 
 /**
- * @description
+ * @description Attempt to do a transaction between sender and receiver.
  * @param {Request} req
  * @param {Response} res
  * @return {Promise<*>}
@@ -74,6 +77,7 @@ async function transactions( req, res ) {
     const sender = req.token.payload.sub;
     const receiver = req.body.receiver;
     const points = req.body.points;
+    if (typeof points !== 'number' || typeof receiver !== 'string') throw new Error('The request parameter is invalid.');
     await pointsServiceInstance.transactions(sender, receiver, points);
     res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
   } catch (e) {
@@ -83,7 +87,7 @@ async function transactions( req, res ) {
 }
 
 /**
- * @description
+ * @description Attempt to get the user transaction history.
  * @param {Request} req
  * @param {Response} res
  * @return {Promise<*>}
