@@ -64,7 +64,7 @@ class Points {
   }
 
   /**
-   * @description Use the redeem code to get points then deposit points in the use wallet.
+   * @description Use the redeem code to get points then deposit points in the user wallet.
    * @param {String} uid The user id
    * @param {String} code The redeem code
    * @return {Object}
@@ -90,7 +90,7 @@ class Points {
   }
 
   /**
-   * @description Use the redeem code to get points then deposit points in the use wallet.
+   * @description Attempt to do a transaction between sender and receiver.
    * @param {String} sender The sender user id
    * @param {String} receiver The receiver user id
    * @param {Number} points The point which is desired to send from sender to receiver
@@ -100,6 +100,8 @@ class Points {
     const transaction = await this._db.sequelize.transaction();
     try {
       const senderReturning = await this._db.users.findByPk(sender);
+      const receiverReturning = await this._db.users.findByPk(receiver);
+      if (!receiverReturning) throw new Error('The receiver does not exist.');
       if (senderReturning.points < points) throw new Error('The balance is not enough.');
       await this._db.users.decrement('points', {by: points, transaction, where: {uid: sender}});
       await this._db.users.increment('points', {by: points, transaction, where: {uid: receiver}});
@@ -113,7 +115,7 @@ class Points {
   }
 
   /**
-   * @description Attempt to get user transaction history.
+   * @description Attempt to get the user transaction history.
    * @param {String} uid The user id
    * @return {Promise<{success: boolean, error: *}|{success: boolean, data: *}>}
    */
