@@ -59,7 +59,11 @@ async function token( req, res ) {
   try {
     const code = req.body.code;
     const token = await telegramServiceInstance.token(code);
-    res.status(StatusCodes.OK).send({token});
+    if (!token) {
+      res.status(StatusCodes.OK).send({success: false, reason: 'The token does not exist.'});
+      return;
+    }
+    res.status(StatusCodes.OK).send({success: true, token});
   } catch (e) {
     logger.error(e);
     res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
