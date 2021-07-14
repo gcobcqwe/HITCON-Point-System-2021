@@ -28,7 +28,9 @@
 const crypto = require('crypto');
 
 /**
- * Create a new CodeGenerator.
+ * CodeGenerator generates the temporary authentication code presented on the OnePage interface.
+ * When the users clicked on the link with the authentication code, the telegram bot would receive the code
+ * and call OnePage's API to exchange the code for a JWT.
  * @class
  */
 class CodeGenerator {
@@ -37,6 +39,7 @@ class CodeGenerator {
    */
   constructor() {
     this._codeCache = undefined;
+    this._counter = 0;
   }
 
   /**
@@ -49,21 +52,29 @@ class CodeGenerator {
   }
 
   /**
-   * @description Issue a code.
+   * @description Issue a code. To avoid a duplicated code adding a 8 digits number before random 32 chars.
    * @param {String} key
    * @return {Promise}
    */
   async issue() {
     try {
       if (!this._codeCache) throw new Error('Please set a codeCache!');
-      let code;
-      do {
-        code = this.randomString;
-      } while (await this._codeCache.has(code)); // Check if it has a duplicate key.
-      return Promise.resolve(code);
+      return Promise.resolve(`${this.series}:${this.randomString}`);
     } catch (e) {
       throw e;
     }
+  }
+
+  /**
+   * @description Create random 8 char string. Maximum: 99999999, e.g. 00000001
+   * @return {String}
+   */
+  get series() {
+    if (this._counter > 99999998) this._counter = 0;
+    this._counter ++;
+    const numberText = this._counter.toString();
+    const numberDigits = numberText.length;
+    return `${'00000000'.slice(0, 8 - numberDigits)}${numberText}`;
   }
 
   /**
