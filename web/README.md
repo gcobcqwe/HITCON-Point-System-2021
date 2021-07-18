@@ -2,11 +2,12 @@
 
 Shopping cart example using Vue 3, Vite, [daisyUI](https://daisyui.com/) and [Pinia](https://pinia.esm.dev/).
 
-Demo: https://vue-cart.vercel.app
-
 ## Usage
 
 ```
+# Base on
+https://github.com/wobsoriano/vue-cart
+
 # Install dependencies
 $ npm install
 

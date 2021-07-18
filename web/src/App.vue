@@ -9,14 +9,17 @@
         <label for="drawer-input" class="drawer-overlay"></label> 
         <ul class="p-4 overflow-y-auto menu w-80 bg-base-100 text-base-content">
           <li>
-            <router-link to="/">Home</router-link>
+            <router-link to="/">首頁</router-link>
           </li> 
           <li>
-            <router-link to="/cart">
-              Cart
-              <div class="badge ml-2 badge-outline" v-text="count"></div>
-            </router-link>
-          </li>
+            <router-link to="/transactions">點數管理</router-link>
+          </li> 
+          <li>
+            <router-link to="/invoices">購買紀錄</router-link>
+          </li> 
+          <li>
+            <router-link to="/redeem_codes">序號產生</router-link>
+          </li> 
         </ul>
     </div>
   </div>
@@ -26,14 +29,11 @@
 import { computed, onMounted } from 'vue';
 import Nav from './components/Nav.vue'
 import { usePersistCart } from './shared/hooks';
-import { useCartStore } from './store/cart';
 import { useProductStore } from './store/products';
 
 const productStore = useProductStore()
-const cartStore = useCartStore()
 
 productStore.fetchAll()
 usePersistCart()
 
-const count = computed(() => cartStore.count)
 </script>

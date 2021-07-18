@@ -1,14 +1,15 @@
 import { defineStore } from "pinia";
 
-const fakeStoreUrl = "https://fakestoreapi.com";
-
+const backendURL = "http://localhost:4000/api/v1/products";
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MyIsImlhdCI6MTYyNDM0MDU5MiwiZXhwIjoxNjMwNDI1NjAwLCJzY29wZSI6InBvaW50X3N5c3RlbSBhZG1pbiJ9.Q7rDFOJhm_-nc0mZW2-yJqFsO8cgXGCkSp4UzQ3MQGM";
 export interface Product {
   id: number;
-  title: string;
-  price: number;
+  name: string;
   description: string;
-  category: string;
-  image: string;
+  image_url: string;
+  points: number;
+  quantity: number;
 }
 
 interface ProductState {
@@ -42,13 +43,16 @@ export const useProductStore = defineStore({
     async fetchAll() {
       if (this.loaded) return;
 
-      const res = await fetch(`${fakeStoreUrl}/products?limit=6`);
-      let data: Product[] = await res.json();
-      data = data.map((product) => {
-        product.title = product.title.split(" ").slice(0, 2).join(" ");
-        product.price = Math.round(product.price);
-        return product;
+      const res = await fetch(backendURL, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
+      console.log(res);
+      const data: Product[] = await res.json();
       this.ids = data.map((product) => {
         this.items[product.id] = product;
         return product.id;

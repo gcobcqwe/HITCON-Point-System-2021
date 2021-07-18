@@ -12,22 +12,26 @@
         HITCON Shop</span>
         </div> 
         <div class="flex-1 px-2 mx-2">
+        <div class="items-stretch hidden lg:flex">
+            <router-link class="btn btn-ghost btn-sm rounded-btn" to="/">
+                首頁
+            </router-link> 
+            <router-link class="btn btn-ghost btn-sm rounded-btn" to="/transactions">
+                點數管理
+            </router-link> 
+            <router-link class="btn btn-ghost btn-sm rounded-btn" to="/invoices">
+                購買紀錄
+            </router-link> 
+            <router-link class="btn btn-ghost btn-sm rounded-btn" to="/redeem_codes">
+                序號生產
+            </router-link> 
+        </div> 
         </div> 
         <div class="flex-1 lg:flex-none">
-          <img style="" src="/scan_v2.png" width="32" height="32">
+          <img style="" src="/scan.png" width="32" height="32">
           <div style="margin-left:20px">Point: 2000</div>
           <img style="margin-left:20px" src="/user.png" width="32" height="32">
-          <div style="margin-left:20px; margin-right:80px">Jim</div>
+          <div style="margin-left:20px; margin-right:80px">eea2faf2ec64ae85df1da5a16348f053</div>
         </div>
     </div>
 </template>
-
-<script setup lang="ts">
-import { computed } from "vue"
-import { useCartStore } from "../store/cart"
-import Search from './Search.vue'
-
-const cartStore = useCartStore()
-
-const count = computed(() => cartStore.count)
-</script>

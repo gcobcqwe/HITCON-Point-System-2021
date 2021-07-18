@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
-import { CART_STORAGE } from "../shared/hooks";
-import { useProductStore } from "./products";
+import {defineStore} from 'pinia';
+import {CART_STORAGE} from '../shared/hooks';
+import {useProductStore} from './products';
 
 export interface Purchase {
   productId: number;
@@ -13,18 +13,18 @@ interface CartState {
 
 export interface CartPreview {
   id: number;
-  image: string;
-  title: string;
+  image_url: string;
+  name: string;
   quantity: number;
   cost: number;
 }
 
 export const useCartStore = defineStore({
-  id: "cart",
+  id: 'cart',
 
   state: (): CartState => {
     return {
-      contents: JSON.parse(localStorage.getItem(CART_STORAGE) as string) ?? {},
+      contents: JSON.parse(localStorage.getItem(CART_STORAGE) as string) ?? {}
     };
   },
 
@@ -38,7 +38,7 @@ export const useCartStore = defineStore({
     total(): number {
       const products = useProductStore();
       return Object.keys(this.contents).reduce((acc, id) => {
-        return acc + products.items[id].price * this.contents[id].quantity;
+        return acc + products.items[id].points * this.contents[id].quantity;
       }, 0);
     },
 
@@ -52,13 +52,13 @@ export const useCartStore = defineStore({
 
         return {
           id: purchase.productId,
-          image: products.items[purchase.productId].image,
-          title: products.items[purchase.productId].title,
+          image_url: products.items[purchase.productId].image_url,
+          name: products.items[purchase.productId].name,
           quantity: purchase.quantity,
-          cost: purchase.quantity * products.items[purchase.productId].price,
+          cost: purchase.quantity * products.items[purchase.productId].points
         };
       });
-    },
+    }
   },
 
   actions: {
@@ -68,7 +68,7 @@ export const useCartStore = defineStore({
       } else {
         this.contents[productId] = {
           productId,
-          quantity: 1,
+          quantity: 1
         };
       }
     },
@@ -87,6 +87,6 @@ export const useCartStore = defineStore({
     countProduct(productId: number): number {
       if (!this.contents[productId]) return 0;
       return this.contents[productId].quantity;
-    },
-  },
+    }
+  }
 });
