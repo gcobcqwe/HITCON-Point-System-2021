@@ -25,17 +25,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
+'use strict';
+const {Model} = require('sequelize');
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/tg', telegram);
-
-module.exports = router;
+module.exports = (sequelize, DataTypes) => {
+  /**
+   * Products Model
+   * @class
+   */
+  class Products extends Model {}
+  Products.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true, unique: true,
+      autoIncrement: true,
+      notEmpty: true
+    },
+    name: {
+      type: DataTypes.STRING(50),
+      notEmpty: true
+    },
+    description: {
+      type: DataTypes.TEXT,
+      notEmpty: false
+    },
+    points: {
+      type: DataTypes.INTEGER,
+      notEmpty: true
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      notEmpty: true
+    }
+  }, {
+    sequelize,
+    modelName: 'products',
+    updatedAt: false
+  });
+  return Products;
+};

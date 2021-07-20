@@ -26,16 +26,14 @@
  */
 
 const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
+const products = require('../controllers/products');
 const router = express.Router();
+const {isAdmin} = require('../middlewares/auth');
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/tg', telegram);
+router.get('/:id', products.find);
+router.get('/', products.find);
+router.post('/', isAdmin, products.add);
+router.put('/', isAdmin, products.update);
+router.delete('/', isAdmin, products.destroy);
 
 module.exports = router;

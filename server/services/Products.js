@@ -25,17 +25,63 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
+/**
+ * Create a new Products service.
+ * @class
+ */
+class Products {
+  /**
+   * @description Create an instance of Products service.
+   * @param {Object} db
+   */
+  constructor(db) {
+    // Create instance of Data Access layer using our desired model
+    this._db = db;
+  }
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/tg', telegram);
+  /**
+   * @description Attempt to get product information using id.
+   * @param {String} id The product id
+   * @return {Promise}
+   */
+  async find(id) {
+    return this._db.products.findByPk(id);
+  }
 
-module.exports = router;
+  /**
+   * @description Attempt to get all products information.
+   * @return {Promise}
+   */
+  async findAll() {
+    return this._db.products.findAll();
+  }
+
+  /**
+   * @description Attempt to add a product.
+   * @param {Object} product The product object
+   * @return {Promise}
+   */
+  async add(product) {
+    return this._db.products.create(product);
+  }
+
+  /**
+   * @description Attempt to update product information.
+   * @param {Object} product The product object
+   * @return {Promise}
+   */
+  async update(product) {
+    return this._db.products.update(product, {where: {id: product.id}});
+  }
+
+  /**
+   * @description Attempt to delete product using id.
+   * @param {String} id The id
+   * @return {Promise}
+   */
+  async destroy(id) {
+    return this._db.products.destroy({where: {id}});
+  }
+}
+
+module.exports = Products;
