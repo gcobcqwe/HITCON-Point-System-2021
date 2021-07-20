@@ -132,6 +132,55 @@ const db = {
         point_system_token: 'TEST_TOKEN1'
       });
     }
+  },
+  products: {
+    findByPk() {
+      return Promise.resolve({
+        id: '1',
+        name: 'product_1',
+        description: '',
+        points: 100,
+        quantity: 5
+      });
+    },
+    findAll() {
+      return Promise.resolve([{
+        id: '1',
+        name: 'product_1',
+        description: '',
+        points: 100,
+        quantity: 5
+      }, {
+        id: '2',
+        name: 'product_2',
+        description: '',
+        points: 200,
+        quantity: 7
+      }]);
+    },
+    create() {
+      return Promise.resolve({
+        id: '1',
+        name: 'product_1',
+        description: '',
+        points: 100,
+        quantity: 5
+      });
+    },
+    update() {
+      return Promise.resolve({
+        id: '1',
+        name: 'product_1',
+        description: '',
+        points: 150,
+        quantity: 5
+      });
+    },
+    destroy() {
+      return Promise.resolve(true);
+    },
+    decrement: jest.fn(),
+    increment: jest.fn()
   }
 };
 

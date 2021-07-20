@@ -100,11 +100,25 @@ module.exports = {
         issuer: 'eea2faf2ec64ae85df1da5a16348f052',
         points: 100
       }]);
+    await queryInterface.bulkInsert(
+      'products',
+      [{
+        name: 'product_1',
+        description: '',
+        points: 100,
+        quantity: 5
+      }, {
+        name: 'product_2',
+        description: '',
+        points: 200,
+        quantity: 7
+      }]);
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('users', null, {});
     await queryInterface.bulkDelete('events', null, {});
     await queryInterface.bulkDelete('transactions', null, {});
     await queryInterface.bulkDelete('redeem_codes', null, {});
+    await queryInterface.bulkDelete('products', null, {});
   }
 };
