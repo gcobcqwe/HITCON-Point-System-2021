@@ -43,6 +43,10 @@ module.exports = {
         type: Sequelize.TEXT,
         notEmpty: false
       },
+      image_url: {
+        type: Sequelize.TEXT,
+        notEmpty: false
+      },
       points: {
         type: Sequelize.INTEGER,
         notEmpty: true
