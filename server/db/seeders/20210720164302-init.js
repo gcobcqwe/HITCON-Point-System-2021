@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -24,20 +25,24 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+'use strict';
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const invoices = require('./invoices');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert(
+      'users',
+      [{
+        uid: 'SHOP_UID',
+        role: 'admin',
+        points: 0
+      }, {
+        uid: 'ADMIN_UID',
+        role: 'admin',
+        points: 10000000
+      }]);
+  },
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/invoices', checkAuth, invoices);
-router.use('/tg', telegram);
-
-module.exports = router;
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('users', null, {});
+  }
+};

@@ -25,19 +25,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const invoices = require('./invoices');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
+'use strict';
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.addConstraint('invoices', {
+      fields: ['t_id'],
+      type: 'foreign key',
+      name: 'invoices_t_id_fkey',
+      references: {
+        table: 'transactions',
+        field: 'id'
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+    await queryInterface.addConstraint('invoices', {
+      fields: ['p_id'],
+      type: 'foreign key',
+      name: 'invoices_p_id_fkey',
+      references: {
+        table: 'products',
+        field: 'id'
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+  },
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/invoices', checkAuth, invoices);
-router.use('/tg', telegram);
-
-module.exports = router;
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeConstraint('invoices', 'invoices_t_id_fkey');
+    await queryInterface.removeConstraint('invoices', 'invoices_p_id_fkey');
+  }
+};

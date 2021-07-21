@@ -25,19 +25,48 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const invoices = require('./invoices');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
+'use strict';
+const {Model} = require('sequelize');
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/invoices', checkAuth, invoices);
-router.use('/tg', telegram);
-
-module.exports = router;
+module.exports = (sequelize, DataTypes) => {
+  /**
+   * Invoices Model
+   * @class
+   */
+  class Invoices extends Model {
+    /**
+     * Associate
+     * @static
+     * @param {Model} models
+     */
+    static associate(models) {
+      Invoices.belongsTo(models.products, {foreignKey: 'p_id', targetKey: 'id'});
+      Invoices.belongsTo(models.transactions, {foreignKey: 't_id', targetKey: 'id'});
+    }
+  }
+  Invoices.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true, unique: true,
+      autoIncrement: true,
+      notEmpty: true
+    },
+    t_id: {
+      type: DataTypes.INTEGER,
+      notEmpty: true
+    },
+    p_id: {
+      type: DataTypes.INTEGER,
+      notEmpty: true
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      notEmpty: true
+    }
+  }, {
+    sequelize,
+    modelName: 'invoices',
+    updatedAt: false
+  });
+  return Invoices;
+};
