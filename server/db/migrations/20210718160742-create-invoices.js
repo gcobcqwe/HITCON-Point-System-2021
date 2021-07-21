@@ -25,19 +25,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const invoices = require('./invoices');
-const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
-
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/invoices', checkAuth, invoices);
-router.use('/tg', telegram);
-
-module.exports = router;
+'use strict';
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('invoices', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true, unique: true,
+        autoIncrement: true,
+        notEmpty: true
+      },
+      t_id: {
+        type: Sequelize.INTEGER,
+        notEmpty: true
+      },
+      p_id: {
+        type: Sequelize.INTEGER,
+        notEmpty: true
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
+        notEmpty: true
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      }
+    });
+  },
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('invoices');
+  }
+};

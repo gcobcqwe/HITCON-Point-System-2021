@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Transactions.belongsTo(models.users, {foreignKey: 'sender', targetKey: 'uid'});
       Transactions.belongsTo(models.users, {foreignKey: 'receiver', targetKey: 'uid'});
+      Transactions.hasMany(models.invoices, {foreignKey: 't_id', targetKey: 'id'});
     }
   }
   Transactions.init({

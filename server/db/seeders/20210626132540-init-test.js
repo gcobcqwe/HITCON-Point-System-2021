@@ -36,6 +36,14 @@ module.exports = {
     await queryInterface.bulkInsert(
       'users',
       [{
+        uid: 'SHOP_UID',
+        role: 'admin',
+        points: 0
+      }, {
+        uid: 'ADMIN_UID',
+        role: 'admin',
+        points: 10000000
+      }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f053',
         role: 'admin',
         points: 100000
@@ -92,6 +100,11 @@ module.exports = {
         receiver: 'eea2faf2ec64ae85df1da5a16348f053',
         points: 100,
         type: 'redeem_code'
+      }, {
+        sender: 'eea2faf2ec64ae85df1da5a16348f053',
+        receiver: 'SHOP_UID',
+        points: 800,
+        type: 'shop'
       }]);
     await queryInterface.bulkInsert(
       'redeem_codes',
@@ -113,6 +126,17 @@ module.exports = {
         points: 200,
         quantity: 7
       }]);
+    await queryInterface.bulkInsert(
+      'invoices',
+      [{
+        t_id: 4,
+        p_id: 1,
+        quantity: 2
+      }, {
+        t_id: 4,
+        p_id: 2,
+        quantity: 3
+      }]);
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('users', null, {});
@@ -120,5 +144,6 @@ module.exports = {
     await queryInterface.bulkDelete('transactions', null, {});
     await queryInterface.bulkDelete('redeem_codes', null, {});
     await queryInterface.bulkDelete('products', null, {});
+    await queryInterface.bulkDelete('invoices', null, {});
   }
 };

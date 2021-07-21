@@ -33,7 +33,16 @@ module.exports = (sequelize, DataTypes) => {
    * Products Model
    * @class
    */
-  class Products extends Model {}
+  class Products extends Model {
+    /**
+     * Associate
+     * @static
+     * @param {Model} models
+     */
+    static associate(models) {
+      Products.hasMany(models.invoices, {foreignKey: 'p_id', targetKey: 'id'});
+    }
+  }
   Products.init({
     id: {
       type: DataTypes.INTEGER,
