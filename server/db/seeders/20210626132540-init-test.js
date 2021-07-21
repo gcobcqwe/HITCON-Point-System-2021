@@ -118,11 +118,13 @@ module.exports = {
       [{
         name: 'product_1',
         description: '',
+        image_url: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
         points: 100,
         quantity: 5
       }, {
         name: 'product_2',
         description: '',
+        image_url: 'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg',
         points: 200,
         quantity: 7
       }]);

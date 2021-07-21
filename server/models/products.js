@@ -58,6 +58,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       notEmpty: false
     },
+    image_url: {
+      type: DataTypes.TEXT,
+      notEmpty: false
+    },
     points: {
       type: DataTypes.INTEGER,
       notEmpty: true

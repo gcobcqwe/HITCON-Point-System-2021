@@ -62,10 +62,11 @@ async function add( req, res ) {
   try {
     const name = req.body.name;
     const description = req.body.description || '';
+    const imageUrl = req.body.image_url || '';
     const points = req.body.points || 0;
     const quantity = req.body.quantity || 0;
-    if (typeof name !== 'string' || typeof description !== 'string' || typeof points !== 'number' || typeof quantity !== 'number') throw new Error('The request parameter is invalid.');
-    await productsServiceInstance.add({name, description, points, quantity});
+    if (typeof name !== 'string' || typeof description !== 'string' || typeof imageUrl !== 'string' || typeof points !== 'number' || typeof quantity !== 'number') throw new Error('The request parameter is invalid.');
+    await productsServiceInstance.add({name, description, image_url: imageUrl, points, quantity});
     res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
   } catch (e) {
     logger.error(e);
@@ -83,10 +84,11 @@ async function update( req, res ) {
     const id = req.body.id;
     const name = req.body.name;
     const description = req.body.description;
+    const imageUrl = req.body.image_url;
     const points = req.body.points;
     const quantity = req.body.quantity;
-    if (typeof id !== 'number' || (name !== undefined && typeof name !== 'string') || (description !== undefined && typeof description !== 'string') || (points !== undefined && typeof points !== 'number') || (quantity !== undefined && typeof quantity !== 'number')) throw new Error('The request parameter is invalid.');
-    await productsServiceInstance.update({id, name, description, points, quantity});
+    if (typeof id !== 'number' || (name !== undefined && typeof name !== 'string') || (description !== undefined && typeof description !== 'string') || (imageUrl !== undefined && typeof imageUrl !== 'string') || (points !== undefined && typeof points !== 'number') || (quantity !== undefined && typeof quantity !== 'number')) throw new Error('The request parameter is invalid.');
+    await productsServiceInstance.update({id, name, description, image_url: imageUrl, points, quantity});
     res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
   } catch (e) {
     logger.error(e);
