@@ -90,6 +90,17 @@ class Points {
   }
 
   /**
+   * @description Attempt to get all self redeem codes using uid.
+   * @param {String} uid The user id
+   * @return {Object}
+   */
+  async fetchAllRedeemCode(uid) {
+    return this._db.redeem_codes.findAll({
+      where: {issuer: uid}
+    });
+  }
+
+  /**
    * @description Attempt to do a transaction between sender and receiver.
    * @param {String} sender The sender user id
    * @param {String} receiver The receiver user id

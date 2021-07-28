@@ -67,10 +67,25 @@ async function redeemCode( req, res ) {
 }
 
 /**
+ * @description Attempt to get all self redeem codes using uid.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function fetchAllRedeemCode( req, res ) {
+  try {
+    const uid = req.token.payload.sub;
+    const result = await pointsServiceInstance.fetchAllRedeemCode(uid);
+    res.status(StatusCodes.OK).send(result);
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+  }
+}
+
+/**
  * @description Attempt to do a transaction between sender and receiver.
  * @param {Request} req
  * @param {Response} res
- * @return {Promise<*>}
  */
 async function transactions( req, res ) {
   try {
@@ -90,7 +105,6 @@ async function transactions( req, res ) {
  * @description Attempt to get the user transaction history.
  * @param {Request} req
  * @param {Response} res
- * @return {Promise<*>}
  */
 async function transactionsHistory( req, res ) {
   try {
@@ -106,6 +120,7 @@ async function transactionsHistory( req, res ) {
 module.exports = {
   generateCode,
   redeemCode,
+  fetchAllRedeemCode,
   transactions,
   transactionsHistory
 };
