@@ -31,6 +31,7 @@ const router = express.Router();
 
 router.post('/generate-code', points.generateCode);
 router.post('/redeem-code', points.redeemCode);
+router.get('/redeem-code', points.fetchAllRedeemCode);
 router.post('/transactions', points.transactions);
 router.get('/transactions-history', points.transactionsHistory);
 

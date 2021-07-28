@@ -40,6 +40,9 @@ describe('[Test] Point Service', () => {
   it('Exposes the redeemCode method', () => {
     expect(PointsServiceInstance.redeemCode).toBeDefined();
   });
+  it('Exposes the fetchAllRedeemCode method', () => {
+    expect(PointsServiceInstance.fetchAllRedeemCode).toBeDefined();
+  });
   it('Exposes the transactions method', () => {
     expect(PointsServiceInstance.transactions).toBeDefined();
   });
@@ -82,6 +85,18 @@ describe('[Test] redeemCode method', () => {
     } catch (e) {
       expect(e).toEqual(new Error('The code is not found.'));
     }
+  });
+});
+
+describe('[Test] fetchAllRedeemCode method', () => {
+  it('Success', async () => {
+    const result = await PointsServiceInstance.fetchAllRedeemCode('eea2faf2ec64ae85df1da5a16348f051');
+    expect(result).toMatchObject([{
+      code: '4c1af499-e472-487e-be59-a1adda9a0d07',
+      issuer: 'eea2faf2ec64ae85df1da5a16348f051',
+      points: 100,
+      created_at: '2021-06-26 14:19:21.849228+00'
+    }]);
   });
 });
 
