@@ -80,7 +80,7 @@ class Points {
         receiver: uid,
         points: codeReturning.points,
         type: 'redeem_code'});
-      await this._db.redeem_codes.destroy({where: {code}});
+      await this._db.redeem_codes.update({is_used: true}, {where: {code}});
       await transaction.commit();
       return {points: codeReturning.points};
     } catch (e) {

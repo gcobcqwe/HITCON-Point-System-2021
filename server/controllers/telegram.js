@@ -35,7 +35,7 @@ const TelegramService = require('../services/Telegram');
 const telegramServiceInstance = new TelegramService(codeCache, codeGenerator, db);
 
 /**
- * @description
+ * @description Attempt to set the token by the code.
  * @param {Request} req
  * @param {Response} res
  */
@@ -51,7 +51,7 @@ async function generateCode( req, res ) {
 }
 
 /**
- * @description
+ * @description Attempt to use the code to get a specific token and delete the code.
  * @param {Request} req
  * @param {Response} res
  */

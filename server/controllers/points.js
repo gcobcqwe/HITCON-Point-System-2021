@@ -30,6 +30,7 @@ const logger = require('../util/logger');
 const db = require('../models');
 const PointsService = require('../services/Points');
 const pointsServiceInstance = new PointsService(db);
+
 /**
  * @description Attempt to subtract points in the user wallet and generate a redeem code.
  * @param {Request} req

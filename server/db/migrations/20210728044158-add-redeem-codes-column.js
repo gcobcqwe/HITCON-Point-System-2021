@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -25,48 +24,19 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-const {ReasonPhrases, StatusCodes} = require('http-status-codes');
-const logger = require('../util/logger');
-const db = require('../models');
-const InvoicesService = require('../services/Invoices');
-const invoicesServiceInstance = new InvoicesService(db);
 
-/**
- * @description Attempt to get all invoices information using uid.
- * @param {Request} req
- * @param {Response} res
- */
-async function findAll( req, res ) {
-  try {
-    const uid = req.token.payload.sub;
-    const result = await invoicesServiceInstance.findAll(uid);
-    res.status(StatusCodes.OK).send(result);
-  } catch (e) {
-    logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
-  }
-}
-
-/**
- * @description Attempt to add an invoice with a transaction.
- * @param {Request} req
- * @param {Response} res
- */
-async function add( req, res ) {
-  try {
-    const uid = req.token.payload.sub;
-    const products = JSON.parse(req.body.products);
-    const amount = req.body.amount;
-    if (typeof products !== 'object' || isNaN(amount)) throw new Error('The request parameter is invalid.');
-    await invoicesServiceInstance.add(uid, products, parseInt(amount));
-    res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
-  } catch (e) {
-    logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
-  }
-}
+'use strict';
 
 module.exports = {
-  findAll,
-  add
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.addColumn('redeem_codes', 'is_used', {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    });
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn('redeem_codes', 'is_used');
+  }
 };
