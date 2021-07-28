@@ -58,6 +58,11 @@ module.exports = (sequelize, DataTypes) => {
     points: {
       type: DataTypes.INTEGER,
       notEmpty: true
+    },
+    is_used: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     sequelize,

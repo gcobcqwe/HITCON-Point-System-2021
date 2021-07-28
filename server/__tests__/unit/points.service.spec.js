@@ -58,6 +58,7 @@ describe('[Test] generateCode method', () => {
       code: '4c1af499-e472-487e-be59-a1adda9a0d07',
       issuer: 'eea2faf2ec64ae85df1da5a16348f051',
       points: 100,
+      is_used: false,
       created_at: '2021-06-26 14:19:21.849228+00'
     });
   });
@@ -95,6 +96,7 @@ describe('[Test] fetchAllRedeemCode method', () => {
       code: '4c1af499-e472-487e-be59-a1adda9a0d07',
       issuer: 'eea2faf2ec64ae85df1da5a16348f051',
       points: 100,
+      is_used: false,
       created_at: '2021-06-26 14:19:21.849228+00'
     }]);
   });

@@ -30,6 +30,7 @@ const logger = require('../util/logger');
 const db = require('../models');
 const UsersService = require('../services/Users');
 const usersServiceInstance = new UsersService(db);
+
 /**
  * @description Attempt to get the user information using uid.
  * @param {Request} req

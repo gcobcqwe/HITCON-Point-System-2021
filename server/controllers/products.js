@@ -30,6 +30,7 @@ const logger = require('../util/logger');
 const db = require('../models');
 const ProductsService = require('../services/Products');
 const productsServiceInstance = new ProductsService(db);
+
 /**
  * @description if id does not equal to undefined, attempt to get product information using id, else attempt to get all products information.
  * @param {Request} req

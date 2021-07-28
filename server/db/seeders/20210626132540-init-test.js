@@ -111,7 +111,8 @@ module.exports = {
       [{
         code: 'dc83b5eb-24b5-4a83-ba76-7758529b59a3',
         issuer: 'eea2faf2ec64ae85df1da5a16348f052',
-        points: 100
+        points: 100,
+        is_used: false
       }]);
     await queryInterface.bulkInsert(
       'products',
