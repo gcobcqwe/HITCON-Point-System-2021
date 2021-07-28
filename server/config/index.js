@@ -26,6 +26,7 @@
  */
 
 const config = {
+  web_endpoint: process.env.WEB_ENDPOINT,
   server_port: process.env.SERVER_PORT || 4000,
   cors_options: {
     credentials: true,
@@ -35,6 +36,7 @@ const config = {
   server_auth_secret: process.env.SERVER_AUTH_SECRET || 'server_auth_secret',
   cookie_secret: process.env.COOKIE_SECRET || 'cookie_secret',
   cookie_max_age: 86400 * 1000 * 30 * 2,
+  cookie_secure: false,
   [`database-${process.env.ENV}`]: {
     migrationStorageTableName: 'sequelize_meta',
     username: process.env.DATABASE_USERNAME || 'database_username',

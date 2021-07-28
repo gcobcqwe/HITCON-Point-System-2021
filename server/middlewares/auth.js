@@ -76,7 +76,20 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
+/**
+ * Convert http post body token to http header authorized format.
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
+const tokenAdapter = (req, res, next) => {
+  const token = req.body.token;
+  req.headers.authorization = `Bearer ${token}`;
+  next();
+};
+
 module.exports = {
   checkAuth,
-  isAdmin
+  isAdmin,
+  tokenAdapter
 };
