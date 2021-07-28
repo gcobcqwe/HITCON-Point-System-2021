@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -31,7 +32,8 @@ const users = require('./users');
 const products = require('./products');
 const invoices = require('./invoices');
 const telegram = require('./telegram');
-const {checkAuth} = require('../middlewares/auth');
+const {checkAuth, tokenAdapter} = require('../middlewares/auth');
+const config = require('../config');
 const router = express.Router();
 
 router.use('/points', checkAuth, points);
@@ -39,5 +41,13 @@ router.use('/users', checkAuth, users);
 router.use('/products', checkAuth, products);
 router.use('/invoices', checkAuth, invoices);
 router.use('/tg', telegram);
+
+// Redirect the shop website.
+router.post('/redirect-shop-endpoint', tokenAdapter, checkAuth, ( req, res ) => {
+  const bearerHeader = req.headers.authorization;
+  const token = bearerHeader.split(' ')[1];
+  res.cookie(`point_system_token`, token, {path: '/', signed: false, maxAge: config.cookie_max_age, httpOnly: false}); // Turn off httpOnly for client using.
+  res.redirect(302, config.web_endpoint);
+});
 
 module.exports = router;
