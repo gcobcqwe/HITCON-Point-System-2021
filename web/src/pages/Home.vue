@@ -11,22 +11,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useCookie } from 'vue-cookie-next'
 import { computed } from 'vue'
 import ProductCard from '../components/ProductCard.vue'
 import ProductCardSkeleton from '../components/ProductCardSkeleton.vue'
 import { useProductStore } from '../store/products'
 import { useCartStore } from '../store/cart';
 import { toPoint } from '../shared/utils'
-
 const productStore = useProductStore()
-
 const products = computed(() => productStore.list)
-
 const cartStore = useCartStore()
-const formattedCart = computed(() => cartStore.formattedCart)
-const { setCookie, removeCookie, getCookie } = useCookie()
-setCookie('test', '123');
-console.log(getCookie('point_system_token'));
-
 </script>

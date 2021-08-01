@@ -25,27 +25,9 @@
 
 <script>
 export default {
-    data() {
-        return {
-            transactions: [
-              {
-                  "id": 2,
-                  "sender": "eea2faf2ec64ae85df1da5a16348f052",
-                  "receiver": "eea2faf2ec64ae85df1da5a16348f053",
-                  "type": "transactions",
-                  "points": 200,
-                  "created_at": "2021-06-22T16:45:08.300Z"
-              },
-              {
-                  "id": 1,
-                  "sender": "eea2faf2ec64ae85df1da5a16348f053",
-                  "receiver": "eea2faf2ec64ae85df1da5a16348f052",
-                  "type": "redeem_codes",
-                  "points": 100,
-                  "created_at": "2021-06-22T16:43:11.313Z"
-              }
-            ]
-        };
-    }
+  props: {
+    transactions: Array,
+  },
+  setup() {},
 };
 </script>

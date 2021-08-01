@@ -29,9 +29,28 @@
         </div> 
         <div class="flex-1 lg:flex-none">
           <img style="" src="/scan.png" width="32" height="32">
-          <div style="margin-left:20px">Point: 2000</div>
+          <div style="margin-left:20px">Point: {{ points }}</div>
           <img style="margin-left:20px" src="/user.png" width="32" height="32">
-          <div style="margin-left:20px; margin-right:80px">eea2faf2ec64ae85df1da5a16348f053</div>
+          <div style="margin-left:20px; margin-right:80px">{{ uid }}</div>
         </div>
     </div>
 </template>
+<script>
+import { computed } from 'vue'
+import { useUserStore } from '../store/user'
+export default {
+  data() {
+    return {
+      uid: "",
+      points: 0
+    }
+  },
+  async mounted() {
+    const userStore = useUserStore()
+    await userStore.fetchMe()
+    const user = userStore.me
+    this.uid = user.info.uid
+    this.points = user.info.points
+  }
+};
+</script>

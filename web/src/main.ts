@@ -7,6 +7,9 @@ import App from "./App.vue";
 import "./assets/styles/tailwind.css";
 
 const app = createApp(App);
+app.config.globalProperties.$pointSystemToken = VueCookieNext.getCookie(
+  "point_system_token"
+);
 app.use(createPinia());
 app.use(VueCookieNext);
 app.use(router);

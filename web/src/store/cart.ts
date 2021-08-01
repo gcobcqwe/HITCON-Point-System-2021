@@ -1,6 +1,6 @@
-import {defineStore} from 'pinia';
-import {CART_STORAGE} from '../shared/hooks';
-import {useProductStore} from './products';
+import { defineStore } from "pinia";
+import { CART_STORAGE } from "../shared/hooks";
+import { useProductStore } from "./products";
 
 export interface Purchase {
   productId: number;
@@ -20,11 +20,11 @@ export interface CartPreview {
 }
 
 export const useCartStore = defineStore({
-  id: 'cart',
+  id: "cart",
 
   state: (): CartState => {
     return {
-      contents: JSON.parse(localStorage.getItem(CART_STORAGE) as string) ?? {}
+      contents: JSON.parse(localStorage.getItem(CART_STORAGE) as string) ?? {},
     };
   },
 
@@ -37,6 +37,7 @@ export const useCartStore = defineStore({
 
     total(): number {
       const products = useProductStore();
+      if (!products.loaded) return 0;
       return Object.keys(this.contents).reduce((acc, id) => {
         return acc + products.items[id].points * this.contents[id].quantity;
       }, 0);
@@ -44,9 +45,7 @@ export const useCartStore = defineStore({
 
     formattedCart(): CartPreview[] {
       const products = useProductStore();
-
       if (!products.loaded) return [];
-
       return Object.keys(this.contents).map((productId) => {
         const purchase = this.contents[productId];
 
@@ -55,10 +54,10 @@ export const useCartStore = defineStore({
           image_url: products.items[purchase.productId].image_url,
           name: products.items[purchase.productId].name,
           quantity: purchase.quantity,
-          cost: purchase.quantity * products.items[purchase.productId].points
+          cost: purchase.quantity * products.items[purchase.productId].points,
         };
       });
-    }
+    },
   },
 
   actions: {
@@ -68,7 +67,7 @@ export const useCartStore = defineStore({
       } else {
         this.contents[productId] = {
           productId,
-          quantity: 1
+          quantity: 1,
         };
       }
     },
@@ -87,6 +86,6 @@ export const useCartStore = defineStore({
     countProduct(productId: number): number {
       if (!this.contents[productId]) return 0;
       return this.contents[productId].quantity;
-    }
-  }
+    },
+  },
 });

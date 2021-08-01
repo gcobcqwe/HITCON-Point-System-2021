@@ -6,19 +6,14 @@
           <button style="margin-left:30px;" class="btn btn-primary" @click="">序號生產</button>
       </div>
     </div>
-    <RedeemCodes />
+    <RedeemCodes :redeemCodes="redeemCodes"/>
   </div>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
 import RedeemCodes from '../components/RedeemCodes.vue'
-import { useProductStore } from '../store/products'
-import { useCartStore } from '../store/cart';
-import { toPoint } from '../shared/utils'
-
-const productStore = useProductStore()
-
-
-const cartStore = useCartStore()
-const formattedCart = computed(() => cartStore.formattedCart)
+import { useRedeemCodeStore } from '../store/redeemCodes'
+const redeemCodeStore = useRedeemCodeStore()
+redeemCodeStore.fetchAll()
+const redeemCodes = computed(() => redeemCodeStore.list)
 </script>

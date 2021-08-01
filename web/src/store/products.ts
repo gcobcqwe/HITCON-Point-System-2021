@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
+import HttpHelper from "../common/HttpHelper";
+const httpHelper = new HttpHelper();
 
-const backendURL = "http://localhost:4000/api/v1/products";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MyIsImlhdCI6MTYyNDM0MDU5MiwiZXhwIjoxNjMwNDI1NjAwLCJzY29wZSI6InBvaW50X3N5c3RlbSBhZG1pbiJ9.Q7rDFOJhm_-nc0mZW2-yJqFsO8cgXGCkSp4UzQ3MQGM";
 export interface Product {
   id: number;
   name: string;
@@ -29,7 +28,7 @@ export const useProductStore = defineStore({
 
   getters: {
     list(): Product[] {
-      return this.ids.map((i) => {
+      return this.ids.map((i: number) => {
         return this.items[i];
       });
     },
@@ -42,21 +41,15 @@ export const useProductStore = defineStore({
   actions: {
     async fetchAll() {
       if (this.loaded) return;
-
-      const res = await fetch(backendURL, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res);
-      const data: Product[] = await res.json();
+      const res = await httpHelper.productsList();
+      const data: Product[] = res.data;
       this.ids = data.map((product) => {
         this.items[product.id] = product;
         return product.id;
       });
+    },
+    async buy(carts: any) {
+      console.log(carts);
     },
   },
 });

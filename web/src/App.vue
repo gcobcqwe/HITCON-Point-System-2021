@@ -26,14 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { getCurrentInstance, computed } from 'vue';
 import Nav from './components/Nav.vue'
 import { usePersistCart } from './shared/hooks';
 import { useProductStore } from './store/products';
-
+import { useUserStore } from './store/user';
 const productStore = useProductStore()
-
+const userStore = useUserStore()
+const { proxy } = getCurrentInstance();
+const token = proxy.$pointSystemToken;
+userStore.addToken(token);
 productStore.fetchAll()
 usePersistCart()
-
 </script>
