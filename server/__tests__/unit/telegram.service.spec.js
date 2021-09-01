@@ -61,6 +61,8 @@ describe('[Test] get method', () => {
     const result = await telegramServiceInstance.token('XXXXXXXXXXXXXXXXOOOOOOOOOOOOOOOO');
     expect(result).toBeUndefined();
   });
+
+  // TODO: Add a timeout situation test case.
 });
 
 describe('[Test] generateCode method', () => {

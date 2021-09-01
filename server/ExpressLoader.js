@@ -34,7 +34,7 @@ const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const logger = require('./util/logger');
 
 /**
- * Create a new ExpressLoader.
+ * This create an express.js app and assembles the relevant routes and middlewares.
  * @class
  */
 class ExpressLoader {
