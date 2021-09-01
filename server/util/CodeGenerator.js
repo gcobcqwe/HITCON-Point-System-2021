@@ -66,7 +66,7 @@ class CodeGenerator {
   }
 
   /**
-   * @description Create random 8 char string. Maximum: 99999999, e.g. 00000001
+   * @description Create an eight char series. Maximum: 99999999, e.g. 00000001
    * @return {String}
    */
   get series() {
