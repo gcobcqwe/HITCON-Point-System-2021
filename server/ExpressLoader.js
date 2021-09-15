@@ -56,6 +56,10 @@ class ExpressLoader {
     }});
     // Route api
     this.app.use('/api/v1', api);
+    // Health check handler
+    this.app.get('/health-check', (req, res) => {
+      res.status(StatusCodes.OK).send(ReasonPhrases.OK);
+    });
     // Handle page NotFound case
     this.app.get('*', (req, res) => {
       res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);

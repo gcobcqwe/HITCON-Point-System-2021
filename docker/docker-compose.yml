@@ -1,0 +1,112 @@
+# BSD 2-Clause License
+# Copyright (c) 2021, HITCON Agent Contributors
+# All rights reserved.
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 1. Redistributions of source code must retain the above copyright notice, this
+# list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+version: "3"
+
+services:
+  redis:
+    build:
+      context: ./redis
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/var/lib/redis/data
+    env_file:
+      - redis/.env
+    networks:
+      - backend
+    
+  postgresql:
+    build:
+      context: ./postgresql
+    image: postgresql
+    container_name: postgresql
+    restart: unless-stopped
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    env_file:
+      - postgresql/.env
+    ports:
+      - "5432:5432/tcp"
+    networks:
+      - backend
+      - frontend
+
+  point-system:
+    build:
+      context: ..
+      dockerfile: ./docker/server/Dockerfile
+    image: point-system
+    container_name: point-system
+    env_file:
+      - ./server/.env
+    ports:
+      - "4000:4000/tcp"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "sh /app/healthcheck.sh"]
+      interval: 300s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      - postgresql
+      - redis
+    networks:
+      - backend
+
+  nginx: 
+    build:
+      context: ./nginx
+    image: nginx
+    container_name: nginx
+    restart: always
+    volumes:
+      - nginx-data:/var/log/nginx/*
+    ports:
+      - "80:80/tcp"
+      # - "443:443/tcp" # TODO: SSL 
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+      interval: 300s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      - point-system
+    networks:
+      - backend
+      - frontend
+
+volumes:
+  postgresql-data:
+  redis-data:
+  nginx-data:
+
+networks:
+  frontend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.10.0.10/24
+  backend:
+    internal: true

@@ -15,9 +15,5 @@ dist
 .vscode
 .vim
 
-# dotenv environment variables file
-.env
-.env.test
-
 # Log file
 *.log
