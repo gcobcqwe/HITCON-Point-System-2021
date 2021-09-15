@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -25,24 +24,41 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert(
-      'users',
-      [{
-        uid: 'SHOP_UID',
-        role: 'admin',
-        points: 0
-      }, {
-        uid: 'ADMIN_UID',
-        role: 'admin',
-        points: 10000000
-      }], { ignoreDuplicates: true });
-  },
-
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('users', null, {});
-  }
+  apps: [
+    {
+      name: 'point-system',
+      script: '/app/server.js',
+      exec_mode: 'cluster',
+      instances: 2,
+      log_date_format: 'YYYY-MM-DD HH:mm Z',
+      error_file: '/var/log/point_system/error.log',
+      out_file: '/var/log/point_system/out.log',
+      pid_file: '/app/.pm2/pid/.pid',
+      merge_logs: true,
+      env: {
+        ENV: '<ENV>',
+        SERVER_PORT: '<SERVER_PORT>',
+        WEB_ENDPOINT: '<WEB_ENDPOINT>',
+        SERVER_AUTH_SECRET: '<SERVER_AUTH_SECRET>',
+        COOKIE_SECRET: '<COOKIE_SECRET>',
+        DATABASE_USERNAME: '<DATABASE_USERNAME>',
+        DATABASE_PASSWORD: '<DATABASE_PASSWORD>',
+        DATABASE_NAME: '<DATABASE_NAME>',
+        DATABASE_HOST: '<DATABASE_HOST>'
+      },
+      env_local: {
+        ENV: 'dev',
+        SERVER_PORT: 4000,
+        WEB_ENDPOINT: 'http://localhost:5000',
+        SERVER_AUTH_SECRET: 'server_auth_secret',
+        COOKIE_SECRET: 'cookie_secret',
+        DATABASE_USERNAME: 'postgres',
+        DATABASE_PASSWORD: 'p@sshitcon2021',
+        DATABASE_NAME: 'postgres',
+        DATABASE_HOST: '127.0.0.1'
+      }
+    }
+  ]
 };
