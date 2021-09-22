@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-catch */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -25,22 +24,29 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-// TODO: Use Redis
-const NodeCache = require('node-cache');
+const redis = require('redis');
+const config = require('../config');
+const logger = require('../util/logger');
 
 /**
- * A simple caching module that has set, get and delete methods and works a little bit like memcached.
- * Keys can have a timeout (ttl) after which they expire and are deleted from the cache.
- * All keys are stored in a single object so the practical limit is at around 1m keys.
+ * A redis client class that has set, get, delete.
  * @class
  */
-class Cache {
+class RedisClient {
   /**
-   * @description Create an instance of Cache.
-   * @param {Object} config
+   * @description Create an instance of redisClient.
    */
-  constructor(config) {
-    this.cache = new NodeCache(config);
+  constructor() {
+    this.client = redis.createClient({
+      host: config.redis_host,
+      port: config.redis_port
+    });
+    this.client.on('error', function(err) {
+      logger.error(`[Redis] could not establish a connection with redis. ${err}`);
+    });
+    this.client.on('connect', function(_) {
+      logger.info(`[Redis] connected to redis successfully`);
+    });
   }
 
   /**
@@ -49,25 +55,29 @@ class Cache {
    * @return {Promise}
    */
   async get(key) {
-    try {
-      return Promise.resolve(this.cache.get(key));
-    } catch (e) {
-      throw e;
-    }
+    return new Promise(function(resolve, reject) {
+      this.client.get(key, function(err, result) {
+        if (err) return reject(err);
+        return resolve(result);
+      });
+    }.bind(this));
   }
 
   /**
    * @description Attempt to set value by key.
    * @param {String} key
    * @param {String} value
+   * @param {Number} expiredTime Set a timeout(seconds) on key; Default: 600
    * @return {Promise}
    */
-  async set(key, value) {
-    try {
-      return Promise.resolve(this.cache.set(key, value));
-    } catch (e) {
-      throw e;
-    }
+  async set(key, value, expiredTime=600) {
+    return new Promise(function(resolve, reject) {
+      this.client.set(key, value, function(err, result) {
+        if (err) return reject(err);
+        if (expiredTime) this.client.expire(key, expiredTime);
+        return resolve(result);
+      }.bind(this));
+    }.bind(this));
   }
 
   /**
@@ -76,25 +86,13 @@ class Cache {
    * @return {Promise}
    */
   async del(key) {
-    try {
-      return Promise.resolve(this.cache.del(key));
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  /**
-   * @description Attempt to check if the value exists by key.
-   * @param {String} key
-   * @return {Promise}
-   */
-  async has(key) {
-    try {
-      return Promise.resolve(this.cache.has(key));
-    } catch (e) {
-      throw e;
-    }
+    return new Promise(function(resolve, reject) {
+      this.client.del(key, function(err, result) {
+        if (err) return reject(err);
+        return resolve(result);
+      });
+    }.bind(this));
   }
 }
 
-module.exports = Cache;
+module.exports = RedisClient;

@@ -25,55 +25,50 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+const NodeCache = require('node-cache');
 
 /**
- * Create a new Telegram service.
+ * A simple caching module that has set, get and delete methods and works a little bit like memcached.
+ * Keys can have a timeout (ttl) after which they expire and are deleted from the cache.
+ * All keys are stored in a single object so the practical limit is at around 1m keys.
  * @class
  */
-class Telegram {
+class Cache {
   /**
-   * @description Create an instance of Telegram service.
-   * @param {RedisClient} redisClient
-   * @param {CodeGenerator} codeGenerator
-   * @param {Object} db
+   * @description Create an instance of Cache.
    */
-  constructor(redisClient, codeGenerator, db) {
-    this.redisClient = redisClient;
-    this.codeGenerator = codeGenerator;
-    this._db = db;
+  constructor() {
+    this.cache = new NodeCache({stdTTL: 600, checkperiod: 60});
   }
 
   /**
-   * @description Attempt to use the code to get a specific token and delete the code.
-   * @param {String} code The code
-   * @return {String|undefined}
+   * @description Attempt to get value by key.
+   * @param {String} key
+   * @return {Promise}
    */
-  async token(code) {
-    try {
-      const token = await this.redisClient.get(code);
-      await this.redisClient.del(code);
-      return token;
-    } catch (e) {
-      throw e;
-    }
+  async get(key) {
+    return Promise.resolve(this.cache.get(key));
   }
 
   /**
-   * @description Attempt to set the token by the code.
-   * @param {String} uid The user uid
-   * @return {String}
+   * @description Attempt to set value by key.
+   * @param {String} key
+   * @param {String} value
+   * @param {Number} expiredTime Set a timeout(seconds) on key; Default: 600
+   * @return {Promise}
    */
-  async generateCode(uid) {
-    try {
-      const code = await this.codeGenerator.issue();
-      const eventsReturning = await this._db.events.findByPk(uid, {attributes: ['point_system_token']});
-      const token = eventsReturning.point_system_token;
-      await this.redisClient.set(code, token);
-      return code;
-    } catch (e) {
-      throw e;
-    }
+  async set(key, value, expiredTime=600) {
+    return Promise.resolve(this.cache.set(key, value));
+  }
+
+  /**
+   * @description Attempt to del value by key.
+   * @param {String} key
+   * @return {Promise}
+   */
+  async del(key) {
+    return Promise.resolve(this.cache.del(key));
   }
 }
 
-module.exports = Telegram;
+module.exports = Cache;
