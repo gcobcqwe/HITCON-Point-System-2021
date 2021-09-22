@@ -26,10 +26,10 @@
  */
 /* eslint-disable no-undef */
 const dbMock = require('../support/dbMock');
-const codeCacheMock = require('../support/codeCacheMock');
+const redisClientMock = require('../support/redisClientMock');
 const codeGeneratorMock = require('../support/codeGeneratorMock');
 const TelegramService = require('../../services/Telegram');
-const telegramServiceInstance = new TelegramService(codeCacheMock, codeGeneratorMock, dbMock);
+const telegramServiceInstance = new TelegramService(redisClientMock, codeGeneratorMock, dbMock);
 
 describe('[Test] Users Service', () => {
   it('Create instance of service', async () => {
@@ -45,11 +45,11 @@ describe('[Test] Users Service', () => {
 
 describe('[Test] get method', () => {
   beforeAll(async () => {
-    await codeCacheMock.set('OOOOOOOOOOOOOOOOXXXXXXXXXXXXXXXX', 'TEST_TOKEN1');
+    await redisClientMock.set('OOOOOOOOOOOOOOOOXXXXXXXXXXXXXXXX', 'TEST_TOKEN1');
   });
 
   afterAll(async () => {
-    await codeCacheMock.del('OOOOOOOOOOOOOOOOXXXXXXXXXXXXXXXX');
+    await redisClientMock.del('OOOOOOOOOOOOOOOOXXXXXXXXXXXXXXXX');
   });
 
   it('Hit', async () => {

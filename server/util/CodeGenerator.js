@@ -38,17 +38,7 @@ class CodeGenerator {
    * @description Create an instance of CodeGenerator.
    */
   constructor() {
-    this._codeCache = undefined;
     this._counter = 0;
-  }
-
-  /**
-   * @description Set a codeCache.
-   * @param {Cache} cache
-   * @set
-   */
-  set codeCache(cache) {
-    this._codeCache = cache;
   }
 
   /**
@@ -58,7 +48,6 @@ class CodeGenerator {
    */
   async issue() {
     try {
-      if (!this._codeCache) throw new Error('Please set a codeCache!');
       return Promise.resolve(`${this.series}:${this.randomString}`);
     } catch (e) {
       throw e;

@@ -26,13 +26,13 @@
  */
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const logger = require('../util/logger');
-const Cache = require('../util/Cache');
+const RedisClient = require('../util/RedisClient');
 const CodeGenerator = require('../util/CodeGenerator');
 const db = require('../models');
-const codeCache = new Cache({stdTTL: 600, checkperiod: 60});
+const redisClient = new RedisClient();
 const codeGenerator = new CodeGenerator();
 const TelegramService = require('../services/Telegram');
-const telegramServiceInstance = new TelegramService(codeCache, codeGenerator, db);
+const telegramServiceInstance = new TelegramService(redisClient, codeGenerator, db);
 
 /**
  * @description Attempt to set the token by the code.

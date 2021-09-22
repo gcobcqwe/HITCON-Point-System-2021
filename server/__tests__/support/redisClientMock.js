@@ -24,6 +24,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-const Cache = require('../../util/Cache');
-const codeCache = new Cache({stdTTL: 600, checkperiod: 60});
-module.exports = codeCache;
+// Use NodeCache to imitate Redis behavior.
+const NodeCache = require('./NodeCache');
+const redisClient = new NodeCache({stdTTL: 600, checkperiod: 60});
+module.exports = redisClient;
