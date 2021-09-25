@@ -53,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       notEmpty: true
     },
+    nick_name: {
+      type: DataTypes.STRING(200),
+      defaultValue: ''
+    },
     role: {
       type: DataTypes.STRING(10),
       notEmpty: true

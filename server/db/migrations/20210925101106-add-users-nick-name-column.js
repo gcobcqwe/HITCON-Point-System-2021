@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -25,26 +24,18 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert(
-      'users',
-      [{
-        uid: 'SHOP_UID',
-        nick_name: 'shop',
-        role: 'admin',
-        points: 0
-      }, {
-        uid: 'ADMIN_UID',
-        nick_name: 'admin',
-        role: 'admin',
-        points: 10000000
-      }], {ignoreDuplicates: true});
+    await queryInterface.addColumn('users', 'nick_name', {
+      type: Sequelize.STRING(200),
+      defaultValue: ''
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('users', null, {});
+    await queryInterface.removeColumn('users', 'nick_name');
   }
 };
