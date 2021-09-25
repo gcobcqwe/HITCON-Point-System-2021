@@ -48,7 +48,7 @@ class CodeGenerator {
    */
   async issue() {
     try {
-      return Promise.resolve(`${this.series}:${this.randomString}`);
+      return Promise.resolve(`${this.series}_${this.randomString}`);
     } catch (e) {
       throw e;
     }
