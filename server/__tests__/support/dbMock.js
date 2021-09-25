@@ -46,6 +46,7 @@ const db = {
     findByPk() {
       return Promise.resolve({
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
+        nick_name: 'test',
         role: 'client',
         points: 100
       });
@@ -53,10 +54,12 @@ const db = {
     findAll() {
       return Promise.resolve([{
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
+        nick_name: 'test',
         role: 'client',
         points: 100
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f052',
+        nick_name: 'test2',
         role: 'vendor',
         points: 200
       }]);
@@ -64,6 +67,7 @@ const db = {
     create() {
       return Promise.resolve({
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
+        nick_name: 'test',
         role: 'client',
         points: 100
       });
@@ -71,6 +75,7 @@ const db = {
     update() {
       return Promise.resolve({
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
+        nick_name: 'test',
         role: 'client',
         points: 150
       });
