@@ -1,0 +1,18 @@
+{
+  "name": "HITCON-One-Page-2021",
+  "version": "1.0.0",
+  "license": "BSD 2-Clause",
+  "scripts": {
+    "dev": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.26.1",
+    "parcel-bundler": "^1.12.5"
+  }
+}
