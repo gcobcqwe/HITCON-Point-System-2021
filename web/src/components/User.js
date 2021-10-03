@@ -1,37 +1,130 @@
 import React from "react";
+import styled from "styled-components";
+import {Button} from "./Button";
+import TradingModal from "./Trading";
 
-const User = ({nickname, point, imageSrc}) => {
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: #B9B9B9 0% 0% no-repeat padding-box;
+  border-radius: 24px;
+  padding: 40px 40px 6px 40px;
+
+  @media(min-width: 1918px) {
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    width: 360px;
+    height: 328px;
+  }
+}
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  color: #3C3C3C;
+  justify-content: space-between;
+  margin-bottom: 27px;
+`;
+
+const Username = styled.div`
+  line-height: 47px;
+  font-size: 32px;
+  color: #3C3C3C;
+`;
+
+const UserImage = styled.img`
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border-radius: 50%;
+`;
+
+const UserSignout = styled.a`
+  line-height: 17px;
+  font-size: 12px;
+  text-decoration: underline;
+  color: #3C3C3C;
+`;
+
+const PointWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 30px;
+  background: #6A6A6A 0% 0% no-repeat padding-box;
+  border-radius: 7px;
+  padding: 10px 20px;
+  margin-bottom: 27px;
+`;
+
+const Quantity = styled.div`
+  font-family: Bungee;
+  color: #FFFFFF;
+  flex-grow: 1;
+  text-align: center;
+`;
+
+const Unit = styled.div`
+  position: absolute;
+  color: #E2E2E2;
+`;
+
+const Actions = styled.div`
+  > button {
+    margin-bottom: 27px;
+  }
+`;
+
+const ActionButton = styled(Button)`
+  font-size: 16px;
+  background: #F0F0F0 0% 0% no-repeat padding-box;
+  width: 100%;
+  color: #696969;
+  border-width: 0px;
+
+  a:visited {
+    color: #696969;
+  }
+`;
+
+
+const User = ({nickname, points, imageSrc}) => {
+
+  const handleTrading = () => {
+    console.log('trading click');
+  }
+
   return (
-    <div className="user">
-      <div className="user__info">
+    <>
+    <Container>
+      <UserInfo>
         <div className="flex-column">
-          <div className="user__info__name">{nickname}</div>
+          <Username>{nickname}</Username>
+          <UserSignout href="">sign out</UserSignout>
         </div>
         <div>
-          <img className="user__info__image" src={imageSrc}  onClick="codePopUp()" />
+          <UserImage src={imageSrc}  onClick="codePopUp()" />
         </div>
-      </div>
+      </UserInfo>
 
-     <div className="user__points">
-       <div className="user__points__number">{point}</div>
-       <div className="user__points__unit">P</div>
-     </div>
-     <div>
-       <button className="user__action" onClick="transactionPopUp()" >交易點數</button>
-     </div>
-     <div>
-      <a href="https://shopee.tw/hitcon" target="_blank">
-       <button className="user__action">前往 HITCON 商城</button>
-      </a>
-     </div>
-    </div>
+      <PointWrapper>
+        <Quantity>{points}</Quantity>
+        <Unit>P</Unit>
+      </PointWrapper>
+
+      <Actions>
+        <ActionButton onClick={handleTrading} >交易點數</ActionButton>
+        <ActionButton>
+          <a href="https://shopee.tw/hitcon" target="_blank">前往 HITCON 商城</a>
+        </ActionButton>
+      </Actions>
+    </Container>
+    </>
   )
 }
 
 User.defaultProps = {
   nickname: "未知人物",
   imageSrc: "https://via.placeholder.com/78x78" ,
-  point: "-1000000",
+  points: "0",
 }
 
 
