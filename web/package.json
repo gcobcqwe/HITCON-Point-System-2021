@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "license": "BSD 2-Clause",
   "scripts": {
-    "dev": "parcel ./src/index.html",
+    "dev": "parcel ./src/index.html -p 5000",
     "build": "parcel build ./src/index.html"
   },
   "dependencies": {
+    "axios": "^0.22.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.1"
