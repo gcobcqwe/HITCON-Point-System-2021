@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.footer`
+const Wrapper = styled.footer`
+  position: absolute;
+  left: 0;
+  width: 100%;
+`;
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,16 +27,18 @@ const Link = styled.a`
 `
 
 const Footer = () => (
-  <Container>
-    <Text>HITCON 2021</Text>
-    <div>
-      <Link href="https://fb.com/hitcon" target="_blank" rel="noreferrer">Facebook</Link>
-      <span> | </span>
-      <Link href="https://twitter.com/HacksInTaiwan" target="_blank" rel="noreferrer">Twitter</Link>
-      <span> | </span>
-      <Link href="https://blog.hitcon.org" target="_blank" rel="noreferrer">Blog</Link>
-    </div>
-  </Container>
+  <Wrapper>
+    <Container>
+      <Text>HITCON 2021</Text>
+      <div>
+        <Link href="https://fb.com/hitcon" target="_blank" rel="noreferrer">Facebook</Link>
+        <span> | </span>
+        <Link href="https://twitter.com/HacksInTaiwan" target="_blank" rel="noreferrer">Twitter</Link>
+        <span> | </span>
+        <Link href="https://blog.hitcon.org" target="_blank" rel="noreferrer">Blog</Link>
+      </div>
+    </Container>
+  </Wrapper>
 )
 
 export default Footer;

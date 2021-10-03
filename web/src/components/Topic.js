@@ -48,7 +48,7 @@ const Image = styled.img`
   }
 `;
 
-const Topic = ({title, description, imageSrc, actionLink, actionText}) => {
+const Topic = ({title, description, imageSrc, actionLink, actionText, actionToken}) => {
   return (
     <Container>
       <Text>主題活動</Text>
@@ -57,6 +57,10 @@ const Topic = ({title, description, imageSrc, actionLink, actionText}) => {
           <Title>{title}</Title>
           <Description>{description}</Description>
           <form method="POST" action={actionLink}>
+            { actionToken ?
+              <input type="hidden" name="token" value={actionToken} /> :
+              ""
+            }
             <Button type ="submit">{actionText}</Button>
           </form>
         </div>
@@ -73,7 +77,8 @@ Topic.defaultProps = {
   description: "喵～我是駭客狗狗，HITCON 最新開發的狗狗聊天機器人，不過我可沒有百寶袋唷！狗狗將會在 Telegram 以及 IRC 上協助大家參與 HITCON 2021，也許還會有一些小驚喜唷！喵～期待大會與各位相見！#聊天機器人 #駭客狗狗",
   imageSrc: "https://via.placeholder.com/296x187",
   actionLink: "https://t.me/hitcon_bot?start=00000001_6ce709f26bf3d745565024957ea1d003",
-  actionText: "前往駭客狗狗"
+  actionText: "前往駭客狗狗",
+  actionToken: false,
 }
 
 export default Topic;
