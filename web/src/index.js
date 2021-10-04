@@ -26,30 +26,43 @@ const Wrapper = styled.div`
   }
 `
 
-const Header = () => (<header>HITCON 2021</header>);
-const baseURL = "https://points-staging.hitcon.org/api/v1/users/me";
+const Header = styled.header`
+  header {
+  font-family: TSTAR;
+  font-size: 60px;
+  margin-top: 151px;
+  margin-bottom: 31px;
+}
+`;
 
 const App = () => {
   const [authorized, setAuthorized] = useState(false);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const headers = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MyIsImlhdCI6MTYzMjYzNzYwMywiZXhwIjoxNjQwOTY2NDAwLCJzY29wZSI6Im9uZV9wYWdlIHBvaW50X3N5c3RlbSBjbGllbnQifQ.CU7fEJq2YB9U35E4AjFj-xv7s-0kT9YZAPXDUBB-2PM'
-    }
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const token = urlParams.get('token');
+    setToken(token);
+  },[]);
+
+  useEffect(() => {
+    if (!token) return;
+    const baseURL = "https://points-staging.hitcon.org/api/v1/users/me";
+    const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(baseURL, { headers })
       .then((response) => {
-      setUser(response.data);
+      setUser(response.data)
+      setAuthorized(true);
+    }).catch((error) => {
+      setAuthorized(false);
     });
-  },[]); // [] represent run once.
-
-  useEffect(() => {
-    setAuthorized(true); // maybe need to check token or something;
-  },[user]);
+  },[token]); // monitor token change then trigger this
 
   return (
     <Wrapper>
-      <Header />
+      <Header>HITCON 2021</Header>
       { authorized ?
         (<>
           <Greeting
