@@ -50,11 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       notEmpty: true
     },
-    private_kktix_code: {
-      type: DataTypes.STRING(50),
-      unique: true,
-      notEmpty: true
-    },
     one_page_token: {
       type: DataTypes.TEXT,
       unique: true,

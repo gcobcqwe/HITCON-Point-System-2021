@@ -53,6 +53,11 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       notEmpty: true
     },
+    private_kktix_code: {
+      type: DataTypes.STRING(50),
+      unique: true,
+      notEmpty: true
+    },
     nick_name: {
       type: DataTypes.STRING(200),
       defaultValue: ''

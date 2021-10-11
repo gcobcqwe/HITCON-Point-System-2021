@@ -37,26 +37,31 @@ module.exports = {
       'users',
       [{
         uid: 'SHOP_UID',
+        private_kktix_code: 'SHOP_CODE',
         nick_name: 'shop',
         role: 'admin',
         points: 0
       }, {
         uid: 'ADMIN_UID',
+        private_kktix_code: 'ADMIN_CODE',
         nick_name: 'admin',
         role: 'admin',
         points: 10000000
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f053',
+        private_kktix_code: '1qnv3KIdgGcTaHXfHtPJda9kDZ5uwqFUT6voH',
         nick_name: 'test3',
         role: 'admin',
         points: 100000
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f052',
+        private_kktix_code: '2lnv3OKdgGcaLHLfHtPJda8kDZ5uwqCCT3vuu',
         nick_name: 'test2',
         role: 'vendor',
         points: 100000
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
+        private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
         nick_name: 'test',
         role: 'client',
         points: 100000
@@ -65,21 +70,18 @@ module.exports = {
       'events',
       [{
         uid: 'eea2faf2ec64ae85df1da5a16348f053',
-        private_kktix_code: '1qnv3KIdgGcTaHXfHtPJda9kDZ5uwqFUT6voH',
         one_page_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MyIsImlhdCI6MTYyNDcxNTc3NSwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6Im9uZV9wYWdlIn0.fuIfk_zrVhJcmmC28GIBwDq6bOxQdyteHEvuKDJq1_Q',
         kof_server_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MyIsImlhdCI6MTYyNDcxNTc3NSwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6ImtvZl9zZXJ2ZXIifQ.zsuoU8PZjpLETEkPsbS_5zb1UpWa0LE1yMTsIIaylCs',
         online_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MyIsImlhdCI6MTYyNDcxNTc3NSwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6Im9ubGluZSJ9.4nJW7SpLGoeMMn7-sxy3e7reIUIfGskhj4OR3R6b8Fw',
         point_system_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MyIsImlhdCI6MTYyNDcxNTc3NSwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6InBvaW50X3N5c3RlbSBjbGllbnQifQ.Fz-wiV1z6VVbeUypanAVugS9adTFJIB6Fy8z7afC-6s'
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f052',
-        private_kktix_code: '2lnv3OKdgGcaLHLfHtPJda8kDZ5uwqCCT3vuu',
         one_page_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MiIsImlhdCI6MTYyNDcxNTcxNiwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6Im9uZV9wYWdlIn0.CYQQH2IvFScxJ6z47A1KUdWhhHc55AkNv3IjSKKEpCw',
         kof_server_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MiIsImlhdCI6MTYyNDcxNTcxNiwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6ImtvZl9zZXJ2ZXIifQ.L3oUIJ3Hvtk3aUnPtldAs1di_6QwK57_pXuv-PwF3og',
         online_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MiIsImlhdCI6MTYyNDcxNTcxNiwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6Im9ubGluZSJ9.pW8cxXbLi25iwV136aeg_M2GMHIiyTjb5uShFTJ80Us',
         point_system_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MiIsImlhdCI6MTYyNDcxNTcxNiwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6InBvaW50X3N5c3RlbSBjbGllbnQifQ.sj6z82RwONZOVGC98a5NAdPz0KqgIpZiavpbJD6AUOg'
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
-        private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
         one_page_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MSIsImlhdCI6MTYyNDcxNTYwNiwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6Im9uZV9wYWdlIn0.IrzesyXxmKjVuymKUDWoSFMTTgjPP_EGrmRTgITLwks',
         kof_server_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MSIsImlhdCI6MTYyNDcxNTYwNiwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6ImtvZl9zZXJ2ZXIifQ.WeNjIH0BlUQcY-KyNARJdvFgseXwgFvXzreY_kY58-0',
         online_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2hpdGNvbi5vcmciLCJzdWIiOiJlZWEyZmFmMmVjNjRhZTg1ZGYxZGE1YTE2MzQ4ZjA1MSIsImlhdCI6MTYyNDcxNTYwNiwiZXhwIjoyNTI0NTc5MjAwLCJzY29wZSI6Im9ubGluZSJ9.b3EjLSSe3n77H8_GUIDlN4WJZ985tcIvEvLRbEScges',
