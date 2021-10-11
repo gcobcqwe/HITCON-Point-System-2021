@@ -35,6 +35,15 @@ module.exports = {
         unique: true,
         notEmpty: true
       },
+      private_kktix_code: {
+        type: Sequelize.STRING(50),
+        unique: true,
+        notEmpty: true
+      },
+      nick_name: {
+        type: Sequelize.STRING(200),
+        defaultValue: ''
+      },
       role: {
         type: Sequelize.STRING(10),
         notEmpty: true

@@ -33,11 +33,13 @@ module.exports = {
       'users',
       [{
         uid: 'SHOP_UID',
+        private_kktix_code: 'SHOP_CODE',
         nick_name: 'shop',
         role: 'admin',
         points: 0
       }, {
         uid: 'ADMIN_UID',
+        private_kktix_code: 'ADMIN_CODE',
         nick_name: 'admin',
         role: 'admin',
         points: 10000000

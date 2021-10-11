@@ -35,11 +35,6 @@ module.exports = {
         unique: true,
         notEmpty: true
       },
-      private_kktix_code: {
-        type: Sequelize.STRING(50),
-        unique: true,
-        notEmpty: true
-      },
       one_page_token: {
         type: Sequelize.TEXT,
         unique: true,
@@ -58,10 +53,6 @@ module.exports = {
       point_system_token: {
         type: Sequelize.TEXT,
         unique: true,
-        notEmpty: true
-      },
-      streaming_link: {
-        type: Sequelize.TEXT,
         notEmpty: true
       }
     });
