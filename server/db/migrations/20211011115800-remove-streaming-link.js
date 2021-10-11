@@ -26,60 +26,16 @@
  */
 
 'use strict';
-const {Model} = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
-  /**
-   * Events Model
-   * @class
-   */
-  class Events extends Model {
-    /**
-     * Associate
-     * @static
-     * @param {Model} models
-     */
-    static associate(models) {
-      Events.belongsTo(models.users, {foreignKey: 'uid'});
-    }
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn('events', 'streaming_link');
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.addColumn('events', 'streaming_link', {
+      type: Sequelize.TEXT,
+      notEmpty: true
+    });
   }
-  Events.init({
-    uid: {
-      type: DataTypes.STRING(50),
-      primaryKey: true,
-      unique: true,
-      notEmpty: true
-    },
-    private_kktix_code: {
-      type: DataTypes.STRING(50),
-      unique: true,
-      notEmpty: true
-    },
-    one_page_token: {
-      type: DataTypes.TEXT,
-      unique: true,
-      notEmpty: true
-    },
-    kof_server_token: {
-      type: DataTypes.TEXT,
-      unique: true,
-      notEmpty: true
-    },
-    online_token: {
-      type: DataTypes.TEXT,
-      unique: true,
-      notEmpty: true
-    },
-    point_system_token: {
-      type: DataTypes.TEXT,
-      unique: true,
-      notEmpty: true
-    }
-  }, {
-    sequelize,
-    modelName: 'events',
-    createdAt: false,
-    updatedAt: false
-  });
-  return Events;
 };
