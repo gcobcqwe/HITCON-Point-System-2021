@@ -7,18 +7,27 @@ const Wrapper = styled.footer`
   width: 100%;
 `;
 
+const Background = styled.div`
+  position: absolute;
+  background: #000000 0% 0% no-repeat padding-box;
+  opacity: 0.7;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #646464 0% 0% no-repeat padding-box;
   padding-top: 54px;
   padding-bottom: 41px;
   color: #EBEBEB;
+  z-index: 1;
 `
 
 const Text = styled.div`
-  margin-bottom: 23px;
+  margin-bottom: 20px;
 `
 
 const Link = styled.a`
@@ -28,6 +37,7 @@ const Link = styled.a`
 
 const Footer = () => (
   <Wrapper>
+    <Background />
     <Container>
       <Text>HITCON 2021</Text>
       <div>
