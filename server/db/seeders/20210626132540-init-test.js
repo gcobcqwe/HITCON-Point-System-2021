@@ -119,32 +119,6 @@ module.exports = {
         is_used: false
       }]);
     await queryInterface.bulkInsert(
-      'products',
-      [{
-        name: 'product_1',
-        description: '',
-        image_url: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-        points: 100,
-        quantity: 5
-      }, {
-        name: 'product_2',
-        description: '',
-        image_url: 'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg',
-        points: 200,
-        quantity: 7
-      }]);
-    await queryInterface.bulkInsert(
-      'invoices',
-      [{
-        t_id: 4,
-        p_id: 1,
-        quantity: 2
-      }, {
-        t_id: 4,
-        p_id: 2,
-        quantity: 3
-      }]);
-    await queryInterface.bulkInsert(
       'coupons_types',
       [{
         id: 1,
@@ -171,8 +145,6 @@ module.exports = {
     await queryInterface.bulkDelete('events', null, {});
     await queryInterface.bulkDelete('transactions', null, {});
     await queryInterface.bulkDelete('redeem_codes', null, {});
-    await queryInterface.bulkDelete('products', null, {});
-    await queryInterface.bulkDelete('invoices', null, {});
     await queryInterface.bulkDelete('coupons', null, {});
     await queryInterface.bulkDelete('coupons-type', null, {});
   }
