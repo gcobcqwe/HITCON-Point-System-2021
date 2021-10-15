@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -25,57 +26,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use strict';
-const {Model} = require('sequelize');
-
-module.exports = (sequelize, DataTypes) => {
+const {ReasonPhrases} = require('http-status-codes');
+const error = {
   /**
-   * Users Model
-   * @class
+   * @description Attempt to convert error message to BAD_REQUEST, if the message is not in the error object.
+   * @param {String} text The error message
+   * @return {String}
    */
-  class Users extends Model {
-    /**
-     * Associate
-     * @static
-     * @param {Model} models
-     */
-    static associate(models) {
-      Users.hasOne(models.events, {foreignKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'sender', targetKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'receiver', targetKey: 'uid'});
-      Users.hasMany(models.redeem_codes, {foreignKey: 'issuer', targetKey: 'uid'});
-      Users.hasMany(models.coupons, {foreignKey: 'uid'});
+  msgAdaptor: (text) => {
+    if (Object.values(error).includes(text)) {
+      return text;
     }
-  }
-  Users.init({
-    uid: {
-      type: DataTypes.STRING(50),
-      primaryKey: true,
-      unique: true,
-      notEmpty: true
-    },
-    private_kktix_code: {
-      type: DataTypes.STRING(50),
-      unique: true,
-      notEmpty: true
-    },
-    nick_name: {
-      type: DataTypes.STRING(200),
-      defaultValue: ''
-    },
-    role: {
-      type: DataTypes.STRING(10),
-      notEmpty: true
-    },
-    points: {
-      type: DataTypes.INTEGER,
-      notEmpty: true
-    }
-  }, {
-    sequelize,
-    modelName: 'users',
-    createdAt: false,
-    updatedAt: false
-  });
-  return Users;
+    return ReasonPhrases.BAD_REQUEST;
+  },
+  THE_BALANCE_IS_NOT_ENOUGH: 'The balance is not enough.',
+  THE_COUPON_IS_FINISHED: 'The coupon is finished.',
+  THE_REQUEST_PARAMETER_IS_INVALID: 'The request parameter is invalid.'
 };
+
+module.exports = error;
