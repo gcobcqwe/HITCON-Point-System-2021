@@ -25,11 +25,12 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-const {ReasonPhrases, StatusCodes} = require('http-status-codes');
+const {StatusCodes} = require('http-status-codes');
 const logger = require('../util/logger');
 const db = require('../models');
 const UsersService = require('../services/Users');
 const usersServiceInstance = new UsersService(db);
+const {THE_UID_IS_NOT_FOUND, msgAdaptor} = require('../config/error');
 
 /**
  * @description Attempt to get the user information using uid.
@@ -40,88 +41,14 @@ async function me( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const result = await usersServiceInstance.find(uid);
-    if (!result) throw new Error('The uid is not found');
-    res.status(StatusCodes.OK).send(result);
+    if (!result) throw new Error(THE_UID_IS_NOT_FOUND);
+    res.status(StatusCodes.OK).send({success: true, data: result});
   } catch (e) {
     logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
-  }
-}
-
-/**
- * @description Attempt to get all user information. Only admin is allowed to use it.
- * @param {Request} req
- * @param {Response} res
- */
-async function findAll( req, res ) {
-  try {
-    const result = await usersServiceInstance.findAll();
-    res.status(StatusCodes.OK).send(result);
-  } catch (e) {
-    logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
-  }
-}
-
-/**
-   * @description Attempt to add a new user. Only admin is allowed to use it.
-   * @param {Request} req
-   * @param {Response} res
-   */
-async function add( req, res ) {
-  try {
-    const uid = req.body.uid;
-    const role = req.body.role;
-    const points = req.body.points;
-    if (typeof uid !== 'string' || typeof role !== 'string' || typeof points !== 'number') throw new Error('The request parameter is invalid.');
-    await usersServiceInstance.add(uid, role, points);
-    res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
-  } catch (e) {
-    logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
-  }
-}
-
-/**
-   * @description Attempt to update the user. Only admin is allowed to use it.
-   * @param {Request} req
-   * @param {Response} res
-   */
-async function update( req, res ) {
-  try {
-    const uid = req.body.uid;
-    const role = req.body.role;
-    const points = req.body.points;
-    if (typeof uid !== 'string' || typeof role !== 'string' || typeof points !== 'number') throw new Error('The request parameter is invalid.');
-    await usersServiceInstance.update(uid, role, points);
-    res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
-  } catch (e) {
-    logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
-  }
-}
-
-/**
-   * @description Attempt to destroy the user. Only admin is allowed to use it.
-   * @param {Request} req
-   * @param {Response} res
-   */
-async function destroy( req, res ) {
-  try {
-    const uid = req.body.uid;
-    if (typeof uid !== 'string') throw new Error('The request parameter is invalid.');
-    await usersServiceInstance.destroy(uid);
-    res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
-  } catch (e) {
-    logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
   }
 }
 
 module.exports = {
-  me,
-  findAll,
-  add,
-  update,
-  destroy
+  me
 };
