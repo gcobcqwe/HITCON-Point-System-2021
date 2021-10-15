@@ -47,45 +47,6 @@ class Users {
   async find(uid) {
     return this._db.users.findByPk(uid);
   }
-
-  /**
-   * @description Attempt to get all users information.
-   * @return {Promise}
-   */
-  async findAll() {
-    return this._db.users.findAll();
-  }
-
-  /**
-   * @description Attempt to add user.
-   * @param {String} uid The user id
-   * @param {String|null} role The user role
-   * @param {Number} points The user points, default: 0
-   * @return {Promise}
-   */
-  async add(uid, role, points=0) {
-    return this._db.users.create({uid, role, points});
-  }
-
-  /**
-   * @description Attempt to update user information.
-   * @param {String} uid The user id
-   * @param {String} role The user role
-   * @param {Number} points The user points
-   * @return {Promise}
-   */
-  async update(uid, role, points) {
-    return this._db.users.update({role, points}, {where: {uid}});
-  }
-
-  /**
-   * @description Attempt to delete user using uid.
-   * @param {String} uid The user id
-   * @return {Promise}
-   */
-  async destroy(uid) {
-    return this._db.users.destroy({where: {uid}});
-  }
 }
 
 module.exports = Users;
