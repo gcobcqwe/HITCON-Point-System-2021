@@ -26,6 +26,8 @@
  */
 
 
+const {THE_BALANCE_IS_NOT_ENOUGH, THE_CODE_IS_NOT_FOUND, THE_CODE_IS_ALREADY_USED,
+  THE_SENDER_DOES_NOT_EXIST, THE_RECEIVER_DOES_NOT_EXIST} = require('../config/error');
 /**
  * Create a new Points service.
  * @class
@@ -49,8 +51,8 @@ class Points {
   async generateCode(uid, points) {
     const transaction = await this._db.sequelize.transaction();
     try {
-      const userReturning = await this._db.users.findByPk(uid);
-      if (userReturning.points < points) throw new Error('The balance is not enough.');
+      const userReturning = await this._db.users.findByPk(uid, {transaction, lock: transaction.LOCK.UPDATE});
+      if (userReturning.points < points) throw new Error(THE_BALANCE_IS_NOT_ENOUGH);
       await this._db.users.decrement('points', {by: points, transaction, where: {uid}});
       const result = await this._db.redeem_codes.create(
         {issuer: uid, points},
@@ -72,15 +74,16 @@ class Points {
   async redeemCode(uid, code) {
     const transaction = await this._db.sequelize.transaction();
     try {
-      const codeReturning = await this._db.redeem_codes.findByPk(code);
-      if (!codeReturning) throw new Error('The code is not found.');
+      const codeReturning = await this._db.redeem_codes.findByPk(code, {transaction, lock: transaction.LOCK.UPDATE});
+      if (!codeReturning) throw new Error(THE_CODE_IS_NOT_FOUND);
+      if (codeReturning.is_used) throw new Error(THE_CODE_IS_ALREADY_USED);
       await this._db.users.increment('points', {by: codeReturning.points, transaction, where: {uid}});
       await this._db.transactions.create({
         sender: codeReturning.issuer,
         receiver: uid,
         points: codeReturning.points,
-        type: 'redeem_code'});
-      await this._db.redeem_codes.update({is_used: true}, {where: {code}});
+        type: 'redeem_code'}, {transaction});
+      await this._db.redeem_codes.update({is_used: true}, {where: {code}, transaction});
       await transaction.commit();
       return {points: codeReturning.points};
     } catch (e) {
@@ -110,15 +113,16 @@ class Points {
   async transactions(sender, receiver, points) {
     const transaction = await this._db.sequelize.transaction();
     try {
-      const senderReturning = await this._db.users.findByPk(sender);
-      const receiverReturning = await this._db.users.findByPk(receiver);
-      if (!receiverReturning) throw new Error('The receiver does not exist.');
-      if (senderReturning.points < points) throw new Error('The balance is not enough.');
+      const senderReturning = await this._db.users.findByPk(sender, {transaction, lock: transaction.LOCK.UPDATE});
+      if (!senderReturning) throw new Error(THE_SENDER_DOES_NOT_EXIST);
+      const receiverReturning = await this._db.users.findByPk(receiver, {transaction, lock: transaction.LOCK.UPDATE});
+      if (!receiverReturning) throw new Error(THE_RECEIVER_DOES_NOT_EXIST);
+      if (senderReturning.points < points) throw new Error(THE_BALANCE_IS_NOT_ENOUGH);
       await this._db.users.decrement('points', {by: points, transaction, where: {uid: sender}});
       await this._db.users.increment('points', {by: points, transaction, where: {uid: receiver}});
-      await this._db.transactions.create({sender, receiver, points, type: 'transactions'});
+      await this._db.transactions.create({sender, receiver, points, type: 'transactions'}, {transaction});
       await transaction.commit();
-      return true;
+      return;
     } catch (e) {
       await transaction.rollback();
       throw e;
@@ -143,3 +147,4 @@ class Points {
 }
 
 module.exports = Points;
+// TODO: Fix unit test.

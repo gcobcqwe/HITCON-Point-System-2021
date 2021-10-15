@@ -25,11 +25,12 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-const {ReasonPhrases, StatusCodes} = require('http-status-codes');
+const {StatusCodes} = require('http-status-codes');
 const logger = require('../util/logger');
 const db = require('../models');
 const PointsService = require('../services/Points');
 const pointsServiceInstance = new PointsService(db);
+const {THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor} = require('../config/error');
 
 /**
  * @description Attempt to subtract points in the user wallet and generate a redeem code.
@@ -40,12 +41,12 @@ async function generateCode( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const points = req.body.points;
-    if (typeof points !== 'number') throw new Error('The request parameter is invalid.');
+    if (typeof points !== 'number') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
     const result = await pointsServiceInstance.generateCode(uid, points);
-    res.status(StatusCodes.OK).send(result);
+    res.status(StatusCodes.OK).send({success: true, data: result});
   } catch (e) {
     logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
   }
 }
 
@@ -58,12 +59,12 @@ async function redeemCode( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const code = req.body.code;
-    if (typeof code !== 'string') throw new Error('The request parameter is invalid.');
+    if (typeof code !== 'string') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
     const result = await pointsServiceInstance.redeemCode(uid, code);
-    res.status(StatusCodes.OK).send(result);
+    res.status(StatusCodes.OK).send({success: true, data: result});
   } catch (e) {
     logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
   }
 }
 
@@ -76,10 +77,10 @@ async function fetchAllRedeemCode( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const result = await pointsServiceInstance.fetchAllRedeemCode(uid);
-    res.status(StatusCodes.OK).send(result);
+    res.status(StatusCodes.OK).send({success: true, data: result});
   } catch (e) {
     logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
   }
 }
 
@@ -93,12 +94,12 @@ async function transactions( req, res ) {
     const sender = req.token.payload.sub;
     const receiver = req.body.receiver;
     const points = req.body.points;
-    if (typeof points !== 'number' || typeof receiver !== 'string') throw new Error('The request parameter is invalid.');
+    if (typeof points !== 'number' || typeof receiver !== 'string') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
     await pointsServiceInstance.transactions(sender, receiver, points);
-    res.status(StatusCodes.OK).send({message: ReasonPhrases.OK});
+    res.status(StatusCodes.OK).send({success: true});
   } catch (e) {
     logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
   }
 }
 
@@ -111,10 +112,10 @@ async function transactionsHistory( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const result = await pointsServiceInstance.transactionsHistory(uid);
-    res.status(StatusCodes.OK).send(result);
+    res.status(StatusCodes.OK).send({success: true, data: result});
   } catch (e) {
     logger.error(e);
-    res.status(StatusCodes.BAD_REQUEST).send({message: ReasonPhrases.BAD_REQUEST});
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
   }
 }
 

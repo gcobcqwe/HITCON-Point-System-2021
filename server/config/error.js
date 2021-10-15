@@ -41,7 +41,11 @@ const error = {
   },
   THE_BALANCE_IS_NOT_ENOUGH: 'The balance is not enough.',
   THE_COUPON_IS_FINISHED: 'The coupon is finished.',
-  THE_REQUEST_PARAMETER_IS_INVALID: 'The request parameter is invalid.'
+  THE_REQUEST_PARAMETER_IS_INVALID: 'The request parameter is invalid.',
+  THE_CODE_IS_NOT_FOUND: 'The code is not found.',
+  THE_CODE_IS_ALREADY_USED: 'The code is already used.',
+  THE_SENDER_DOES_NOT_EXIST: 'The sender does not exist.',
+  THE_RECEIVER_DOES_NOT_EXIST: 'The receiver does not exist.',
 };
 
 module.exports = error;
