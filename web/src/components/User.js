@@ -1,63 +1,68 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import {Button} from "./Button";
 import TradingModal from "./Trading";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: #B9B9B9 0% 0% no-repeat padding-box;
-  border-radius: 24px;
-  padding: 40px 40px 6px 40px;
+  position: fixed;
+  bottom: 100px;
+  right: 15px;
+  background: #0F2250;
+  box-shadow: 0px 3px 6px #1B3A76B5;
+  border-radius: 39px;
+  min-width: 380px;
+  z-index: 2;
 
-  @media(min-width: 1918px) {
-    position: fixed;
-    top: 10%;
-    right: 5%;
-    width: 360px;
-    height: 328px;
+  @media(min-width: 1280px) {
+    bottom: unset;
+    top: 100px;
+    right: 120px;
+    min-width: 390px;
+  }
+
+  @media(min-width: 1920px) {
+    display: none;
   }
 }
 `;
 
 const UserInfo = styled.div`
   display: flex;
-  color: #3C3C3C;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 27px;
+  width: 100%;
+  height: 76px;
+  background: #0F2250
+  box-shadow: 0px 3px 6px #1B3A76B5;
+  border-radius: 48px;
+  box-sizing: border-box;
+  padding-left: 39px;
 `;
 
 const Username = styled.div`
-  line-height: 47px;
-  font-size: 32px;
-  color: #3C3C3C;
-`;
-
-const UserImage = styled.img`
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border-radius: 50%;
+  font-size: 26px;
 `;
 
 const UserSignout = styled.a`
-  line-height: 17px;
-  font-size: 12px;
+  font-size: 16px;
   text-decoration: underline;
-  color: #3C3C3C;
+  color: #FFFFFF;
+  margin-left: 10px;
 `;
 
 const PointWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
-  font-size: 30px;
-  background: #6A6A6A 0% 0% no-repeat padding-box;
-  border-radius: 7px;
+  right: 20px;
+  min-width: 123px;
+  background: #3046BF 0% 0% no-repeat padding-box;
+  box-shadow: inset 0px 3px 6px #0000003C;
+  border-radius: 21px;
   padding: 10px 20px;
-  margin-bottom: 27px;
 `;
 
 const Quantity = styled.div`
   font-family: Bungee;
-  color: #FFFFFF;
   flex-grow: 1;
   text-align: center;
 `;
@@ -67,63 +72,172 @@ const Unit = styled.div`
   color: #E2E2E2;
 `;
 
+
+const ActionBar = styled.div`
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  background: #2A64F2 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000050;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+
+  z-index: 1;
+  user-select: none;
+
+  input {
+    display: block;
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    opacity: 0;
+    z-index: 2;
+    -webkit-touch-callout: none;
+  }
+
+  span {
+    display: block;
+    width: 20px;
+    height: 3px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+    border-radius: 20px;
+    position: relative;
+    background: #FFFFFF;
+    z-index: 1;
+    transform-origin: 4px 0px;
+    transition: transform 0.5s ease,
+    background 0.5s ease,
+    opacity 0.55s ease;
+  }
+
+  span:first-child {
+    transform-origin: 0% 0%;
+  }
+
+  span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+  }
+
+  input:checked ~ span {
+    opacity: 1;
+    transform: rotate(135deg) translate(-11px, 4px);
+    background: #FFFFFF;
+  }
+
+  input:checked ~ span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+  }
+
+  input:checked ~ span:nth-last-child(2) {
+    transform: rotate(45deg) translate(0px, -12px);
+  }
+`;
+
+const Menu = styled.div`
+`;
+
+
 const Actions = styled.div`
-  > button {
-    margin-bottom: 27px;
-  }
+  display: flex;
 `;
 
-const ActionButton = styled(Button)`
-  font-size: 16px;
-  background: #F0F0F0 0% 0% no-repeat padding-box;
-  width: 100%;
-  color: #696969;
-  border-width: 0px;
+const ActionButton = styled.div`
+  width: 146px;
+  height: 48px;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0px 3px 6px #00000080;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #000000;
+  padding: 10px 17px;
+  cursor: pointer;
+`;
 
-  a:visited {
-    color: #696969;
+const UserWide = styled.div`
+  display: none;
+  @media(min-width: 1920px) {
+    display: block;
+    position: fixed;
+    left: 65%;
+    background: #0F2250 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #1B3A76B5;
+    border-radius: 39px;
+    min-width: 380px;
   }
+
 `;
 
 
-const User = ({nickname, points, imageSrc}) => {
+const User = ({nickname, points }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleTrading = () => {
-    console.log('trading click');
+  const openMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   }
 
   return (
     <>
     <Container>
+      {
+        isMenuOpen ?
+        <Menu>
+          <PointWrapper>
+            <Quantity>{points}</Quantity>
+            <Unit>P</Unit>
+          </PointWrapper>
+          <Actions>
+            <ActionButton>交易點數</ActionButton>
+            <ActionButton>兌換點數</ActionButton>
+          </Actions>
+        </Menu> :
+        null
+      }
       <UserInfo>
-        <div className="flex-column">
-          <Username>{nickname}</Username>
-          <UserSignout href="">sign out</UserSignout>
-        </div>
-        <div>
-          <UserImage src={imageSrc}  onClick="codePopUp()" />
-        </div>
+        <Username>
+          {nickname}
+          {
+            isMenuOpen ?
+            <UserSignout href="">sign out</UserSignout> :
+            null
+          }
+        </Username>
+        <ActionBar onClick={openMenu}>
+          <input type="checkbox" />
+          <span />
+          <span />
+          <span />
+        </ActionBar>
       </UserInfo>
-
+    </Container>
+    <UserWide>
+      <Username>{nickname}</Username>
+      <UserSignout href="">sign out</UserSignout>
       <PointWrapper>
         <Quantity>{points}</Quantity>
         <Unit>P</Unit>
       </PointWrapper>
-
       <Actions>
-        <ActionButton onClick={handleTrading} >交易點數</ActionButton>
-        <ActionButton>
-          <a href="https://shopee.tw/hitcon" target="_blank">前往 HITCON 商城</a>
-        </ActionButton>
+        <ActionButton>交易點數</ActionButton>
+        <ActionButton>兌換點數</ActionButton>
       </Actions>
-    </Container>
+    </UserWide>
     </>
   )
 }
 
 User.defaultProps = {
   nickname: "未知人物",
-  imageSrc: "https://via.placeholder.com/78x78" ,
   points: "0",
 }
 
