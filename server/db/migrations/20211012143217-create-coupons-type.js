@@ -26,56 +26,34 @@
  */
 
 'use strict';
-const {Model} = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
-  /**
-   * Users Model
-   * @class
-   */
-  class Users extends Model {
-    /**
-     * Associate
-     * @static
-     * @param {Model} models
-     */
-    static associate(models) {
-      Users.hasOne(models.events, {foreignKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'sender', targetKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'receiver', targetKey: 'uid'});
-      Users.hasMany(models.redeem_codes, {foreignKey: 'issuer', targetKey: 'uid'});
-      Users.hasMany(models.coupons, {foreignKey: 'uid'});
-    }
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('coupons_types', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        unique: true,
+        autoIncrement: true,
+        notEmpty: true
+      },
+      name: {
+        type: Sequelize.STRING(20),
+        notEmpty: true
+      },
+      points: {
+        type: Sequelize.INTEGER,
+        notEmpty: true
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      }
+    });
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('coupons_types');
   }
-  Users.init({
-    uid: {
-      type: DataTypes.STRING(50),
-      primaryKey: true,
-      unique: true,
-      notEmpty: true
-    },
-    private_kktix_code: {
-      type: DataTypes.STRING(50),
-      unique: true,
-      notEmpty: true
-    },
-    nick_name: {
-      type: DataTypes.STRING(200),
-      defaultValue: ''
-    },
-    role: {
-      type: DataTypes.STRING(10),
-      notEmpty: true
-    },
-    points: {
-      type: DataTypes.INTEGER,
-      notEmpty: true
-    }
-  }, {
-    sequelize,
-    modelName: 'users',
-    createdAt: false,
-    updatedAt: false
-  });
-  return Users;
 };

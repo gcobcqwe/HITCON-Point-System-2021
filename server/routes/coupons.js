@@ -25,57 +25,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-'use strict';
-const {Model} = require('sequelize');
+const express = require('express');
+const coupons = require('../controllers/coupons');
+const router = express.Router();
 
-module.exports = (sequelize, DataTypes) => {
-  /**
-   * Users Model
-   * @class
-   */
-  class Users extends Model {
-    /**
-     * Associate
-     * @static
-     * @param {Model} models
-     */
-    static associate(models) {
-      Users.hasOne(models.events, {foreignKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'sender', targetKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'receiver', targetKey: 'uid'});
-      Users.hasMany(models.redeem_codes, {foreignKey: 'issuer', targetKey: 'uid'});
-      Users.hasMany(models.coupons, {foreignKey: 'uid'});
-    }
-  }
-  Users.init({
-    uid: {
-      type: DataTypes.STRING(50),
-      primaryKey: true,
-      unique: true,
-      notEmpty: true
-    },
-    private_kktix_code: {
-      type: DataTypes.STRING(50),
-      unique: true,
-      notEmpty: true
-    },
-    nick_name: {
-      type: DataTypes.STRING(200),
-      defaultValue: ''
-    },
-    role: {
-      type: DataTypes.STRING(10),
-      notEmpty: true
-    },
-    points: {
-      type: DataTypes.INTEGER,
-      notEmpty: true
-    }
-  }, {
-    sequelize,
-    modelName: 'users',
-    createdAt: false,
-    updatedAt: false
-  });
-  return Users;
-};
+router.get('/', coupons.findAll);
+router.post('/', coupons.bind);
+
+module.exports = router;

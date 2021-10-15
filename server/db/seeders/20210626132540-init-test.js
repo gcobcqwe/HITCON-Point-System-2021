@@ -144,6 +144,27 @@ module.exports = {
         p_id: 2,
         quantity: 3
       }]);
+    await queryInterface.bulkInsert(
+      'coupons_types',
+      [{
+        id: 1,
+        name: 'shopee_500',
+        points: 1000
+      }]);
+    await queryInterface.bulkInsert(
+      'coupons',
+      [{
+        uid: 'eea2faf2ec64ae85df1da5a16348f053',
+        code: 'GDS71120sda',
+        type: 1,
+        updated_at: '2021-10-13 14:15:40.038+00'
+      }, {
+        code: 'GDS71120sdb',
+        type: 1
+      }, {
+        code: 'GDS71120sdc',
+        type: 1
+      }]);
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('users', null, {});
@@ -152,5 +173,7 @@ module.exports = {
     await queryInterface.bulkDelete('redeem_codes', null, {});
     await queryInterface.bulkDelete('products', null, {});
     await queryInterface.bulkDelete('invoices', null, {});
+    await queryInterface.bulkDelete('coupons', null, {});
+    await queryInterface.bulkDelete('coupons-type', null, {});
   }
 };
