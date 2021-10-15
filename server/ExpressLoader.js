@@ -62,13 +62,13 @@ class ExpressLoader {
     });
     // Handle page NotFound case
     this.app.get('*', (req, res) => {
-      res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
+      res.status(StatusCodes.NOT_FOUND).send({success: false, message: ReasonPhrases.NOT_FOUND});
     });
     // Error handler
     this.app.use((err, _, res, next) => {
       if (err) {
         console.log(err);
-        res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
+        res.status(StatusCodes.BAD_REQUEST).send({success: false, message: ReasonPhrases.BAD_REQUEST});
       } else {
         next();
       }
