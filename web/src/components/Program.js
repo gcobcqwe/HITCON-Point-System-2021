@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { SecondaryButton } from "./button";
 
 const Container = styled.div`
   display: flex;
@@ -51,10 +50,12 @@ const Brief = styled.div`
   color: #B9B9B9;
 `;
 
-const Link = styled(SecondaryButton)`
+const Link = styled.button`
   position: absolute;
   top: 5px;
   right: 0px;
+  font-size: 12px;
+  padding: 0 20px;
 
   a:link, a:visited {
     color: #262626;
