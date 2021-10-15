@@ -25,22 +25,48 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+const {StatusCodes} = require('http-status-codes');
+const logger = require('../util/logger');
+const db = require('../models');
+const CouponsService = require('../services/Coupons');
+const CouponsServiceInstance = new CouponsService(db);
+const {THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor} = require('../config/error');
 
-const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const products = require('./products');
-const invoices = require('./invoices');
-const telegram = require('./telegram');
-const coupons = require('./coupons');
-const {checkAuth} = require('../middlewares/auth');
-const router = express.Router();
+/**
+ * @description Attempt to get all coupons using uid.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function findAll( req, res ) {
+  try {
+    const uid = req.token.payload.sub;
+    const result = await CouponsServiceInstance.findAll(uid);
+    res.status(StatusCodes.OK).send({success: true, data: result});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
+  }
+}
 
-router.use('/points', checkAuth, points);
-router.use('/users', checkAuth, users);
-router.use('/products', checkAuth, products);
-router.use('/invoices', checkAuth, invoices);
-router.use('/coupons', checkAuth, coupons);
-router.use('/tg', telegram);
+/**
+ * @description Attempt to cost points for binding a coupons.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function bind( req, res ) {
+  try {
+    const uid = req.token.payload.sub;
+    const type = req.body.type;
+    if (typeof type !== 'string') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
+    const result = await CouponsServiceInstance.bind(uid, type);
+    res.status(StatusCodes.OK).send({success: true, data: result});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
+  }
+}
 
-module.exports = router;
+module.exports = {
+  findAll,
+  bind
+};

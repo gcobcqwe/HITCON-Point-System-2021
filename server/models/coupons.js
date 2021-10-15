@@ -30,52 +30,44 @@ const {Model} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   /**
-   * Users Model
+   * Coupons Model
    * @class
    */
-  class Users extends Model {
+  class Coupons extends Model {
     /**
      * Associate
      * @static
      * @param {Model} models
      */
     static associate(models) {
-      Users.hasOne(models.events, {foreignKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'sender', targetKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'receiver', targetKey: 'uid'});
-      Users.hasMany(models.redeem_codes, {foreignKey: 'issuer', targetKey: 'uid'});
-      Users.hasMany(models.coupons, {foreignKey: 'uid'});
+      Coupons.belongsTo(models.users, {foreignKey: 'uid'});
+      Coupons.belongsTo(models.coupons_types, {foreignKey: 'type', targetKey: 'id'});
     }
   }
-  Users.init({
-    uid: {
-      type: DataTypes.STRING(50),
+  Coupons.init({
+    id: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
       unique: true,
+      autoIncrement: true,
       notEmpty: true
     },
-    private_kktix_code: {
+    uid: {
+      type: DataTypes.STRING(50),
+      defaultValue: ''
+    },
+    code: {
       type: DataTypes.STRING(50),
       unique: true,
       notEmpty: true
     },
-    nick_name: {
-      type: DataTypes.STRING(200),
-      defaultValue: ''
-    },
-    role: {
-      type: DataTypes.STRING(10),
-      notEmpty: true
-    },
-    points: {
+    type: {
       type: DataTypes.INTEGER,
       notEmpty: true
     }
   }, {
     sequelize,
-    modelName: 'users',
-    createdAt: false,
-    updatedAt: false
+    modelName: 'coupons'
   });
-  return Users;
+  return Coupons;
 };
