@@ -28,12 +28,7 @@
 const express = require('express');
 const users = require('../controllers/users');
 const router = express.Router();
-const {isAdmin} = require('../middlewares/auth');
 
 router.get('/me', users.me);
-router.get('/', isAdmin, users.findAll);
-router.post('/', isAdmin, users.add);
-router.put('/', isAdmin, users.update);
-router.delete('/', isAdmin, users.destroy);
 
 module.exports = router;
