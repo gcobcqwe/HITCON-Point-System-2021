@@ -1,39 +1,48 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import TradingModal from "./Trading";
+import Mask from "./Mask";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+const PositionFixed = styled.div`
   position: fixed;
   bottom: 100px;
   right: 15px;
-  background: #0F2250;
-  box-shadow: 0px 3px 6px #1B3A76B5;
-  border-radius: 39px;
-  min-width: 380px;
-  z-index: 2;
+  z-index: 5;
 
   @media(min-width: 1280px) {
     bottom: unset;
     top: 100px;
     right: 120px;
-    min-width: 390px;
   }
 
   @media(min-width: 1920px) {
     display: none;
   }
+`;
+
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #0F2250;
+  box-shadow: 0px 3px 6px #1B3A76B5;
+  border-radius: 39px;
+  min-width: 390px;
 }
 `;
 
+const Menu = styled.div`
+  position: relative;
+  padding: 28px 32px 0 32px;
+`;
+
 const UserInfo = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 76px;
-  background: #0F2250
+  background: #0F2250;
   box-shadow: 0px 3px 6px #1B3A76B5;
   border-radius: 48px;
   box-sizing: border-box;
@@ -51,33 +60,22 @@ const UserSignout = styled.a`
   margin-left: 10px;
 `;
 
-const PointWrapper = styled.div`
-  display: flex;
-  right: 20px;
-  min-width: 123px;
-  background: #3046BF 0% 0% no-repeat padding-box;
+const Points = styled.div`
+  position: relative;
+  background: #3046BF;
   box-shadow: inset 0px 3px 6px #0000003C;
   border-radius: 21px;
-  padding: 10px 20px;
-`;
-
-const Quantity = styled.div`
-  font-family: Bungee;
-  flex-grow: 1;
+  font-size: 22px;
   text-align: center;
+  padding: 10px 20px;
+  margin-bottom: 40px;
 `;
-
-const Unit = styled.div`
-  position: absolute;
-  color: #E2E2E2;
-`;
-
 
 const ActionBar = styled.div`
+  position: relative;
   display:flex;
   flex-direction: column;
   justify-content: center;
-  position: relative;
   align-items: center;
   background: #2A64F2 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000050;
@@ -86,7 +84,6 @@ const ActionBar = styled.div`
   height: 48px;
   margin-right: 10px;
 
-  z-index: 1;
   user-select: none;
 
   input {
@@ -141,12 +138,10 @@ const ActionBar = styled.div`
   }
 `;
 
-const Menu = styled.div`
-`;
-
-
 const Actions = styled.div`
   display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 const ActionButton = styled.div`
@@ -166,18 +161,36 @@ const ActionButton = styled.div`
 
 const UserWide = styled.div`
   display: none;
+
   @media(min-width: 1920px) {
-    display: block;
     position: fixed;
     left: 65%;
+    display: block;
+    min-width: 380px;
+    padding: 28px 32px 0 32px;
     background: #0F2250 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #1B3A76B5;
     border-radius: 39px;
-    min-width: 380px;
+  }
+
+  ${Username} {
+    margin-bottom: 10px;
+  }
+
+  ${UserSignout} {
+    margin: 0;
+  }
+
+  ${Points} {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+
+  ${ActionButton} {
+    width: 48%;
   }
 
 `;
-
 
 const User = ({nickname, points }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -186,16 +199,22 @@ const User = ({nickname, points }) => {
     setIsMenuOpen(!isMenuOpen);
   }
 
+  const handleMask = () => {
+    document.getElementById("menuCheck").checked = false;
+    setIsMenuOpen(!isMenuOpen);
+  }
+
   return (
     <>
+    <PositionFixed>
     <Container>
       {
         isMenuOpen ?
         <Menu>
-          <PointWrapper>
-            <Quantity>{points}</Quantity>
-            <Unit>P</Unit>
-          </PointWrapper>
+          <Mask onClick={handleMask} />
+          <Points>
+             現有點數：{points} P
+          </Points>
           <Actions>
             <ActionButton>交易點數</ActionButton>
             <ActionButton>兌換點數</ActionButton>
@@ -213,20 +232,20 @@ const User = ({nickname, points }) => {
           }
         </Username>
         <ActionBar onClick={openMenu}>
-          <input type="checkbox" />
+          <input type="checkbox" id="menuCheck"/>
           <span />
           <span />
           <span />
         </ActionBar>
       </UserInfo>
     </Container>
+    </PositionFixed>
     <UserWide>
       <Username>{nickname}</Username>
       <UserSignout href="">sign out</UserSignout>
-      <PointWrapper>
-        <Quantity>{points}</Quantity>
-        <Unit>P</Unit>
-      </PointWrapper>
+      <Points>
+          現有點數: {points} P
+      </Points>
       <Actions>
         <ActionButton>交易點數</ActionButton>
         <ActionButton>兌換點數</ActionButton>
@@ -238,7 +257,7 @@ const User = ({nickname, points }) => {
 
 User.defaultProps = {
   nickname: "未知人物",
-  points: "0",
+  points: "9999",
 }
 
 
