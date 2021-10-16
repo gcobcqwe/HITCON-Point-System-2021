@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import {PostButton} from "./Buttons";
 
 const Container = styled.div`
   display: none;

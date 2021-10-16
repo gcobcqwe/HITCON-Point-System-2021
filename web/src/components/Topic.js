@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import {PostButton} from "./Buttons";
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +48,9 @@ const Description = styled.div`
   }
 `;
 
+const Button = styled.button`
+`;
+
 const Topic = ({
   title, description, imageSrc, actionLink, actionText, actionToken
 }) => {
@@ -58,10 +60,14 @@ const Topic = ({
       <Info>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <PostButton
-          actionToken={actionToken}
-          actionLink={actionLink}
-        />
+        <form method="POST" action={actionLink}>
+          {
+            actionToken ?
+            <input type="hidden" name="token" value={actionToken} /> :
+            null
+          }
+          <Button type ="submit">{actionText}</Button>
+        </form>
       </Info>
     </Container>
   )
