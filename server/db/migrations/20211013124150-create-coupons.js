@@ -86,7 +86,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.removeConstraint('coupons', 'coupons_uid_fkey');
-    await queryInterface.removeConstraint('coupons', 'coupons_type_fkey');
+    await queryInterface.removeConstraint('coupons', 'coupons_types_fkey');
     await queryInterface.dropTable('coupons');
   }
 };
