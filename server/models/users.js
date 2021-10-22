@@ -49,13 +49,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Users.init({
     uid: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       primaryKey: true,
       unique: true,
       notEmpty: true
     },
     private_kktix_code: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       unique: true,
       notEmpty: true
     },

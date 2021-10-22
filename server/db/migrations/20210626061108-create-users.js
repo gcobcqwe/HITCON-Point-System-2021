@@ -30,13 +30,13 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('users', {
       uid: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.TEXT,
         primaryKey: true,
         unique: true,
         notEmpty: true
       },
       private_kktix_code: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.TEXT,
         unique: true,
         notEmpty: true
       },

@@ -30,7 +30,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('events', {
       uid: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.TEXT,
         primaryKey: true,
         unique: true,
         notEmpty: true

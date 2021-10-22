@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Events.init({
     uid: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       primaryKey: true,
       unique: true,
       notEmpty: true
