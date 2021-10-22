@@ -1,0 +1,15 @@
+{
+  "name": "HITCON-Point-System-2021",
+  "version": "1.0.0",
+  "license": "BSD 2-Clause",
+  "description": "",
+  "author": "",
+  "main": "collector.js",
+  "scripts": {
+    "start": "node collector.js"
+  },
+  "dependencies": {
+    "google-spreadsheet": "^3.1.15",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
