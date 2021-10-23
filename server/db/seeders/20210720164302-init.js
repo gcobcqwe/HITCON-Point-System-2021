@@ -36,13 +36,15 @@ module.exports = {
         private_kktix_code: 'SHOP_CODE',
         nick_name: 'shop',
         role: 'admin',
-        points: 0
+        points: 0,
+        email: 'shop@gmail.com'
       }, {
         uid: 'ADMIN_UID',
         private_kktix_code: 'ADMIN_CODE',
         nick_name: 'admin',
         role: 'admin',
-        points: 10000000
+        points: 10000000,
+        email: 'admin@gmail.com'
       }], {ignoreDuplicates: true});
   },
 

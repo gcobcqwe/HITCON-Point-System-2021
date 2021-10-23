@@ -51,6 +51,10 @@ module.exports = {
       points: {
         type: Sequelize.INTEGER,
         notEmpty: true
+      },
+      email: {
+        type: Sequelize.STRING(200),
+        notEmpty: true
       }
     });
   },

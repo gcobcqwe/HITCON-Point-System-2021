@@ -70,6 +70,10 @@ module.exports = (sequelize, DataTypes) => {
     points: {
       type: DataTypes.INTEGER,
       notEmpty: true
+    },
+    email: {
+      type: Sequelize.STRING(200),
+      notEmpty: true
     }
   }, {
     sequelize,
