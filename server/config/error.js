@@ -46,7 +46,7 @@ const error = {
   THE_CODE_IS_ALREADY_USED: 'The code is already used.',
   THE_SENDER_DOES_NOT_EXIST: 'The sender does not exist.',
   THE_RECEIVER_DOES_NOT_EXIST: 'The receiver does not exist.',
-  THE_UID_IS_NOT_FOUND: 'The uid is not found.'
+  THE_USER_IS_NOT_FOUND: 'The user is not found.'
 };
 
 module.exports = error;

@@ -25,6 +25,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+const {THE_USER_IS_NOT_FOUND} = require('../config/error');
 /**
  * Create a new Users service.
  * @class
@@ -46,6 +47,26 @@ class Users {
    */
   async find(uid) {
     return this._db.users.findByPk(uid);
+  }
+
+  /**
+   * @description Attempt to get events using uid.
+   * @param {String} uid The user id
+   * @return {Promise}
+   */
+  async events(uid) {
+    return this._db.events.findByPk(uid);
+  }
+
+  /**
+   * @description Attempt to get user one page token using private KKTix code.
+   * @param {String} code The private KKTix code
+   * @return {Promise}
+   */
+  async token(code) {
+    const usersReturning = await this._db.users.findOne({where: {private_kktix_code: code}, attributes: ['uid']});
+    if (!usersReturning) throw new Error(THE_USER_IS_NOT_FOUND);
+    return this._db.events.findByPk(usersReturning.uid, {attributes: ['one_page_token']});
   }
 }
 
