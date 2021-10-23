@@ -38,7 +38,7 @@ const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const checkAuth = (req, res, next) => {
   const bearerHeader = req.headers.authorization;
   if (!bearerHeader) {
-    res.status(StatusCodes.UNAUTHORIZED).send({message: ReasonPhrases.UNAUTHORIZED});
+    res.status(StatusCodes.UNAUTHORIZED).send({success: false, message: ReasonPhrases.UNAUTHORIZED});
     return;
   }
 
@@ -47,10 +47,10 @@ const checkAuth = (req, res, next) => {
     const token = bearer[1];
     jwt.verify(token, config.server_auth_secret, (err, decoded) => {
       if (err) {
-        res.status(StatusCodes.FORBIDDEN).send({message: ReasonPhrases.FORBIDDEN});
+        res.status(StatusCodes.FORBIDDEN).send({success: false, message: ReasonPhrases.FORBIDDEN});
       } else {
         if (!decoded.scope.includes('point_system')) {
-          res.status(StatusCodes.FORBIDDEN).send({message: ReasonPhrases.FORBIDDEN});
+          res.status(StatusCodes.FORBIDDEN).send({success: false, message: ReasonPhrases.FORBIDDEN});
         }
         req.token = {};
         req.token.payload = decoded;
@@ -58,7 +58,7 @@ const checkAuth = (req, res, next) => {
       }
     });
   } else {
-    res.status(StatusCodes.UNAUTHORIZED).send({message: ReasonPhrases.UNAUTHORIZED});
+    res.status(StatusCodes.UNAUTHORIZED).send({success: false, message: ReasonPhrases.UNAUTHORIZED});
   }
 };
 
@@ -70,7 +70,7 @@ const checkAuth = (req, res, next) => {
  */
 const isAdmin = (req, res, next) => {
   if (!req.token.payload.scope.includes('admin')) {
-    res.status(StatusCodes.FORBIDDEN).send({message: ReasonPhrases.FORBIDDEN});
+    res.status(StatusCodes.FORBIDDEN).send({success: false, message: ReasonPhrases.FORBIDDEN});
     return;
   }
   next();

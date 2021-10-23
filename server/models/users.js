@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       notEmpty: true
     },
     email: {
-      type: Sequelize.STRING(200),
+      type: DataTypes.STRING(200),
       notEmpty: true
     }
   }, {

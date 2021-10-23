@@ -30,7 +30,7 @@ const logger = require('../util/logger');
 const db = require('../models');
 const UsersService = require('../services/Users');
 const usersServiceInstance = new UsersService(db);
-const {THE_UID_IS_NOT_FOUND, msgAdaptor} = require('../config/error');
+const {THE_USER_IS_NOT_FOUND, THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor} = require('../config/error');
 
 /**
  * @description Attempt to get the user information using uid.
@@ -41,7 +41,41 @@ async function me( req, res ) {
   try {
     const uid = req.token.payload.sub;
     const result = await usersServiceInstance.find(uid);
-    if (!result) throw new Error(THE_UID_IS_NOT_FOUND);
+    if (!result) throw new Error(THE_USER_IS_NOT_FOUND);
+    res.status(StatusCodes.OK).send({success: true, data: result});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
+  }
+}
+
+/**
+ * @description Attempt to get events using uid.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function events( req, res ) {
+  try {
+    const uid = req.token.payload.sub;
+    const result = await usersServiceInstance.events(uid);
+    if (!result) throw new Error(THE_USER_IS_NOT_FOUND);
+    res.status(StatusCodes.OK).send({success: true, data: result});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
+  }
+}
+
+/**
+ * @description Attempt to get user one page token using private KKTix code.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function token( req, res ) {
+  try {
+    const privateKKTixCode = req.body.private_kktix_code;
+    if (typeof privateKKTixCode !== 'string') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
+    const result = await usersServiceInstance.token(privateKKTixCode);
     res.status(StatusCodes.OK).send({success: true, data: result});
   } catch (e) {
     logger.error(e);
@@ -50,5 +84,7 @@ async function me( req, res ) {
 }
 
 module.exports = {
-  me
+  me,
+  events,
+  token
 };

@@ -30,5 +30,6 @@ const users = require('../controllers/users');
 const router = express.Router();
 
 router.get('/me', users.me);
+router.get('/me/events', users.events);
 
 module.exports = router;
