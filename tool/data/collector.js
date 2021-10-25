@@ -7,10 +7,18 @@ const credentialsPath = './credential.json';
 const sheetID = '402048441';
 const userFilePath = "./users.csv";
 const eventFilePath = "./events.csv";
+const USERS_COLUMN = {
+  PRIVATE_KKTIX_CODE: 0,
+  NICK_NAME: 1,
+  ROLE: 2,
+  POINTS: 3,
+  EMAIL: 4,
+  ONE_PAGE_TOKEN: 5,
+};
 
 /**
  * Fetch google sheet. 
- * Format: [ 'private_kktix_code','nick_name','role','points','email' ]
+ * Format: {USERS_COLUMN}
  * @param {String} docID the document ID
  * @param {String} sheetID the google sheet table ID
  * @param {String} credentialsPath the credentials path, default is './credential.json'
@@ -24,16 +32,37 @@ async function getData(docID, sheetID, credentialsPath) {
     await doc.loadInfo();
     const sheet = doc.sheetsById[sheetID];
     const rows = await sheet.getRows();
-    const headerLength = rows[0]? rows[0]._sheet.headerValues.length: 0;
-    for (row of rows) {
-      const userData = row._rawData;
-      if (!rowValidator(userData, headerLength)) continue;
-      const uid = await sha256(userData[0]);
-      const role = userData[2];
-      userData.unshift(uid);
-      result.users.push(userData.join(','));
-      const eventData = eventGenerator(uid, role)
+    for (remoteRow of rows) {
+      const userData = [...remoteRow._rawData];
+      const isRowValid = rowValidator(userData, USERS_COLUMN.EMAIL + 1);
+      const isOnePageTokenNullable = !remoteRow.one_page_token? true: false;
+
+      if (!isRowValid) continue;
+      const role = userData[USERS_COLUMN.ROLE];
+      const uid = await sha256(userData[USERS_COLUMN.PRIVATE_KKTIX_CODE]);
+
+      /**
+       * Compose events data.
+       * Format: ["<UID>,<ONE_PAGE_TOKEN>,<KOF_SERVER_TOKEN>,<ONLINE_TOKEN>,<POINT_SYSTEM_TOKEN>",...]
+       */
+      const eventData = eventGenerator(uid, role);
+      const onePageToken = eventData[1];
       result.events.push(eventData.join(','));
+
+      /**
+       * Compose users data.
+       * Format: ["<UID>,<PRIVATE_KKTIX_CODE>,<ROLE>,<POINTS>,<EMAIL>",...]
+       * e.g. ["8b01600a25fe070bb51ed957ea1922d367728fc34d1c47b9e1f65db32ad3443b,f8ca1cc047e7f0419bb09761e211d467,Jack,client,2000,test@gmail.com,...]
+       */
+      userData.unshift(uid);
+      if (!isOnePageTokenNullable) userData.pop();
+      result.users.push(userData.join(','));
+
+      // Write the one page token to the remote google sheet when one_page_token is empty.
+      if (isOnePageTokenNullable) {
+        remoteRow.one_page_token = onePageToken;
+        await remoteRow.save();
+      }
     }
     return result;
   } catch(e) {
@@ -57,11 +86,12 @@ async function sha256(text) {
 /**
  * For checking row attribute in google sheet is valid. Filter null or incomplete data.
  * @param {Array} data the row data
+ * @param {Number} pointer check if data is valid till this position
  * @return {Boolean}
  */
-function rowValidator(data, headerLength) {
+function rowValidator(data, pointer) {
   try {
-    if (data.length < headerLength) return false;
+    if (data.length < pointer) return false;
     for (let i = 0; i < data.length; i++) {
       if (data[i] === '') return false;
     }
