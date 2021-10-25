@@ -1,11 +1,12 @@
 # Tool
-### Sync Account
+### Sync Users Data From The Google Sheet
 ---
-This service is for non-stopping fetching the latest account data from google sheet. We need to set up cron job and run this service in the background.
+This service is for non-stopping fetching the latest users data from the google sheet. We need to set up cron job and run this service in the background.
 
 Environment:
 1. Install Node version > 12.
 2. Install git.
+3. Install psql.
 
 Prerequisite:
 1. [Prepare your own credential.](https://robocorp.com/docs/development-guide/google-sheets/interacting-with-google-sheets)
@@ -13,7 +14,7 @@ Prerequisite:
 3. Set cron job (* * * * *) for running service every minute.
 
 Workflow:
-1. Fetch account data from the google sheet.
+1. Fetch users data from the google sheet and write the one page token to the google sheet.
 2. Git diff.
 3. Parse data to SQL and run psql (Optional: Only data change).
 4. git add and commit <UNIX_TIMESTAMP> (Optional: Only data change).
@@ -21,13 +22,6 @@ Workflow:
 Run:
 ```
 $ sh sync_ad.sh
-```
-
-### Fetch Account Data From The Google Sheet And Parse Data
----
-```
-$ cd data
-$ npm run start
 ```
 
 ### Generate JWT
