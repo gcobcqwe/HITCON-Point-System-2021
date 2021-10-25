@@ -38,7 +38,7 @@ module.exports = {
         notEmpty: true
       },
       uid: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.TEXT,
         defaultValue: ''
       },
       code: {
@@ -61,17 +61,6 @@ module.exports = {
       }
     });
     await queryInterface.addConstraint('coupons', {
-      fields: ['uid'],
-      type: 'foreign key',
-      name: 'coupons_uid_fkey',
-      references: {
-        table: 'users',
-        field: 'uid'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    await queryInterface.addConstraint('coupons', {
       fields: ['type'],
       type: 'foreign key',
       name: 'coupons_types_fkey',
@@ -85,7 +74,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeConstraint('coupons', 'coupons_uid_fkey');
     await queryInterface.removeConstraint('coupons', 'coupons_types_fkey');
     await queryInterface.dropTable('coupons');
   }

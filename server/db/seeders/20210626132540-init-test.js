@@ -54,21 +54,21 @@ module.exports = {
         private_kktix_code: '1qnv3KIdgGcTaHXfHtPJda9kDZ5uwqFUT6voH',
         nick_name: 'test3',
         role: 'admin',
-        points: 100000,
+        points: 10000000,
         email: 'test3@gmail.com'
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f052',
         private_kktix_code: '2lnv3OKdgGcaLHLfHtPJda8kDZ5uwqCCT3vuu',
         nick_name: 'test2',
         role: 'vendor',
-        points: 100000,
+        points: 10000000,
         email: 'test2@gmail.com'
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
         private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
         nick_name: 'test',
         role: 'client',
-        points: 100000,
+        points: 10000000,
         email: 'test@gmail.com'
       }]);
     await queryInterface.bulkInsert(
