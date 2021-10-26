@@ -39,7 +39,7 @@ module.exports = {
       },
       uid: {
         type: Sequelize.TEXT,
-        defaultValue: ''
+        allowNull: true
       },
       code: {
         type: Sequelize.STRING(50),
