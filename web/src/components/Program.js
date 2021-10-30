@@ -86,7 +86,7 @@ Program.defaultProps = {
   location: "RX",
   title: "沒有進行中的議程",
   speaker: "",
-  brief: "",
+  brief: "查看議程表確認下場議程",
   link: "https://google.com/",
 }
 
