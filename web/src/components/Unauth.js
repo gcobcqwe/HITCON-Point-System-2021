@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+import QrReader from 'react-qr-reader'
 import Greeting from "./Greeting";
 import CameraIcon from "../public/ionic-camera.svg";
 import ArrorDownIcon from "../public/fa-arrow-down.svg";
@@ -106,8 +107,15 @@ const Input = styled.input`
   height: 30px;
   box-shadow: none;
   border-radius: 20px;
+  border: 0;
   margin: 2em 0;
   padding-left: 15px;
+`;
+
+const EmailInput = styled(Input)`
+  :invalid {
+    color: red;
+  }
 `;
 
 const Button = styled.button`
@@ -141,9 +149,82 @@ const Switch = styled.div`
   cursor: pointer;
 `
 
+const Modal = styled.div`
+  position: fixed;
+  top: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 29px;
+  background: #fff;
+  color: #000;
+  width: 90%;
+  max-width: 622px;
+  box-sizing: border-box;
+  padding: 0 1.5em 2em 1.5em;
+  z-index: 5;
+
+
+  ${Title} {
+    border-color: #000;
+    padding-top: 0.3em;
+    padding-bottom: 1em;
+    font-weight: bolder;
+    font-size: 30px;
+  }
+
+  ${Button} {
+    min-width: 117px;
+    margin-top: 3em;
+    justify-self: center;
+    font-size: 20px;
+    padding: 5px 20px;
+  }
+
+  @media(min-width: 1280px) {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+const EmailConfirmModal = styled(Modal)``;
+const QRCodeModal = styled(Modal)``;
+const QRCodeReader = styled(QrReader)`
+  min-width: 334px;
+  min-height: 284px;
+`;
+
 const Unauth = () => {
-  const [isQRCode, setIsQRCode] = useState(true);
-  const handleSwitch = () => setIsQRCode(!isQRCode);
+  const [useQRCode, setUseQRCode] = useState(true);
+  const [email, setEmail] = useState("");
+  const [emailConfirm, setEmailConfirm] = useState(false);
+  const [qrData, setQrData] = useState();
+  const [token, setToken] = useState();
+  const [reader, setReader] = useState(false);
+
+  const handleSwitch = () => setUseQRCode(!useQRCode);
+  const handleEmailValue = (e) => setEmail(event.target.value);
+  const handleTokenValue = (e) => setToken(event.target.value);
+  const handleToken = () => {
+    // TODO
+    console.log("your kktix token: ", token);
+  }
+  const sendEmail = () => {
+    // TODO call SendEmail API;
+    setEmailConfirm(true);
+  }
+  const closeEmailComfirm = () => setEmailConfirm(false);
+  const handleReader = () => setReader(!reader);
+  const handleQRError = (err) => { console.log(err) }
+  const handleQRScan = (data) => {
+    if (data === null) return;
+    // TODO deal with data
+    setQrData(data);
+    // TODO close reader and login
+    // setReader(false)
+    // window.location(....?token=token) ?
+  }
 
   return(
     <>
@@ -172,24 +253,53 @@ const Unauth = () => {
         <Method>
           <Title>電子信箱</Title>
           <Desc>請輸入購票時使用的電子信箱<br />我們將會重新寄送登入連結給您</Desc>
-          <Input />
-          <Button>確認</Button>
+          <EmailInput type="email" value={email} onChange={handleEmailValue}/>
+          <Button onClick={sendEmail}>確認</Button>
         </Method>
-        { isQRCode ?
+        { useQRCode ?
         <Method>
           <Title>QR code</Title>
           <Desc>請掃描 KKTIX 票券上的 QR code 進行登入</Desc>
-          <Camera><Icon src={CameraIcon} />開啟相機</Camera>
+          <Camera onClick={handleReader}><Icon src={CameraIcon} />開啟相機</Camera>
           <Switch onClick={handleSwitch}>手動輸入token</Switch>
         </Method>
         :
         <Method>
           <Title>輸入 Token</Title>
           <Desc>請輸入 KKTIX 票券上的 Token</Desc>
-          <Input />
-          <Button>確認</Button>
+          <Input type="text" value={token} onChange={handleTokenValue} />
+          <Button onClick={handleToken}>確認</Button>
           <Switch onClick={handleSwitch}>掃描 QR code</Switch>
         </Method>
+        }
+        { emailConfirm ?
+          <EmailConfirmModal>
+            <Title>請透過信中連結登入</Title>
+            <Desc>若有帳號符合<br /><br />
+              {email}<br /><br />
+              我們將會寄送登入連結至該信箱。 <br />
+              <br /><br />
+              請透過信中連結登入 HITCON 2021
+            </Desc>
+            <Button onClick={closeEmailComfirm}>確認</Button>
+          </EmailConfirmModal> :
+          null
+        }
+        { reader ?
+          <QRCodeModal>
+            <Title>
+              掃描 QR Code
+              <button onClick={handleReader}>x</button>
+            </Title>
+            <Desc>請掃描 KKTIX 票券上的 QR code</Desc>
+            <QRCodeReader
+              delay={300}
+              onError={handleQRError}
+              onScan={handleQRScan}
+            />
+            <div>qrcode: {qrData}</div>
+          </QRCodeModal> :
+          null
         }
       </Methods>
     </>
