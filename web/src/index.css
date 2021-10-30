@@ -16,4 +16,5 @@ a {
 button {
   box-shadow: none;
   border: none;
+  cursor: pointer;
 }

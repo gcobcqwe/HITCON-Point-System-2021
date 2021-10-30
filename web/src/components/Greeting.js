@@ -6,10 +6,18 @@ const Container = styled.div`
 `
 const Title = styled.div`
   margin-bottom: 28px;
+  text-align: center;
+  @media(min-width: 1280px) {
+    text-align: left;
+  }
 `;
 
 const Description = styled.div`
   line-height: 26px;
+  text-align: center;
+  @media(min-width: 1280px) {
+    text-align: left;
+  }
 `;
 
 const Greeting = ({title, description}) => {
