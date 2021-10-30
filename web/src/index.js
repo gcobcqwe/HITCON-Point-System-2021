@@ -10,6 +10,21 @@ import Schedule from "./components/Schedule";
 import Footer from "./components/Footer";
 import "./index.css";
 
+
+const Main = styled.main`
+  padding: 0 28px;
+  margin-bottom: 10%;
+  max-width: 1039px;
+
+  @media(min-width: 1280px) {
+    padding: 0 128px;
+  }
+
+  @media(min-width: 1366px) {
+    padding: 0 168px;
+  }
+`;
+
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
@@ -44,18 +59,7 @@ const Language = styled.div`
 
 `;
 
-const Main = styled.main`
-  padding: 0 28px;
-  margin-bottom: 10%;
 
-  @media(min-width: 1280px) {
-    padding: 0 128px;
-  }
-
-  @media(min-width: 1366px) {
-    padding: 0 168px;
-  }
-`;
 
 const TopicList = styled.div`
   max-width: 1030px;
@@ -144,6 +148,7 @@ const App = () => {
     </Header>
       { authorized ?
         (<>
+          <User />
           <Tab>
            <button className={isTopic ? "active" : ""} onClick={handleTab}>主題活動</button>
            <button className={isTopic ? "": "active"} onClick={handleTab}>議程資訊</button>
