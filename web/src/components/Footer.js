@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.footer`
   position: absolute;
   left: 0;
+  right: 0;
   width: 100%;
 `;
 
