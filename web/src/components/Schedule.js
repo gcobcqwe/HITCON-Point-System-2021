@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Program from "./Program";
+import { fakeSession as SessionInfo } from "../FakeSession";
+import moment from "moment";
 
 const Wrapper = styled.div`
   display:flex;
@@ -27,16 +29,56 @@ const Link = styled.a`
   margin-left: 50px;
 `
 
+
 const Schedule = () => {
+  let time = moment();
+  let currentSessions = {};
+  for (var session of SessionInfo.sessions) {
+    if (time.isAfter(session.start) && time.isBefore(session.end)) {
+      currentSessions[session.room] = session;
+    }
+  }
+
+  console.log(currentSessions);
+  console.log(SessionInfo);
+
   return (
     <div>
       <Wrapper>
         <Title>進行中議程</Title>
         <Link href="https://hitcon.org/2021/agenda/" target="_blank">查看完整議程表</Link>
       </Wrapper>
-      <Program />
-      <Program />
-      <Program />
+      <Program location="R0" title={currentSessions["R0"].zh.title} speaker={
+        SessionInfo.speakers.filter(function (s) {
+          return currentSessions["R0"].speakers.includes(s.id);
+        }).map(function (element) {
+          return element.zh.name;
+        }).join(", ")
+      } brief={currentSessions["R0"].zh.description} />
+
+      <Program location="R1" title={currentSessions["R1"].zh.title} speaker={
+        SessionInfo.speakers.filter(function (s) {
+          return currentSessions["R1"].speakers.includes(s.id);
+        }).map(function (element) {
+          return element.zh.name;
+        }).join(", ")
+      } brief={currentSessions["R1"].zh.description} />
+
+      <Program location="R2" title={currentSessions["R2"].zh.title} speaker={
+        SessionInfo.speakers.filter(function (s) {
+          return currentSessions["R2"].speakers.includes(s.id);
+        }).map(function (element) {
+          return element.zh.name;
+        }).join(", ")
+      } brief={currentSessions["R2"].zh.description} />
+
+      <Program location="R3" title={currentSessions["R3"].zh.title} speaker={
+        SessionInfo.speakers.filter(function (s) {
+          return currentSessions["R3"].speakers.includes(s.id);
+        }).map(function (element) {
+          return element.zh.name;
+        }).join(", ")
+      } brief={currentSessions["R3"].zh.description} />
     </div>
   )
 }

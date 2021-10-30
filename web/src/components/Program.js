@@ -51,9 +51,10 @@ const Brief = styled.div`
 `;
 
 const Link = styled.button`
-  position: absolute;
+  position: relative;
   top: 5px;
   right: 0px;
+  left: 10px;
   font-size: 12px;
   padding: 0 20px;
 
@@ -75,7 +76,7 @@ const Program = ({location, title, speaker, brief, streamLink}) => {
         <Title>{title}</Title>
         <Speaker>{speaker}</Speaker>
         <Brief>{brief}</Brief>
-        <Link><a href={streamLink} target="_blank" rel="noreferrer">前往議程直播 →</a></Link>
+          <Link><a href={streamLink} target="_blank" rel="noreferrer">前往議程直播 →</a></Link>
       </Context>
     </Container>
   )
@@ -83,9 +84,9 @@ const Program = ({location, title, speaker, brief, streamLink}) => {
 
 Program.defaultProps = {
   location: "RX",
-  title: "你所未知的世界",
-  speaker: "不知道哪裡來的人",
-  brief: "超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹超級簡短的介紹",
+  title: "沒有進行中的議程",
+  speaker: "",
+  brief: "",
   link: "https://google.com/",
 }
 
