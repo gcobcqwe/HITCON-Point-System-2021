@@ -4,13 +4,13 @@ import Mask from "./Mask";
 
 const PositionFixed = styled.div`
   position: fixed;
-  bottom: 100px;
+  bottom: 150px;
   right: 15px;
   z-index: 5;
 
   @media(min-width: 1280px) {
     bottom: unset;
-    top: 100px;
+    top: 150px;
     right: 120px;
   }
 
@@ -225,11 +225,6 @@ const User = ({nickname, points }) => {
       <UserInfo>
         <Username>
           {nickname}
-          {
-            isMenuOpen ?
-            <UserSignout href="">sign out</UserSignout> :
-            null
-          }
         </Username>
         <ActionBar onClick={openMenu}>
           <input type="checkbox" id="menuCheck"/>
@@ -242,7 +237,6 @@ const User = ({nickname, points }) => {
     </PositionFixed>
     <UserWide>
       <Username>{nickname}</Username>
-      <UserSignout href="">sign out</UserSignout>
       <Points>
           現有點數: {points} P
       </Points>
