@@ -11,13 +11,42 @@ import Footer from "./components/Footer";
 import "./index.css";
 
 const Header = styled.header`
-  font-size: 36px;
+  display: flex;
+  justify-content: space-between;
   margin-top: 93px;
   margin-bottom: 31px;
 `;
 
+const Title = styled.div`
+  font-size: 34px;
+`;
+
+const SectionTitle = styled.div`
+  font-size: 28px;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 1.5em;
+  margin: 1.5em 0;
+`;
+
+const SectionDesc = styled.div`
+  font-size: 18px;
+  margin: 1.5em 0 2em;
+`;
+
+const Language = styled.div`
+  display: flex;
+  font-size: 22px;
+  align-items: center;
+  span {
+    cursor: pointer;
+    padding: 0 10px;
+  }
+
+`;
+
 const Main = styled.main`
   padding: 0 28px;
+  margin-bottom: 10%;
 
   @media(min-width: 1280px) {
     padding: 0 128px;
@@ -37,11 +66,52 @@ const TopicList = styled.div`
   }
 `;
 
+const Tab = styled.div`
+  margin-bottom: 43px;
+  display: flex;
+  border-radius: 8px;
+  max-width: 406px;
+  background: #0C2758;
+  button {
+    flex-grow: 1;
+    color: #fff;
+    font-size: 24px;
+    padding: 0.3em;
+    border-radius: 8px;
+    background: #0C2758;
+  }
+
+  button.active {
+    background: #154ED6;
+  }
+`;
+
+const Topics = () => {
+  return(
+    <>
+     <SectionTitle>主題活動</SectionTitle>
+     <SectionDesc>HITCON Online、駭客貓歷險記、煉蠱等活動，建議使用電腦參與。</SectionDesc>
+     <HotTopic />
+     <TopicList>
+       <Topic />
+       <Topic />
+       <Topic />
+       <Topic />
+      </TopicList>
+    </>
+  )
+}
+
+
 const App = () => {
   const [authorized, setAuthorized] = useState(true);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [isTopic, setIsTopic] = useState(true);
 
+  const handleTab = () => {
+    setIsTopic(!isTopic);
+  }
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -58,28 +128,27 @@ const App = () => {
       setUser(response.data)
       setAuthorized(true);
     }).catch((error) => {
+      console.log('get users error',error)
       setAuthorized(false);
     });
-  },[]); // monitor token change then trigger this
+  },[token]); // monitor token change then trigger this
 
   return (
     <>
      <Main>
-      <Header>HITCON 2021</Header>
+      <Header>
+        <Title>HITCON 2021</Title>
+        <Language>
+          <span>中</span>|<span>Eng</span>
+        </Language>
+    </Header>
       { authorized ?
         (<>
-          <User />
-          <Greeting
-            title="歡迎來到 HITCON 2021"
-            description="您已經登入,可以開始參觀本次大會的各項活動" />
-          <HotTopic />
-          <TopicList>
-            <Topic />
-            <Topic />
-            <Topic />
-            <Topic />
-          </TopicList>
-          <Schedule />
+          <Tab>
+           <button className={isTopic ? "active" : ""} onClick={handleTab}>主題活動</button>
+           <button className={isTopic ? "": "active"} onClick={handleTab}>議程資訊</button>
+          </Tab>
+          { isTopic ? <Topics/> : <Schedule />}
         </>) :
         (<>
           <Greeting
