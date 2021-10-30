@@ -3,16 +3,17 @@ import React, {useState, useEffect} from "react";
 import ReactDom from "react-dom";
 import styled from "styled-components";
 import User from "./components/User";
-import Greeting from "./components/Greeting";
 import Topic from "./components/Topic";
 import HotTopic from "./components/HotTopic";
 import Schedule from "./components/Schedule";
+import Unauth from "./components/Unauth";
 import Footer from "./components/Footer";
 import "./index.css";
 
 
 const Main = styled.main`
   padding: 0 28px;
+  margin: 0 auto;
   margin-bottom: 10%;
   max-width: 1039px;
 
@@ -108,7 +109,13 @@ const Topics = () => {
 
 
 const App = () => {
-  const [authorized, setAuthorized] = useState(true);
+  const [authorized, setAuthorized] = useState(() => {
+    // TODO check with token;
+    const queryParams = new URLSearchParams(window.location.search);
+    const unauth = queryParams.get('unauth');
+    return unauth === '1' ? false : true;
+  });
+
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isTopic, setIsTopic] = useState(true);
@@ -154,13 +161,7 @@ const App = () => {
            <button className={isTopic ? "": "active"} onClick={handleTab}>議程資訊</button>
           </Tab>
           { isTopic ? <Topics/> : <Schedule />}
-        </>) :
-        (<>
-          <Greeting
-            title="歡迎來到 HITCON 2021"
-            description="需登入才能取用本次大會的活動，您可以在先前的「HITCON 2021 行前通知信」中找到登入連結！"/>
-          <h1>scan qrcode or resend email</h1>
-        </>)
+        </>) : <Unauth />
       }
       </Main>
       <Footer />
