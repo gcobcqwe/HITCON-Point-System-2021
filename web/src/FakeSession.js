@@ -1017,7 +1017,7 @@ for (var d = moment(day); d.isBefore(endDay); d.add(1, 'days')) {
             };
             session["en"] = {
                 "title": "Testing session on " + t.toISOString(true),
-                "description": "This is a testing session."
+                "description": "This is a testing session.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo suscipit lorem convallis vulputate ac ut orci. Donec orci sapien, pellentesque sit amet magna at, pellentesque pretium augue. Aliquam erat volutpat. Aenean lacinia dui vel fringilla congue."
             };
             session["speakers"] = [];
             var speakerNumber = Math.floor(Math.random() * 3 + 1);
