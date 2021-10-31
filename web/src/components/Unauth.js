@@ -7,6 +7,7 @@ import ArrorDownIcon from "../public/fa-arrow-down.svg";
 import StepLinkIcon from "../public/awesome-link.svg";
 import StepSearchIcon from "../public/awesome-search.svg";
 import StepMailIcon from "../public/ionic-ios-mail.svg";
+import { langText } from "../lang";
 
 const Steps = styled.div`
   display: flex;
@@ -229,69 +230,69 @@ const Unauth = () => {
   return(
     <>
       <Greeting
-        title="歡迎來到 HITCON 2021"
-        description="請登入來使用本次大會的活動，您可以在先前的「HITCON 2021 行前通知信」中找到登入連結！"
+        title={langText("UNAUTH_GREETING_TITLE")}
+        description={langText("UNAUTH_GREETING_DESC")}
       />
       <Steps>
         <Step>
           <StepIcon src={StepMailIcon} />
-          前往收件夾
+          {langText("UNAUTH_STEP_INBOX")}
         </Step>
         <Arrow src={ArrorDownIcon} />
         <Step>
           <StepIcon src={StepSearchIcon} />
-          搜尋「HITCON 2021 行前通知信
+          {langText("UNAUTH_STEP_SEARCH_MAIL")}
         </Step>
         <Arrow src={ArrorDownIcon} />
         <Step>
           <StepIcon src={StepLinkIcon} />
-          點選信中連結<br />進行登入
+          {langText("UNAUTH_STEP_LOGIN")}
         </Step>
       </Steps>
-      <Other>或透過以下方式登入</Other>
+      <Other>{langText("UNAUTH_ALTER_METHOD")}</Other>
       <Methods>
         <Method>
-          <Title>電子信箱</Title>
-          <Desc>請輸入購票時使用的電子信箱<br />我們將會重新寄送登入連結給您</Desc>
+          <Title>{langText("UNAUTH_EMAIL_METHOD")}</Title>
+          <Desc>{langText("UNAUTH_EMAIL_DESC")}</Desc>
           <EmailInput type="email" value={email} onChange={handleEmailValue}/>
-          <Button onClick={sendEmail}>確認</Button>
+          <Button onClick={sendEmail}>{langText("UNAUTH_EMAIL_SEND")}</Button>
         </Method>
         { useQRCode ?
         <Method>
-          <Title>QR code</Title>
-          <Desc>請掃描 KKTIX 票券上的 QR code 進行登入</Desc>
-          <Camera onClick={handleReader}><Icon src={CameraIcon} />開啟相機</Camera>
-          <Switch onClick={handleSwitch}>手動輸入token</Switch>
+          <Title>QR Code</Title>
+          <Desc>{langText("UNAUTH_QRCODE_DESC")}</Desc>
+          <Camera onClick={handleReader}><Icon src={CameraIcon} />{langText("UNAUTH_QRCODE_OPEN_CAM")}</Camera>
+          <Switch onClick={handleSwitch}>{langText("UNAUTH_QRCODE_TOKEN")}</Switch>
         </Method>
         :
         <Method>
-          <Title>輸入 Token</Title>
-          <Desc>請輸入 KKTIX 票券上的 Token</Desc>
+          <Title>{langText("UNAUTH_TOKEN_TITLE")}</Title>
+          <Desc>{langText("UNAUTH_TOKEN_DESC")}</Desc>
           <Input type="text" value={token} onChange={handleTokenValue} />
-          <Button onClick={handleToken}>確認</Button>
-          <Switch onClick={handleSwitch}>掃描 QR code</Switch>
+          <Button onClick={handleToken}>{langText("CONFIRM")}</Button>
+          <Switch onClick={handleSwitch}>{langText("UNAUTH_TOKEN_QRCODE")}</Switch>
         </Method>
         }
         { emailConfirm ?
           <EmailConfirmModal>
-            <Title>請透過信中連結登入</Title>
-            <Desc>若有帳號符合<br /><br />
+            <Title>{langText("UNAUTH_EMAIL_LINK_TITLE")}</Title>
+            <Desc>{langText("UNAUTH_EMAIL_MATCH")}<br /><br />
               {email}<br /><br />
-              我們將會寄送登入連結至該信箱。 <br />
+              {langText("UNAUTH_EMAIL_SENDING")} <br />
               <br /><br />
-              請透過信中連結登入 HITCON 2021
+              {langText("UNAUTH_EMAIL_LINK_TITLE")}
             </Desc>
-            <Button onClick={closeEmailComfirm}>確認</Button>
+            <Button onClick={closeEmailComfirm}>{langText("CONFIRM")}</Button>
           </EmailConfirmModal> :
           null
         }
         { reader ?
           <QRCodeModal>
             <Title>
-              掃描 QR Code
+              {langText("UNAUTH_QRCODE_SCAN")}
               <button onClick={handleReader}>x</button>
             </Title>
-            <Desc>請掃描 KKTIX 票券上的 QR code</Desc>
+            <Desc>{langText("UNAUTH_QRCODE_SCAN_KKTIX")}</Desc>
             <QRCodeReader
               delay={300}
               onError={handleQRError}

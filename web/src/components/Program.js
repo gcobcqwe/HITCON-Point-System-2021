@@ -49,6 +49,7 @@ const Brief = styled.div`
   font-size: 12px;
   line-height: 18px;
   color: #B9B9B9;
+  white-space: pre-wrap;
 `;
 
 const Link = styled.button`
@@ -77,7 +78,7 @@ const Program = ({location, title, speaker, brief, streamLink}) => {
         <Title>{title}</Title>
         <Speaker>{speaker}</Speaker>
         <Brief>{brief}</Brief>
-          <Link><a href={streamLink} target="_blank" rel="noreferrer">前往議程直播 →</a></Link>
+          <Link><a href={streamLink} target="_blank" rel="noreferrer">{langText("PROGRAM_VIEW_LIVESTREAM")} →</a></Link>
       </Context>
     </Container>
   )
