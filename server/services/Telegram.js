@@ -50,8 +50,8 @@ class Telegram {
    */
   async token(code) {
     try {
-      const token = await this.redisClient.get(code);
-      await this.redisClient.del(code);
+      const token = await this.redisClient.get(`TELEGRAM:${code}`);
+      await this.redisClient.del(`TELEGRAM:${code}`);
       return token;
     } catch (e) {
       throw e;
@@ -68,7 +68,7 @@ class Telegram {
       const code = await this.codeGenerator.issue();
       const eventsReturning = await this._db.events.findByPk(uid, {attributes: ['point_system_token']});
       const token = eventsReturning.point_system_token;
-      await this.redisClient.set(code, token);
+      await this.redisClient.set(`TELEGRAM:${code}`, token);
       return code;
     } catch (e) {
       throw e;
