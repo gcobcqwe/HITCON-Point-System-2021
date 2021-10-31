@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { langText, LANG } from "../lang";
 
 const Container = styled.div`
   display: flex;
@@ -84,9 +85,9 @@ const Program = ({location, title, speaker, brief, streamLink}) => {
 
 Program.defaultProps = {
   location: "RX",
-  title: "沒有進行中的議程",
+  title: langText("PROGRAM_NO_ONGOING_SESSION"),
   speaker: "",
-  brief: "查看議程表確認下場議程",
+  brief: langText("PROGRAM_CHECK_AGENDA"),
   link: "https://google.com/",
 }
 

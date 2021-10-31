@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
 import styled from "styled-components";
 import User from "./components/User";
@@ -8,6 +8,8 @@ import HotTopic from "./components/HotTopic";
 import Schedule from "./components/Schedule";
 import Unauth from "./components/Unauth";
 import Footer from "./components/Footer";
+import Cookies from "universal-cookie";
+import { langText, LANG } from "./lang";
 import "./index.css";
 
 
@@ -92,16 +94,16 @@ const Tab = styled.div`
 `;
 
 const Topics = () => {
-  return(
+  return (
     <>
-     <SectionTitle>主題活動</SectionTitle>
-     <SectionDesc>HITCON Online、駭客貓歷險記、煉蠱等活動，建議使用電腦參與。</SectionDesc>
-     <HotTopic />
-     <TopicList>
-       <Topic />
-       <Topic />
-       <Topic />
-       <Topic />
+      <SectionTitle>{langText("TOPIC_SECTION_TITLE")}</SectionTitle>
+      <SectionDesc>{langText("TOPIC_SECTION_DESC")}</SectionDesc>
+      <HotTopic />
+      <TopicList>
+        <Topic />
+        <Topic />
+        <Topic />
+        <Topic />
       </TopicList>
     </>
   )
@@ -128,7 +130,7 @@ const App = () => {
     const urlParams = new URLSearchParams(queryString);
     const token = urlParams.get('token');
     setToken(token);
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (!token) return;
@@ -136,33 +138,33 @@ const App = () => {
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(baseURL, { headers })
       .then((response) => {
-      setUser(response.data)
-      setAuthorized(true);
-    }).catch((error) => {
-      console.log('get users error',error)
-      setAuthorized(false);
-    });
-  },[token]); // monitor token change then trigger this
+        setUser(response.data)
+        setAuthorized(true);
+      }).catch((error) => {
+        console.log('get users error', error)
+        setAuthorized(false);
+      });
+  }, [token]); // monitor token change then trigger this
 
   return (
     <>
-     <Main>
-      <Header>
-        <Title>HITCON 2021</Title>
-        <Language>
-          <span>中</span>|<span>Eng</span>
-        </Language>
-    </Header>
-      { authorized ?
-        (<>
-          <User />
-          <Tab>
-           <button className={isTopic ? "active" : ""} onClick={handleTab}>主題活動</button>
-           <button className={isTopic ? "": "active"} onClick={handleTab}>議程資訊</button>
-          </Tab>
-          { isTopic ? <Topics/> : <Schedule />}
-        </>) : <Unauth />
-      }
+      <Main>
+        <Header>
+          <Title>HITCON 2021</Title>
+          <Language>
+            <span>中</span>|<span>Eng</span>
+          </Language>
+        </Header>
+        {authorized ?
+          (<>
+            <User />
+            <Tab>
+              <button className={isTopic ? "active" : ""} onClick={handleTab}>{langText("TAB_EVENT")}</button>
+              <button className={isTopic ? "" : "active"} onClick={handleTab}>{langText("TAB_AGENDA")}</button>
+            </Tab>
+            {isTopic ? <Topics /> : <Schedule />}
+          </>) : <Unauth />
+        }
       </Main>
       <Footer />
     </>
