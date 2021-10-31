@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { __esModule } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 const fakeSession = {};

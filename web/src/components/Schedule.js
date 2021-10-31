@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Program from "./Program";
 import { fakeSession as SessionInfo } from "../FakeSession";
 import moment from "moment";
+import { langText, LANG } from "../lang";
 
 const Wrapper = styled.div`
   display:flex;
@@ -45,40 +46,41 @@ const Schedule = () => {
   return (
     <div>
       <Wrapper>
-        <Title>進行中議程</Title>
-        <Link href="https://hitcon.org/2021/agenda/" target="_blank">查看完整議程表</Link>
+        <Title>{langText("SCHEDULE_TITLE")}</Title>
+        <Link href="https://hitcon.org/2021/agenda/" target="_blank">{langText("SCHEDULE_FULL_AGENDA")}</Link>
       </Wrapper>
-      <Program location="R0" title={currentSessions["R0"]?.zh.title} speaker={
+
+      <Program location="R0" title={currentSessions["R0"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
           return currentSessions["R0"]?.speakers.includes(s.id);
         }).map(function (element) {
-          return element.zh.name;
+          return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R0"]?.zh.description} />
+      } brief={currentSessions["R0"]?.[LANG].description} />
 
-      <Program location="R1" title={currentSessions["R1"]?.zh.title} speaker={
+      <Program location="R1" title={currentSessions["R1"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
           return currentSessions["R1"]?.speakers.includes(s.id);
         }).map(function (element) {
-          return element.zh.name;
+          return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R1"]?.zh.description} />
+      } brief={currentSessions["R1"]?.[LANG].description} />
 
-      <Program location="R2" title={currentSessions["R2"]?.zh.title} speaker={
+      <Program location="R2" title={currentSessions["R2"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
           return currentSessions["R2"]?.speakers.includes(s.id);
         }).map(function (element) {
-          return element.zh.name;
+          return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R2"]?.zh.description} />
+      } brief={currentSessions["R2"]?.[LANG].description} />
 
-      <Program location="R3" title={currentSessions["R3"]?.zh.title} speaker={
+      <Program location="R3" title={currentSessions["R3"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
           return currentSessions["R3"]?.speakers.includes(s.id);
         }).map(function (element) {
-          return element.zh.name;
+          return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R3"]?.zh.description} />
+      } brief={currentSessions["R3"]?.[LANG].description} />
     </div>
   )
 }
