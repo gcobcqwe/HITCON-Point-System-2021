@@ -39,7 +39,7 @@ $ sh jwt_generator.sh <UID> <SCOPE>
 ### Generate UID
 ---
 ```
-$ sh jwt_generator.sh <KKTIX_PRIVATE_CODE>
+$ sh uid_generator.sh <KKTIX_PRIVATE_CODE>
 ```
 
 ## License
