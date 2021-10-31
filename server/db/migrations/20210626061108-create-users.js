@@ -55,6 +55,11 @@ module.exports = {
       email: {
         type: Sequelize.STRING(200),
         notEmpty: true
+      },
+      is_email_sent: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       }
     });
   },

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /**
  * BSD 2-Clause License
  * Copyright (c) 2021, HITCON Agent Contributors
@@ -27,20 +26,9 @@
  */
 
 const express = require('express');
-const points = require('./points');
-const users = require('./users');
-const token = require('./token');
-const email = require('./email');
-const telegram = require('./telegram');
-const coupons = require('./coupons');
-const {checkAuth} = require('../middlewares/auth');
+const users = require('../controllers/users');
 const router = express.Router();
 
-router.use('/points', checkAuth, points);
-router.use('/users/token', token);
-router.use('/users/email-send', email);
-router.use('/users', checkAuth, users);
-router.use('/coupons', checkAuth, coupons);
-router.use('/tg', telegram);
+router.post('/', users.sendEmail);
 
 module.exports = router;

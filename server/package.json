@@ -13,6 +13,7 @@
     "test:coverage": "jest --verbose --runInBand --forceExit --config ./__tests__/config/coverage.config.js"
   },
   "dependencies": {
+    "@mailchimp/mailchimp_transactional": "^1.0.46",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-status-codes": "^2.1.4",

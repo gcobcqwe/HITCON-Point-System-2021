@@ -74,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING(200),
       notEmpty: true
+    },
+    is_email_sent: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     sequelize,
