@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Mask from "./Mask";
+import Trade from "./Trade";
 
 const PositionFixed = styled.div`
   position: fixed;
@@ -194,15 +195,22 @@ const UserWide = styled.div`
 
 const User = ({nickname, points }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isTradingOpen, setIsTradningOpen] = useState(false);
+  const [isExchangeOpen, setIsExchangeOpen] = useState(false);
 
-  const openMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  }
+  const openMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleMask = () => {
     document.getElementById("menuCheck").checked = false;
     setIsMenuOpen(!isMenuOpen);
   }
+
+  const openTrading = () => setIsTradningOpen(true);
+  const openExchange = () => setIsExchangeOpen(true);
+
+  useEffect(() => {
+    // TODO check modal open state
+  }, []);
 
   return (
     <>
@@ -216,7 +224,7 @@ const User = ({nickname, points }) => {
              現有點數：{points} P
           </Points>
           <Actions>
-            <ActionButton>交易點數</ActionButton>
+            <ActionButton onClick={openTrading}>交易點數</ActionButton>
             <ActionButton>兌換點數</ActionButton>
           </Actions>
         </Menu> :
@@ -245,6 +253,7 @@ const User = ({nickname, points }) => {
         <ActionButton>兌換點數</ActionButton>
       </Actions>
     </UserWide>
+    { isTradingOpen ? <Trade /> : null }
     </>
   )
 }
