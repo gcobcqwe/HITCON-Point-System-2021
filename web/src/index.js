@@ -8,7 +8,7 @@ import HotTopic from "./components/HotTopic";
 import Schedule from "./components/Schedule";
 import Unauth from "./components/Unauth";
 import Footer from "./components/Footer";
-import Cookies from "universal-cookie";
+import Cookies from "js-cookie";
 import { langText, LANG } from "./lang";
 import "./index.css";
 
@@ -152,7 +152,7 @@ const App = () => {
         <Header>
           <Title>HITCON 2021</Title>
           <Language>
-            <span>中</span>|<span>Eng</span>
+            <span onClick={() => { Cookies.set("lang", "zh"); location.reload() }}>中</span>|<span onClick={() => { Cookies.set("lang", "en"); location.reload() }}>Eng</span>
           </Language>
         </Header>
         {authorized ?
