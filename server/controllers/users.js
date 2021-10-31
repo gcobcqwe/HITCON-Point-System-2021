@@ -27,9 +27,11 @@
  */
 const {StatusCodes} = require('http-status-codes');
 const logger = require('../util/logger');
+const RedisClient = require('../util/RedisClient');
 const db = require('../models');
+const redisClient = new RedisClient();
 const UsersService = require('../services/Users');
-const usersServiceInstance = new UsersService(db);
+const usersServiceInstance = new UsersService(redisClient, db);
 const {THE_USER_IS_NOT_FOUND, THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor} = require('../config/error');
 
 /**
@@ -83,8 +85,26 @@ async function token( req, res ) {
   }
 }
 
+/**
+ * @description Attempt to send an email.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function sendEmail( req, res ) {
+  try {
+    const email = req.body.email;
+    if (typeof email !== 'string') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
+    await usersServiceInstance.sendEmail(email);
+    res.status(StatusCodes.OK).send({success: true});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
+  }
+}
+
 module.exports = {
   me,
   events,
-  token
+  token,
+  sendEmail
 };

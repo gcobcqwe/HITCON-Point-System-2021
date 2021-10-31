@@ -57,7 +57,11 @@ const config = {
     }
   },
   redis_host: process.env.REDIS_HOST || '127.0.0.1',
-  redis_port: process.env.REDIS_PORT || 6379
+  redis_port: process.env.REDIS_PORT || 6379,
+  mailchimp_api_key: process.env.MAILCHIMP_API_KEY || '',
+  mailchimp_template_name: process.env.MAILCHIMP_TEMPLATE_NAME || 'HITCON2021_TEST',
+  email_from: process.env.EMAIL_FROM || 'edm@testmail.hitcon2021.online',
+  email_name_from: process.env.EMAIL_NAME_FROM || 'HITCON EDM'
 };
 
 module.exports = config;
