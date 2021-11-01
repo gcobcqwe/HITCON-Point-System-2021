@@ -32,12 +32,15 @@ async function getData(docID, sheetID, credentialsPath) {
     await doc.loadInfo();
     const sheet = doc.sheetsById[sheetID];
     const rows = await sheet.getRows();
-    for (remoteRow of rows) {
+    for (let [index, remoteRow] of rows.entries()) {
       const userData = [...remoteRow._rawData];
       const isRowValid = rowValidator(userData, USERS_COLUMN.EMAIL + 1);
       const isOnePageTokenNullable = !remoteRow.one_page_token? true: false;
 
-      if (!isRowValid) continue;
+      if (!isRowValid) {
+        console.warn(`The row ${index} is invalid: ${userData}.`);
+        continue;
+      }
       const role = userData[USERS_COLUMN.ROLE];
       const uid = await sha256(userData[USERS_COLUMN.PRIVATE_KKTIX_CODE]);
 
