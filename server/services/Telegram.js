@@ -26,6 +26,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+const config = require('../config');
+
 /**
  * Create a new Telegram service.
  * @class
@@ -50,8 +52,8 @@ class Telegram {
    */
   async token(code) {
     try {
-      const token = await this.redisClient.get(`TELEGRAM:${code}`);
-      await this.redisClient.del(`TELEGRAM:${code}`);
+      const token = await this.redisClient.get(`${config.redis_prefix.TELEGRAM_CODE}${code}`);
+      await this.redisClient.del(`${config.redis_prefix.TELEGRAM_CODE}${code}`);
       return token;
     } catch (e) {
       throw e;
@@ -68,7 +70,7 @@ class Telegram {
       const code = await this.codeGenerator.issue();
       const eventsReturning = await this._db.events.findByPk(uid, {attributes: ['point_system_token']});
       const token = eventsReturning.point_system_token;
-      await this.redisClient.set(`TELEGRAM:${code}`, token);
+      await this.redisClient.set(`${config.redis_prefix.TELEGRAM_CODE}${code}`, token);
       return code;
     } catch (e) {
       throw e;

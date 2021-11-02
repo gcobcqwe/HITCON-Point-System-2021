@@ -93,6 +93,23 @@ class RedisClient {
       });
     }.bind(this));
   }
+
+  /**
+   * @description Attempt to setnx("if Not eXists") value by key. If the key doesn't exist, return 1, else return 0.
+   * @param {String} key
+   * @param {String} value
+   * @param {Number} expiredTime Set a timeout(seconds) on key; Default: 300
+   * @return {Promise}
+   */
+  async setnx(key, value, expiredTime=300) {
+    return new Promise(function(resolve, reject) {
+      this.client.setnx(key, value, function(err, result) {
+        if (err) return reject(err);
+        if (expiredTime) this.client.expire(key, expiredTime);
+        return resolve(result);
+      }.bind(this));
+    }.bind(this));
+  }
 }
 
 module.exports = RedisClient;
