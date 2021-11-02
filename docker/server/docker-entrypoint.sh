@@ -58,6 +58,30 @@ if [[ ! -z "$DATABASE_HOST" ]]; then
   sed -i 's,<DATABASE_HOST>,'"$DATABASE_HOST"',' /etc/pm2/ecosystem.config.js
 fi
 
+if [[ ! -z "$REDIS_HOST" ]]; then
+  sed -i 's/<REDIS_HOST>/'"$REDIS_HOST"'/' /etc/pm2/ecosystem.config.js
+fi
+
+if [[ ! -z "$REDIS_PORT" ]]; then
+  sed -i 's,<REDIS_PORT>,'"$REDIS_PORT"',' /etc/pm2/ecosystem.config.js
+fi
+
+if [[ ! -z "$MAILCHIMP_API_KEY" ]]; then
+  sed -i 's/<MAILCHIMP_API_KEY>/'"$MAILCHIMP_API_KEY"'/' /etc/pm2/ecosystem.config.js
+fi
+
+if [[ ! -z "$MAILCHIMP_TEMPLATE_NAME" ]]; then
+  sed -i 's,<MAILCHIMP_TEMPLATE_NAME>,'"$MAILCHIMP_TEMPLATE_NAME"',' /etc/pm2/ecosystem.config.js
+fi
+
+if [[ ! -z "$EMAIL_FROM" ]]; then
+  sed -i 's/<EMAIL_FROM>/'"$EMAIL_FROM"'/' /etc/pm2/ecosystem.config.js
+fi
+
+if [[ ! -z "$EMAIL_NAME_FROM" ]]; then
+  sed -i 's,<EMAIL_NAME_FROM>,'"$EMAIL_NAME_FROM"',' /etc/pm2/ecosystem.config.js
+fi
+
 if [[ ! -z "$SERVER_PORT" ]]; then
   sed -i 's/<SERVER_PORT>/'"$SERVER_PORT"'/' /app/healthcheck.sh
 fi

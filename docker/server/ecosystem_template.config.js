@@ -46,7 +46,13 @@ module.exports = {
         DATABASE_USERNAME: '<DATABASE_USERNAME>',
         DATABASE_PASSWORD: '<DATABASE_PASSWORD>',
         DATABASE_NAME: '<DATABASE_NAME>',
-        DATABASE_HOST: '<DATABASE_HOST>'
+        DATABASE_HOST: '<DATABASE_HOST>',
+        REDIS_HOST: '<REDIS_HOST>',
+        REDIS_PORT: '<REDIS_PORT>',
+        MAILCHIMP_API_KEY: '<MAILCHIMP_API_KEY>',
+        MAILCHIMP_TEMPLATE_NAME: '<MAILCHIMP_TEMPLATE_NAME>',
+        EMAIL_FROM: '<EMAIL_FROM>',
+        EMAIL_NAME_FROM: '<EMAIL_NAME_FROM>'
       },
       env_local: {
         ENV: 'dev',
@@ -57,7 +63,13 @@ module.exports = {
         DATABASE_USERNAME: 'postgres',
         DATABASE_PASSWORD: 'p@sshitcon2021',
         DATABASE_NAME: 'postgres',
-        DATABASE_HOST: '127.0.0.1'
+        DATABASE_HOST: '127.0.0.1',
+        REDIS_HOST: '127.0.0.1',
+        REDIS_PORT: 6379,
+        MAILCHIMP_API_KEY: '',
+        MAILCHIMP_TEMPLATE_NAME: 'HITCON2021_TEST',
+        EMAIL_FROM: 'edm@testmail.hitcon2021.online',
+        EMAIL_NAME_FROM: 'HITCON EDM'
       }
     }
   ]
