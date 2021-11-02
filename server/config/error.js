@@ -47,8 +47,8 @@ const error = {
   THE_SENDER_DOES_NOT_EXIST: 'The sender does not exist.',
   THE_RECEIVER_DOES_NOT_EXIST: 'The receiver does not exist.',
   THE_USER_IS_NOT_FOUND: 'The user is not found.',
-  THE_EMAIL_IS_COOL_DOWN: 'The email is cool down.',
-  THE_EMAIL_IS_FAILED_DELIVERY: 'The email is failed delivery.'
+  THE_EMAIL_SENDER_IS_COOLING_DOWN: 'The email sender is cooling down.',
+  FAILED_TO_DELIVER_EMAIL: 'Failed to deliver email.'
 };
 
 module.exports = error;

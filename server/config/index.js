@@ -58,6 +58,10 @@ const config = {
   },
   redis_host: process.env.REDIS_HOST || '127.0.0.1',
   redis_port: process.env.REDIS_PORT || 6379,
+  redis_prefix: {
+    TELEGRAM_CODE: 'TELEGRAM:CODE:',
+    EMAIL_COOL_DOWN: 'EMAIL:COOL_DOWN:'
+  },
   mailchimp_api_key: process.env.MAILCHIMP_API_KEY || '',
   mailchimp_template_name: process.env.MAILCHIMP_TEMPLATE_NAME || 'HITCON2021_TEST',
   email_from: process.env.EMAIL_FROM || 'edm@testmail.hitcon2021.online',

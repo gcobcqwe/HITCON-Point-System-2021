@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const {THE_USER_IS_NOT_FOUND, THE_EMAIL_IS_COOL_DOWN, THE_EMAIL_IS_FAILED_DELIVERY} = require('../config/error');
+const {THE_USER_IS_NOT_FOUND, THE_EMAIL_SENDER_IS_COOLING_DOWN, FAILED_TO_DELIVER_EMAIL} = require('../config/error');
 const config = require('../config');
 const mailchimpClient = require('@mailchimp/mailchimp_transactional')(config.mailchimp_api_key);
 
@@ -93,9 +93,10 @@ class Users {
       }});
     if (!usersArray.length) throw new Error(THE_USER_IS_NOT_FOUND);
 
-    // Check email cool down status. If the email is cool down, then throw error.
-    const emailCoolDownCheck = await this.redisClient.get(`EMAIL:COOL_DOWN:${email}`);
-    if (emailCoolDownCheck) throw new Error(THE_EMAIL_IS_COOL_DOWN);
+    // Check the email status. If the email is cooling down, then throw an error.
+    const isEmailActive = await this.redisClient.setnx(`${config.redis_prefix.EMAIL_COOL_DOWN}${email}`, 1);
+    // TODO: Let users know the cool-down time by TTL return.
+    if (!isEmailActive) throw new Error(THE_EMAIL_SENDER_IS_COOLING_DOWN);
 
     for (let i = 0; i < usersArray.length; i++) {
       const user = usersArray[i];
@@ -109,7 +110,7 @@ class Users {
       const emailResponse = await mailchimpClient.messages.sendTemplate(template);
       if (emailResponse[0].status !== 'sent') {
         console.error(emailResponse);
-        throw new Error(THE_EMAIL_IS_FAILED_DELIVERY);
+        throw new Error(FAILED_TO_DELIVER_EMAIL);
       }
 
       // Update user data.
@@ -123,9 +124,6 @@ class Users {
         return setTimeout(r, 100);
       });
     }
-
-    // Set email cool down in redis
-    await this.redisClient.set(`EMAIL:COOL_DOWN:${email}`, true, 300);
   }
 }
 
