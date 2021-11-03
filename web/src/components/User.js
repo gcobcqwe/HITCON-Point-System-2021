@@ -202,7 +202,8 @@ const User = ({nickname, points }) => {
 
   const handleMask = () => {
     document.getElementById("menuCheck").checked = false;
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen(false);
+    setIsTradningOpen(false);
   }
 
   const openTrading = () => setIsTradningOpen(true);
@@ -249,11 +250,11 @@ const User = ({nickname, points }) => {
           現有點數: {points} P
       </Points>
       <Actions>
-        <ActionButton>交易點數</ActionButton>
+        <ActionButton onClick={openTrading}>交易點數</ActionButton>
         <ActionButton>兌換點數</ActionButton>
       </Actions>
     </UserWide>
-    { isTradingOpen ? <Trade /> : null }
+    { isTradingOpen ? <Trade setIsTradningOpen={setIsTradningOpen} /> : null }
     </>
   )
 }
