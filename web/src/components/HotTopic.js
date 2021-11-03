@@ -40,10 +40,11 @@ const Description = styled.div`
 `;
 
 const Button = styled.button`
-  position: absolute;
-  bottom: 38px;
-  font-size: 14px;
-  padding: 0 15px;
+  margin-top: 20px;
+  border-radius: 19px;
+  font-size: 18px;
+  font-weight: border;
+  padding: 15px 20px;
 `;
 
 const HotTopic = ({title, description, imageSrc, actionLink, actionText, actionToken}) => {
@@ -70,8 +71,8 @@ HotTopic.defaultProps = {
   title: "駭客狗狗",
   description: "喵～我是駭客狗狗，HITCON 最新開發的狗狗聊天機器人，不過我可沒有百寶袋唷！狗狗將會在 Telegram 以及 IRC 上協助大家參與 HITCON 2021，也許還會有一些小驚喜唷！喵～期待大會與各位相見！#聊天機器人 #駭客狗狗",
   imageSrc: "https://via.placeholder.com/361x190",
-  actionLink: "https://t.me/hitcon_bot?start=00000001_6ce709f26bf3d745565024957ea1d003",
-  actionText: "前往駭客狗狗",
+  actionLink: "",
+  actionText: "Go!",
   actionToken: false,
 }
 
