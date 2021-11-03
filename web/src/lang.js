@@ -123,6 +123,58 @@ export function langText(key) {
         "UNAUTH_QRCODE_SCAN_KKTIX": {
             "en": "Please scan QR code on KKTIX ticket.",
             "zh": "請掃描 KKTIX 票券上的 QRcode "
+        },
+        "USER_CURRENT_POINTS": {
+            "en": "Current points: ",
+            "zh": "現有點數："
+        },
+        "USER_TRADE_POINTS": {
+            "en": "Trade points",
+            "zh": "交易點數"
+        },
+        "USER_REDEEM_POINTS": {
+            "en": "Redeem points",
+            "zh": "兌換點數"
+        },
+        "TOPIC_ONLINE_TITLE": {
+            "en": "HITCON Online",
+            "zh": "HITCON Online"
+        },
+        "TOPIC_ONLINE_DESC": {
+            "en": "In addition to providing a platform for online communication with sponsors, we will also add online activities and integrate hacker cat adventures to bring a different virtual and real game experience, hoping to bring a different online experience to our members. #NewbieFriendly",
+            "zh": "2021 虛擬會場再次登場，承襲去年的精神，簡化系統設計，以網頁做為介面降低使用門檻及難度。除了原有提供線上會眾與贊助商交流的平台之外，還會加入線上的活動及結合駭客貓歷險記帶來不同的虛實整合遊戲體驗，期望帶給會眾不一樣的線上體驗 #新手友善"
+        },
+        "TOPIC_ADV_TITLE": {
+            "en": "HITCON：Hacker Cat Adventure",
+            "zh": "HITCON - 駭客貓歷險記"
+        },
+        "TOPIC_ADV_DESC": {
+            "en": "Meow ~ hackers, are you ready for an adventure? Hacker Cat Adventures is a real-life puzzle game composed of plot, puzzle and information security elements, with unlimited playing time! Players can not only learn more about HITCON 2021 from the perspective of the hacker cats, but also collect points to redeem limited edition gifts.",
+            "zh": "喵～駭客們，你準備好一起冒險了嗎？駭客貓歷險記是透過劇情、解謎與資安等要素所組成的實境解謎遊戲，不限遊玩時間，只要是年會期間隨時可透過線上線下參與。玩家除了能藉由駭客貓的視角更加認識 HITCON 2021 之外也能同時收集點數換取限量精美禮品"
+        },
+        "TOPIC_MP_TITLE": {
+            "en": "Malware Playground",
+            "zh": "煉蠱"
+        },
+        "TOPIC_MP_DESC": {
+            "en": "The 2020 Malware Playground will continue to get even more difficult. The contestants will be even more difficult, what kind of tricks will be the king of compulsion this year? Are you ready to fight with each other in the net? The strongest Tricky King 2.0 is waiting for you to challenge!",
+            "zh": "2020 好評延續，更加困難的煉蠱大會將會再度進化！參賽者也會更加的難搞，今年將會是什麼樣的奇技淫巧位居蠱王寶座呢？你準備好一起網內互打了嗎？最強蠱王 2.0 等你來挑戰！"
+        },
+        "TOPIC_CAT_TITLE": {
+            "en": "駭客喵喵",
+            "zh": "駭客喵喵"
+        },
+        "TOPIC_CAT_DESC": {
+            "en": "Meow, I'm Hacker Meow, HITCON's newest cat chatbot, but I don't have the Doraemon bag! I'll be helping out at HITCON 2021 on Telegram and IRC, and there may be a few surprises in store for you! I'm looking forward to seeing you all at the conference! #chatbot #hackermeow",
+            "zh": "喵～我是駭客喵喵，HITCON 最新開發的貓咪聊天機器人，不過我可沒有百寶袋唷！喵喵將會在 Telegram 以及 IRC 上協助大家參與 HITCON 2021，也許還會有一些小驚喜唷！喵～期待大會與各位相見！ #聊天機器人 #駭客喵喵"
+        },
+        "TOPIC_VILLAGE_TOPIC": {
+            "en": "HITCON Village",
+            "zh": "HITCON Village"
+        },
+        "TOPIC_VILLAGE_DESC": {
+            "en": "HITCON Village will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.",
+            "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣"
         }
     }
 
