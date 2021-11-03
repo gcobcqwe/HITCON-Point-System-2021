@@ -59,10 +59,7 @@ const Language = styled.div`
     cursor: pointer;
     padding: 0 10px;
   }
-
 `;
-
-
 
 const TopicList = styled.div`
   max-width: 1030px;
@@ -109,42 +106,39 @@ const Topics = () => {
   )
 }
 
-
 const App = () => {
-  const [authorized, setAuthorized] = useState(() => {
-    // TODO check with token;
-    const queryParams = new URLSearchParams(window.location.search);
-    const unauth = queryParams.get('unauth');
-    return unauth === '1' ? false : true;
-  });
-
+  const [authorized, setAuthorized] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isTopic, setIsTopic] = useState(true);
 
-  const handleTab = () => {
-    setIsTopic(!isTopic);
-  }
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const token = urlParams.get('token');
-    setToken(token);
+    const tokenFromCookies = Cookies.get('token');
+    if (tokenFromCookies !== undefined) {
+      setToken(tokenFromCookies);
+    } else {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const token = urlParams.get('token');
+      setToken(token);
+    }
   }, []);
 
   useEffect(() => {
     if (!token) return;
-    const baseURL = "https://points-staging.hitcon.org/api/v1/users/me";
+    const apiURL = `${process.env.POINT_URL}/users/me`;
     const headers = { 'Authorization': `Bearer ${token}` }
-    axios.get(baseURL, { headers })
+    axios.get(apiURL, { headers })
       .then((response) => {
         setUser(response.data)
         setAuthorized(true);
+        Cookies.set('token', token);
       }).catch((error) => {
-        console.log('get users error', error)
+        console.log('get users error', error);
+        Cookies.remove('token');
         setAuthorized(false);
       });
-  }, [token]); // monitor token change then trigger this
+  }, [token]);
 
   return (
     <>
@@ -157,10 +151,10 @@ const App = () => {
         </Header>
         {authorized ?
           (<>
-            <User />
+            <User {...user}/>
             <Tab>
-              <button className={isTopic ? "active" : ""} onClick={handleTab}>{langText("TAB_EVENT")}</button>
-              <button className={isTopic ? "" : "active"} onClick={handleTab}>{langText("TAB_AGENDA")}</button>
+              <button className={isTopic ? "active" : ""} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_EVENT")}</button>
+              <button className={isTopic ? "" : "active"} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_AGENDA")}</button>
             </Tab>
             {isTopic ? <Topics /> : <Schedule />}
           </>) : <Unauth />

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Mask from "./Mask";
 import Trade from "./Trade";
+import Exchange from "./Exchange";
 import { langText } from "../lang";
 
 const PositionFixed = styled.div`
@@ -194,24 +195,24 @@ const UserWide = styled.div`
 
 `;
 
-const User = ({nickname, points }) => {
+const User = (user) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTradingOpen, setIsTradningOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
-
+  const [nickname, setNickname] = useState();
+  const [points, setPoints] = useState();
   const openMenu = () => setIsMenuOpen(!isMenuOpen);
-
   const handleMask = () => {
     document.getElementById("menuCheck").checked = false;
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen(false);
+    setIsTradningOpen(false);
   }
 
-  const openTrading = () => setIsTradningOpen(true);
-  const openExchange = () => setIsExchangeOpen(true);
-
   useEffect(() => {
-    // TODO check modal open state
-  }, []);
+    if (user === undefined) return;
+    setNickname(user.nickname);
+    setPoints(user.points);
+  }, [user]);
 
   return (
     <>
@@ -225,8 +226,8 @@ const User = ({nickname, points }) => {
           {langText("USER_CURRENT_POINTS")}{points} P
           </Points>
           <Actions>
-            <ActionButton onClick={openTrading}>{langText("USER_TRADE_POINTS")}</ActionButton>
-            <ActionButton>{langText("USER_REDEEM_POINTS")}</ActionButton>
+            <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+            <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
           </Actions>
         </Menu> :
         null
@@ -250,11 +251,12 @@ const User = ({nickname, points }) => {
           {langText("USER_CURRENT_POINTS")}{points} P
       </Points>
       <Actions>
-        <ActionButton>{langText("USER_TRADE_POINTS")}</ActionButton>
-        <ActionButton>{langText("USER_REDEEM_POINTS")}</ActionButton>
+        <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+        <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
       </Actions>
     </UserWide>
-    { isTradingOpen ? <Trade /> : null }
+    { isTradingOpen ? <Trade setIsTradningOpen={setIsTradningOpen} /> : null }
+    { isExchangeOpen ? <Exchange setIsExchangeOpen={setIsExchangeOpen} /> : null}
     </>
   )
 }

@@ -33,7 +33,7 @@ async function getData(docID, sheetID, credentialsPath) {
     const sheet = doc.sheetsById[sheetID];
     const rows = await sheet.getRows();
     for (let [index, remoteRow] of rows.entries()) {
-      const userData = [...remoteRow._rawData];
+      let userData = [...remoteRow._rawData];
       const isRowValid = rowValidator(userData, USERS_COLUMN.EMAIL + 1);
       const isOnePageTokenNullable = !remoteRow.one_page_token? true: false;
 
@@ -95,8 +95,10 @@ async function sha256(text) {
 function rowValidator(data, pointer) {
   try {
     if (data.length < pointer) return false;
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < pointer; i++) {
       if (data[i] === '') return false;
+      // Replace special characters('+',',',' ') with a "%" followed by two hexadecimal digits.
+      data[i] = data[i].replace(/\+/g,'%2B').replace(/\,/g,'%2C').replace(/ /g,'%20');
     }
     return true;
   } catch(e) {
