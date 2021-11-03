@@ -219,7 +219,7 @@ const Unauth = () => {
         }
       })
       .catch((error) => {
-        console.log('get token error', error)
+        console.error('get token error', error)
         Cookies.remove('token');
       });
     return null;
@@ -238,7 +238,7 @@ const Unauth = () => {
         setEmailConfirm(true);
       })
       .catch((err) => {
-        console.log(err)
+        console.error(err)
         setEmail('');
         setEmailErr(err.message);
       })
