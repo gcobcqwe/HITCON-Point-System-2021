@@ -20,9 +20,9 @@ print "=============================== End fetch account data ==================
 print "=================================== Start git diff ==================================="
 cd $workdir
 users_diff_string=`git diff $users_file_path | grep ^+ | grep -vE .csv`
-users_diff_array=(`echo $users_diff_string | tr '+' ' '`)
+users_diff_array=(`echo $users_diff_string | sed -e "s/+//g"`)
 events_diff_string=`git diff $events_file_path | grep ^+ | grep -vE .csv`
-events_diff_array=(`echo $events_diff_string | tr '+' ' '`)
+events_diff_array=(`echo $events_diff_string | sed -e "s/+//g"`)
 print "Users diff: ${#users_diff_array[@]}"
 print "Events diff: ${#events_diff_array[@]}"
 print "==================================== End git diff ===================================="
@@ -41,7 +41,7 @@ function sql_exec() {
 
 for user in ${users_diff_array[@]}
 do
-  sql="INSERT INTO users(uid,private_kktix_code,nick_name,role,points,email) VALUES('`echo $user | sed -e "s/,/','/g"`') ON CONFLICT(uid) DO NOTHING;"
+  sql="INSERT INTO users(uid,private_kktix_code,nick_name,role,points,email) VALUES('`echo $user | sed -e "s/,/','/g" | sed -e "s/%2B/+/g" | sed -e "s/%2C/,/g" | sed -e "s/%20/ /g"`') ON CONFLICT(uid) DO NOTHING;"
   sql_exec "$sql"
 done 
 # TODO: Exec batch sql.
