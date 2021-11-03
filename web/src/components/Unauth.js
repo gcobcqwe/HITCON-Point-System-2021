@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import axios from "axios";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import QrReader from 'react-qr-reader'
 import Greeting from "./Greeting";
@@ -199,33 +200,63 @@ const QRCodeReader = styled(QrReader)`
 const Unauth = () => {
   const [useQRCode, setUseQRCode] = useState(true);
   const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState("");
   const [emailConfirm, setEmailConfirm] = useState(false);
-  const [qrData, setQrData] = useState();
-  const [token, setToken] = useState();
+  const [qrData, setQrData] = useState(null);
+  const [kktix, setKktix] = useState("");
+  const [token, setToken] = useState(null);
   const [reader, setReader] = useState(false);
 
-  const handleSwitch = () => setUseQRCode(!useQRCode);
-  const handleEmailValue = (e) => setEmail(event.target.value);
-  const handleTokenValue = (e) => setToken(event.target.value);
-  const handleToken = () => {
-    // TODO
-    console.log("your kktix token: ", token);
+  const exchangeToken = (data) => {
+    const apiURL = `${process.env.POINT_URL}/users/token`;
+    axios.post(apiURL, {private_kktix_code: data})
+      .then((response) => {
+        const { data: { token: respToken } } = response.data;
+        if (respToken !== undefined) {
+          setToken(respToken);
+          Cookies.set('token', respToken);
+          return respToken;
+        }
+      })
+      .catch((error) => {
+        console.log('get token error', error)
+        Cookies.remove('token');
+      });
+    return null;
+  }
+  const handleEmailChange = (e) => {
+    if (emailErr.length > 0) setEmailErr("");
+    setEmail(e.target.value);
+  }
+  const handleKktix = () => {
+    exchangeToken(kktix)
   }
   const sendEmail = () => {
-    // TODO call SendEmail API;
-    setEmailConfirm(true);
+    const apiURL = `${process.env.POINT_URL}/users/email-send`;
+    axios.post(apiURL, {email})
+      .then((resp) => {
+        setEmailConfirm(true);
+      })
+      .catch((err) => {
+        console.log(err)
+        setEmail('');
+        setEmailErr(err.message);
+      })
   }
-  const closeEmailComfirm = () => setEmailConfirm(false);
-  const handleReader = () => setReader(!reader);
-  const handleQRError = (err) => { console.log(err) }
+
+  const handleQRError = (err) => console.log(err);
   const handleQRScan = (data) => {
     if (data === null) return;
-    // TODO deal with data
-    setQrData(data);
-    // TODO close reader and login
-    // setReader(false)
-    // window.location(....?token=token) ?
+    const result = exchangeToken(data);
+    if (result !== null) setReader(false);
   }
+
+  useEffect(() => {
+    if (token === null) return;
+    setTimeout(() => {
+      window.location.href = `?token=${token}`
+    }, 1000);
+  }, [token])
 
   return(
     <>
@@ -254,23 +285,24 @@ const Unauth = () => {
         <Method>
           <Title>{langText("UNAUTH_EMAIL_METHOD")}</Title>
           <Desc>{langText("UNAUTH_EMAIL_DESC")}</Desc>
-          <EmailInput type="email" value={email} onChange={handleEmailValue}/>
+          <EmailInput type="email" value={email} onChange={handleEmailChange}/>
           <Button onClick={sendEmail}>{langText("UNAUTH_EMAIL_SEND")}</Button>
+          <div>{emailErr}</div>
         </Method>
         { useQRCode ?
         <Method>
           <Title>QR Code</Title>
           <Desc>{langText("UNAUTH_QRCODE_DESC")}</Desc>
-          <Camera onClick={handleReader}><Icon src={CameraIcon} />{langText("UNAUTH_QRCODE_OPEN_CAM")}</Camera>
-          <Switch onClick={handleSwitch}>{langText("UNAUTH_QRCODE_TOKEN")}</Switch>
+          <Camera onClick={() => setReader(!reader)}><Icon src={CameraIcon} />{langText("UNAUTH_QRCODE_OPEN_CAM")}</Camera>
+          <Switch onClick={() => setUseQRCode(!useQRCode)}>{langText("UNAUTH_QRCODE_TOKEN")}</Switch>
         </Method>
         :
         <Method>
           <Title>{langText("UNAUTH_TOKEN_TITLE")}</Title>
           <Desc>{langText("UNAUTH_TOKEN_DESC")}</Desc>
-          <Input type="text" value={token} onChange={handleTokenValue} />
-          <Button onClick={handleToken}>{langText("CONFIRM")}</Button>
-          <Switch onClick={handleSwitch}>{langText("UNAUTH_TOKEN_QRCODE")}</Switch>
+          <Input type="text" value={kktix} onChange={(e) => setKktix(e.target.value)} />
+          <Button onClick={handleKktix}>{langText("CONFIRM")}</Button>
+          <Switch onClick={() => setUseQRCode(!useQRCode)}>{langText("UNAUTH_TOKEN_QRCODE")}</Switch>
         </Method>
         }
         { emailConfirm ?
@@ -282,7 +314,7 @@ const Unauth = () => {
               <br /><br />
               {langText("UNAUTH_EMAIL_LINK_TITLE")}
             </Desc>
-            <Button onClick={closeEmailComfirm}>{langText("CONFIRM")}</Button>
+            <Button onClick={() => setEmailConfirm(false)}>{langText("CONFIRM")}</Button>
           </EmailConfirmModal> :
           null
         }
@@ -290,7 +322,7 @@ const Unauth = () => {
           <QRCodeModal>
             <Title>
               {langText("UNAUTH_QRCODE_SCAN")}
-              <button onClick={handleReader}>x</button>
+              <button onClick={() => setReader(!reader)}>x</button>
             </Title>
             <Desc>{langText("UNAUTH_QRCODE_SCAN_KKTIX")}</Desc>
             <QRCodeReader
