@@ -90,17 +90,18 @@ const Tab = styled.div`
   }
 `;
 
+//TODO: finish topic details
 const Topics = () => {
   return (
     <>
       <SectionTitle>{langText("TOPIC_SECTION_TITLE")}</SectionTitle>
       <SectionDesc>{langText("TOPIC_SECTION_DESC")}</SectionDesc>
-      <HotTopic />
+      <HotTopic title={langText("TOPIC_ONLINE_TITLE")} description={langText("TOPIC_ONLINE_DESC")}/>
       <TopicList>
-        <Topic />
-        <Topic />
-        <Topic />
-        <Topic />
+        <Topic title={langText("TOPIC_ADV_TITLE")} description={langText("TOPIC_ADV_DESC")}/>
+        <Topic title={langText("TOPIC_MP_TITLE")} description={langText("TOPIC_MP_DESC")}/>
+        <Topic title={langText("TOPIC_CAT_TITLE")} description={langText("TOPIC_CAT_DESC")}/>
+        <Topic title={langText("TOPIC_VILLAGE_TOPIC")} description={langText("TOPIC_VILLAGE_DESC")}/>
       </TopicList>
     </>
   )
