@@ -151,7 +151,7 @@ const App = () => {
         </Header>
         {authorized ?
           (<>
-            <User {...user} />
+            <User {...user}/>
             <Tab>
               <button className={isTopic ? "active" : ""} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_EVENT")}</button>
               <button className={isTopic ? "" : "active"} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_AGENDA")}</button>
