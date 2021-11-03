@@ -123,6 +123,18 @@ export function langText(key) {
         "UNAUTH_QRCODE_SCAN_KKTIX": {
             "en": "Please scan QR code on KKTIX ticket.",
             "zh": "請掃描 KKTIX 票券上的 QRcode "
+        },
+        "USER_CURRENT_POINTS": {
+            "en": "Current points: ",
+            "zh": "現有點數："
+        },
+        "USER_TRADE_POINTS": {
+            "en": "Trade points",
+            "zh": "交易點數"
+        },
+        "USER_REDEEM_POINTS": {
+            "en": "Redeem points",
+            "zh": "兌換點數"
         }
     }
 

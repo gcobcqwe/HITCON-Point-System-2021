@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Mask from "./Mask";
 import Trade from "./Trade";
+import { langText } from "../lang";
 
 const PositionFixed = styled.div`
   position: fixed;
@@ -221,11 +222,11 @@ const User = ({nickname, points }) => {
         <Menu>
           <Mask onClick={handleMask} />
           <Points>
-             現有點數：{points} P
+          {langText("USER_CURRENT_POINTS")}{points} P
           </Points>
           <Actions>
-            <ActionButton onClick={openTrading}>交易點數</ActionButton>
-            <ActionButton>兌換點數</ActionButton>
+            <ActionButton onClick={openTrading}>{langText("USER_TRADE_POINTS")}</ActionButton>
+            <ActionButton>{langText("USER_REDEEM_POINTS")}</ActionButton>
           </Actions>
         </Menu> :
         null
@@ -246,11 +247,11 @@ const User = ({nickname, points }) => {
     <UserWide>
       <Username>{nickname}</Username>
       <Points>
-          現有點數: {points} P
+          {langText("USER_CURRENT_POINTS")}{points} P
       </Points>
       <Actions>
-        <ActionButton>交易點數</ActionButton>
-        <ActionButton>兌換點數</ActionButton>
+        <ActionButton>{langText("USER_TRADE_POINTS")}</ActionButton>
+        <ActionButton>{langText("USER_REDEEM_POINTS")}</ActionButton>
       </Actions>
     </UserWide>
     { isTradingOpen ? <Trade /> : null }
