@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Program from "./Program";
-import { fakeSession as SessionInfo } from "../FakeSession";
+const SessionInfo = require('../session.json');
 import moment from "moment";
 import { langText, LANG } from "../lang";
 
@@ -74,13 +74,13 @@ const Schedule = () => {
         }).join(", ")
       } brief={currentSessions["R2"]?.[LANG].description} />
 
-      <Program location="R3" title={currentSessions["R3"]?.[LANG].title} speaker={
+      {/* <Program location="R3" title={currentSessions["R3"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
           return currentSessions["R3"]?.speakers.includes(s.id);
         }).map(function (element) {
           return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R3"]?.[LANG].description} />
+      } brief={currentSessions["R3"]?.[LANG].description} /> */}
     </div>
   )
 }
