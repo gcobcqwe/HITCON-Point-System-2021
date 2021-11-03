@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Mask from "./Mask";
 import Trade from "./Trade";
 import Exchange from "./Exchange";
+import { langText } from "../lang";
 
 const PositionFixed = styled.div`
   position: fixed;
@@ -222,11 +223,11 @@ const User = (user) => {
         <Menu>
           <Mask onClick={handleMask} />
           <Points>
-             現有點數：{points} P
+          {langText("USER_CURRENT_POINTS")}{points} P
           </Points>
           <Actions>
-            <ActionButton onClick={() => setIsTradningOpen(true)}>交易點數</ActionButton>
-            <ActionButton onClick={() => setIsExchangeOpen(true)}>兌換點數</ActionButton>
+            <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+            <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
           </Actions>
         </Menu> :
         null
@@ -247,11 +248,11 @@ const User = (user) => {
     <UserWide>
       <Username>{nickname}</Username>
       <Points>
-          現有點數: {points} P
+          {langText("USER_CURRENT_POINTS")}{points} P
       </Points>
       <Actions>
-        <ActionButton onClick={() => setIsTradningOpen(true)}>交易點數</ActionButton>
-        <ActionButton onClick={() => setIsExchangeOpen(true)}>兌換點數</ActionButton>
+        <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+        <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
       </Actions>
     </UserWide>
     { isTradingOpen ? <Trade setIsTradningOpen={setIsTradningOpen} /> : null }
