@@ -8,6 +8,7 @@ import HotTopic from "./components/HotTopic";
 import Schedule from "./components/Schedule";
 import Unauth from "./components/Unauth";
 import Footer from "./components/Footer";
+import Exchange from "./components/Exchange";
 import Cookies from "js-cookie";
 import { langText, LANG } from "./lang";
 import "./index.css";
@@ -64,6 +65,9 @@ const Language = styled.div`
 const TopicList = styled.div`
   max-width: 1030px;
   @media(min-width: 1280px) {
+    > div:nth-child(1) {
+      display: none;
+    }
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -91,17 +95,45 @@ const Tab = styled.div`
 `;
 
 //TODO: finish topic details
-const Topics = () => {
+const Topics = ({eventToken}) => {
   return (
     <>
       <SectionTitle>{langText("TOPIC_SECTION_TITLE")}</SectionTitle>
       <SectionDesc>{langText("TOPIC_SECTION_DESC")}</SectionDesc>
-      <HotTopic title={langText("TOPIC_ONLINE_TITLE")} description={langText("TOPIC_ONLINE_DESC")}/>
+      <HotTopic
+        title={langText("TOPIC_ONLINE_TITLE")}
+        description={langText("TOPIC_ONLINE_DESC")}
+        actionLink={process.env.ONLINE_URL}
+        actionToken={eventToken.online_token}
+      />
       <TopicList>
-        <Topic title={langText("TOPIC_ADV_TITLE")} description={langText("TOPIC_ADV_DESC")}/>
-        <Topic title={langText("TOPIC_MP_TITLE")} description={langText("TOPIC_MP_DESC")}/>
-        <Topic title={langText("TOPIC_CAT_TITLE")} description={langText("TOPIC_CAT_DESC")}/>
-        <Topic title={langText("TOPIC_VILLAGE_TOPIC")} description={langText("TOPIC_VILLAGE_DESC")}/>
+        <Topic
+          title={langText("TOPIC_ONLINE_TITLE")}
+          description={langText("TOPIC_ONLINE_DESC")}
+          actionLink={process.env.ONLINE_URL}
+          actionToken={eventToken.online_token}
+        />
+        <Topic
+          title={langText("TOPIC_ADV_TITLE")}
+          description={langText("TOPIC_ADV_DESC")}
+          actionLink={process.env.ONLINE_URL}
+          actionToken={eventToken.online_token}
+        />
+        <Topic
+          title={langText("TOPIC_MP_TITLE")}
+          description={langText("TOPIC_MP_DESC")}
+          actionLink={process.env.KOF_URL}
+          actionToken={eventToken.kof_server_token}
+        />
+        <Topic
+          title={langText("TOPIC_CAT_TITLE")}
+          description={langText("TOPIC_CAT_DESC")}
+          actionLink={process.env.BOT_URL}
+        />
+        <Topic
+          title={langText("TOPIC_VILLAGE_TOPIC")}
+          description={langText("TOPIC_VILLAGE_DESC")}
+        />
       </TopicList>
     </>
   )
@@ -112,6 +144,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isTopic, setIsTopic] = useState(true);
+  const [eventToken, setEventToken] = useState({});
 
   useEffect(() => {
     const tokenFromCookies = Cookies.get('token');
@@ -130,16 +163,31 @@ const App = () => {
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })
-      .then((response) => {
-        setUser(response.data)
+      .then((resp) => {
+        setUser(resp.data)
         setAuthorized(true);
         Cookies.set('token', token);
       }).catch((error) => {
-        console.log('get users error', error);
+        console.error('get users error', error);
         Cookies.remove('token');
         setAuthorized(false);
       });
   }, [token]);
+
+  useEffect(() => {
+    if (!token) return;
+    const apiURL = `${process.env.POINT_URL}/users/me/events`;
+    const headers = { 'Authorization': `Bearer ${token}` }
+    axios.get(apiURL, { headers })
+      .then((resp) => {
+        const { success, data } = resp.data;
+        console.log(data);
+        if (success) setEventToken(data)
+      }).catch((error) => {
+        console.error('get users error', error);
+      });
+  }, [token])
+
 
   return (
     <>
@@ -157,7 +205,7 @@ const App = () => {
               <button className={isTopic ? "active" : ""} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_EVENT")}</button>
               <button className={isTopic ? "" : "active"} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_AGENDA")}</button>
             </Tab>
-            {isTopic ? <Topics /> : <Schedule />}
+            {isTopic ? <Topics eventToken={eventToken}/> : <Schedule />}
           </>) : <Unauth />
         }
       </Main>
