@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Mask from "./Mask";
 import Trade from "./Trade";
+import Exchange from "./Exchange";
 
 const PositionFixed = styled.div`
   position: fixed;
@@ -193,25 +194,24 @@ const UserWide = styled.div`
 
 `;
 
-const User = ({nickname, points }) => {
+const User = (user) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTradingOpen, setIsTradningOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
-
+  const [nickname, setNickname] = useState();
+  const [points, setPoints] = useState();
   const openMenu = () => setIsMenuOpen(!isMenuOpen);
-
   const handleMask = () => {
     document.getElementById("menuCheck").checked = false;
     setIsMenuOpen(false);
     setIsTradningOpen(false);
   }
 
-  const openTrading = () => setIsTradningOpen(true);
-  const openExchange = () => setIsExchangeOpen(true);
-
   useEffect(() => {
-    // TODO check modal open state
-  }, []);
+    if (user === undefined) return;
+    setNickname(user.nickname);
+    setPoints(user.points);
+  }, [user]);
 
   return (
     <>
@@ -225,8 +225,8 @@ const User = ({nickname, points }) => {
              現有點數：{points} P
           </Points>
           <Actions>
-            <ActionButton onClick={openTrading}>交易點數</ActionButton>
-            <ActionButton>兌換點數</ActionButton>
+            <ActionButton onClick={() => setIsTradningOpen(true)}>交易點數</ActionButton>
+            <ActionButton onClick={() => setIsExchangeOpen(true)}>兌換點數</ActionButton>
           </Actions>
         </Menu> :
         null
@@ -250,11 +250,12 @@ const User = ({nickname, points }) => {
           現有點數: {points} P
       </Points>
       <Actions>
-        <ActionButton onClick={openTrading}>交易點數</ActionButton>
-        <ActionButton>兌換點數</ActionButton>
+        <ActionButton onClick={() => setIsTradningOpen(true)}>交易點數</ActionButton>
+        <ActionButton onClick={() => setIsExchangeOpen(true)}>兌換點數</ActionButton>
       </Actions>
     </UserWide>
     { isTradingOpen ? <Trade setIsTradningOpen={setIsTradningOpen} /> : null }
+    { isExchangeOpen ? <Exchange setIsExchangeOpen={setIsExchangeOpen} /> : null}
     </>
   )
 }
