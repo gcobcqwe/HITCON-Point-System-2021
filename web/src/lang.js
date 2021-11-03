@@ -161,7 +161,7 @@ export function langText(key) {
             "zh": "2020 好評延續，更加困難的煉蠱大會將會再度進化！參賽者也會更加的難搞，今年將會是什麼樣的奇技淫巧位居蠱王寶座呢？你準備好一起網內互打了嗎？最強蠱王 2.0 等你來挑戰！"
         },
         "TOPIC_CAT_TITLE": {
-            "en": "駭客喵喵",
+            "en": "Hacker Meow",
             "zh": "駭客喵喵"
         },
         "TOPIC_CAT_DESC": {
