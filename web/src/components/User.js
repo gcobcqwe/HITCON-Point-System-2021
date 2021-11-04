@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import Cookies from "js-cookie";
 import Mask from "./Mask";
 import Trade from "./Trade";
 import Exchange from "./Exchange";
@@ -195,24 +197,35 @@ const UserWide = styled.div`
 
 `;
 
-const User = (user) => {
+const UserContiner = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTradingOpen, setIsTradningOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
   const [nickname, setNickname] = useState();
   const [points, setPoints] = useState();
+
+  const [user, setUser] = useState(() => {
+    const token = Cookies.get('token');
+    const apiURL = `${process.env.POINT_URL}/users/me`;
+    const headers = { 'Authorization': `Bearer ${token}` }
+    axios.get(apiURL, { headers })
+      .then((resp) => {
+        const { success, data} = resp.data;
+        if (success) {
+          setPoints(data.points)
+          setNickname(data.nick_name);
+          return data;
+        }
+      }).catch((error) => {
+        console.error('get users error', error);
+      })
+  })
   const openMenu = () => setIsMenuOpen(!isMenuOpen);
   const handleMask = () => {
     document.getElementById("menuCheck").checked = false;
     setIsMenuOpen(false);
     setIsTradningOpen(false);
   }
-
-  useEffect(() => {
-    if (user === undefined) return;
-    setNickname(user.nickname);
-    setPoints(user.points);
-  }, [user]);
 
   return (
     <>
@@ -261,10 +274,10 @@ const User = (user) => {
   )
 }
 
-User.defaultProps = {
+UserContiner.defaultProps = {
   nickname: "未知人物",
   points: "9999",
 }
 
 
-export default User;
+export default UserContiner;

@@ -45,22 +45,39 @@ const Button = styled.button`
   font-size: 18px;
   font-weight: border;
   padding: 15px 20px;
+
+  a:visited {
+    color: #000;
+  }
 `;
 
-const HotTopic = ({title, description, imageSrc, actionLink, actionText, actionToken}) => {
+const Links = styled.div``;
+
+const PostLink = ({link, token, text}) => {
+  return(
+  <>
+    { token ?
+      <form method="POST" action={link}>
+        <input type="hidden" name="token" value={token} />
+        <Button type ="submit">{text}</Button>
+      </form> :
+      <Button>
+          <a href={link}>{text}</a>
+      </Button>
+    }
+  </>
+  )
+};
+
+const HotTopic = ({title, description, imageSrc, links}) => {
   return (
     <Container>
       <Info>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <form method="POST" action={actionLink}>
-          {
-            actionToken ?
-            <input type="hidden" name="token" value={actionToken} /> :
-            null
-          }
-          <Button type ="submit">{actionText}</Button>
-        </form>
+        <Links>
+        { links.map((l, idx) => <PostLink key={idx} link={l.link} token={l.token} text={l.text}/>) }
+        </Links>
       </Info>
       <Image src={imageSrc} />
     </Container>

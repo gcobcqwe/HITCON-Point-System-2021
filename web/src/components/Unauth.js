@@ -3,12 +3,13 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import QrReader from 'react-qr-reader'
 import Greeting from "./Greeting";
+import Cookies from "js-cookie";
+import { langText } from "../lang";
 import CameraIcon from "../public/ionic-camera.svg";
 import ArrorDownIcon from "../public/fa-arrow-down.svg";
 import StepLinkIcon from "../public/awesome-link.svg";
 import StepSearchIcon from "../public/awesome-search.svg";
 import StepMailIcon from "../public/ionic-ios-mail.svg";
-import { langText } from "../lang";
 
 const Steps = styled.div`
   display: flex;
@@ -235,7 +236,8 @@ const Unauth = () => {
     const apiURL = `${process.env.POINT_URL}/users/email-send`;
     axios.post(apiURL, {email})
       .then((resp) => {
-        setEmailConfirm(true);
+        const { success } = resp.data;
+        if (success) setEmailConfirm(true);
       })
       .catch((err) => {
         console.error(err)
