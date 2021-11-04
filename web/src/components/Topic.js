@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -53,10 +53,34 @@ const Button = styled.button`
   font-size: 18px;
   font-weight: border;
   padding: 15px 20px;
+  margin-bottom : 10px;
+
+  a:visited {
+    color: #000;
+  }
 `;
 
+const Links = styled.div``;
+
+const PostLink = ({link, token, text}) => {
+  return(
+  <>
+    { token ?
+      <form method="POST" action={link}>
+        <input type="hidden" name="token" value={token} />
+        <Button type ="submit">{text}</Button>
+      </form> :
+      <Button>
+          <a href={link}>{text}</a>
+      </Button>
+    }
+  </>
+  )
+}
+
+
 const Topic = ({
-  title, description, imageSrc, actionLink, actionText, actionToken
+  title, description, imageSrc, links
 }) => {
   return (
     <Container>
@@ -64,14 +88,9 @@ const Topic = ({
       <Info>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <form method="POST" action={actionLink}>
-          {
-            actionToken ?
-            <input type="hidden" name="token" value={actionToken} /> :
-            null
-          }
-          <Button type ="submit">{actionText}</Button>
-        </form>
+        <Links>
+        { links.map((l, idx) => <PostLink key={idx} link={l.link} token={l.token} text={l.text}/>) }
+        </Links>
       </Info>
     </Container>
   )
@@ -81,9 +100,7 @@ Topic.defaultProps = {
   title: "駭客狗狗",
   description: "喵～我是駭客狗狗，HITCON 最新開發的狗狗聊天機器人，不過我可沒有百寶袋唷！狗狗將會在 Telegram 以及 IRC 上協助大家參與 HITCON 2021，也許還會有一些小驚喜唷！喵～期待大會與各位相見！#聊天機器人 #駭客狗狗",
   imageSrc: "https://via.placeholder.com/361x190",
-  actionLink: "",
-  actionText: "Go!",
-  actionToken: false,
+  links: []
 }
 
 export default Topic;

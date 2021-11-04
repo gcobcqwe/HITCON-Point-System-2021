@@ -8,11 +8,15 @@ import HotTopic from "./components/HotTopic";
 import Schedule from "./components/Schedule";
 import Unauth from "./components/Unauth";
 import Footer from "./components/Footer";
-import Exchange from "./components/Exchange";
 import Cookies from "js-cookie";
 import { langText, LANG } from "./lang";
 import "./index.css";
 
+import TopicTGImg from "./public/tg.png";
+import TopicOnlineImg from "./public/online.png";
+import TopicADVImg from "./public/online.png";
+import TopicMpImg from "./public/mp.png";
+import TopicVillageImg from "./public/online.png";
 
 const Main = styled.main`
   padding: 0 28px;
@@ -94,8 +98,50 @@ const Tab = styled.div`
   }
 `;
 
-//TODO: finish topic details
+
 const Topics = ({eventToken}) => {
+  const [tgLink, setTgLink] = useState([]);
+
+  const onlineLink = [{
+    link: process.env.ONLINE_URL,
+    token: eventToken.online_token,
+    text: "GO!"
+  }]
+
+  const mpLink = [{
+    link: process.env.MP_INTRO_URL,
+    token: eventToken.kof_server_token,
+    text: langText("TOPIC_MP_INTRO_LINK")
+  },{
+    link: process.env.MP_ADV_URL,
+    token: eventToken.kof_server_token,
+    text: langText("TOPIC_MP_ADV_LINK")
+  },{
+    link: process.env.MP_DOCS_URL,
+    text: langText("TOPIC_MP_DOC_LINK")
+  }];
+
+  const villageLink = [{
+    link: "?",
+    text: "GO!"
+  }];
+
+  useEffect(() => {
+    const tokenFromCookies = Cookies.get('token');
+    const apiURL = `${process.env.POINT_URL}/tg/generate-code`;
+    const headers = { 'Authorization': `Bearer ${tokenFromCookies}` }
+    axios.post(apiURL, headers, { headers })
+      .then((resp) => {
+        const { code } = resp.data;
+        setTgLink([{
+          link: `https://t.me/hitcon_bot?start=${code}`,
+          text: "GO!"
+        }]);
+      }).catch((error) => {
+        console.error('get tg code', error);
+      });
+  }, [])
+
   return (
     <>
       <SectionTitle>{langText("TOPIC_SECTION_TITLE")}</SectionTitle>
@@ -103,36 +149,40 @@ const Topics = ({eventToken}) => {
       <HotTopic
         title={langText("TOPIC_ONLINE_TITLE")}
         description={langText("TOPIC_ONLINE_DESC")}
-        actionLink={process.env.ONLINE_URL}
-        actionToken={eventToken.online_token}
+        imageSrc={TopicOnlineImg}
+        links={onlineLink}
       />
       <TopicList>
         <Topic
           title={langText("TOPIC_ONLINE_TITLE")}
           description={langText("TOPIC_ONLINE_DESC")}
-          actionLink={process.env.ONLINE_URL}
-          actionToken={eventToken.online_token}
-        />
+          imageSrc={TopicOnlineImg}
+          links={onlineLink}
+        >
+        </Topic>
         <Topic
           title={langText("TOPIC_ADV_TITLE")}
           description={langText("TOPIC_ADV_DESC")}
-          actionLink={process.env.ONLINE_URL}
-          actionToken={eventToken.online_token}
+          imageSrc={TopicADVImg}
+          links={onlineLink}
         />
         <Topic
           title={langText("TOPIC_MP_TITLE")}
           description={langText("TOPIC_MP_DESC")}
-          actionLink={process.env.KOF_URL}
-          actionToken={eventToken.kof_server_token}
+          imageSrc={TopicMpImg}
+          links={mpLink}
         />
         <Topic
           title={langText("TOPIC_CAT_TITLE")}
           description={langText("TOPIC_CAT_DESC")}
-          actionLink={process.env.BOT_URL}
+          imageSrc={TopicTGImg}
+          links={tgLink}
         />
         <Topic
           title={langText("TOPIC_VILLAGE_TOPIC")}
           description={langText("TOPIC_VILLAGE_DESC")}
+          imageSrc={TopicVillageImg}
+          links={villageLink}
         />
       </TopicList>
     </>
@@ -140,48 +190,34 @@ const Topics = ({eventToken}) => {
 }
 
 const App = () => {
-  const [authorized, setAuthorized] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isTopic, setIsTopic] = useState(true);
   const [eventToken, setEventToken] = useState({});
-
-  useEffect(() => {
+  const [authorized, setAuthorized] = useState(() => {
     const tokenFromCookies = Cookies.get('token');
     if (tokenFromCookies !== undefined) {
       setToken(tokenFromCookies);
+      return true;
     } else {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
-      const token = urlParams.get('token');
-      setToken(token);
+      const tokenFromParams = urlParams.get('token');
+      if (tokenFromParams !== null) {
+        setToken(tokenFromParams);
+        return true;
+      }
     }
-  }, []);
+    return false;
+  });
 
   useEffect(() => {
-    if (!token) return;
-    const apiURL = `${process.env.POINT_URL}/users/me`;
-    const headers = { 'Authorization': `Bearer ${token}` }
-    axios.get(apiURL, { headers })
-      .then((resp) => {
-        setUser(resp.data)
-        setAuthorized(true);
-        Cookies.set('token', token);
-      }).catch((error) => {
-        console.error('get users error', error);
-        Cookies.remove('token');
-        setAuthorized(false);
-      });
-  }, [token]);
-
-  useEffect(() => {
-    if (!token) return;
+    if (token === null) return;
     const apiURL = `${process.env.POINT_URL}/users/me/events`;
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })
       .then((resp) => {
         const { success, data } = resp.data;
-        console.log(data);
         if (success) setEventToken(data)
       }).catch((error) => {
         console.error('get users error', error);
@@ -200,12 +236,15 @@ const App = () => {
         </Header>
         {authorized ?
           (<>
-            <User {...user}/>
+            <User />
             <Tab>
               <button className={isTopic ? "active" : ""} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_EVENT")}</button>
               <button className={isTopic ? "" : "active"} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_AGENDA")}</button>
             </Tab>
-            {isTopic ? <Topics eventToken={eventToken}/> : <Schedule />}
+            { isTopic ?
+              <Topics eventToken={eventToken} /> :
+              <Schedule />
+            }
           </>) : <Unauth />
         }
       </Main>

@@ -160,6 +160,18 @@ export function langText(key) {
             "en": "The 2020 Malware Playground will continue to get even more difficult. The contestants will be even more difficult, what kind of tricks will be the king of compulsion this year? Are you ready to fight with each other in the net? The strongest Tricky King 2.0 is waiting for you to challenge!",
             "zh": "2020 好評延續，更加困難的煉蠱大會將會再度進化！參賽者也會更加的難搞，今年將會是什麼樣的奇技淫巧位居蠱王寶座呢？你準備好一起網內互打了嗎？最強蠱王 2.0 等你來挑戰！"
         },
+        "TOPIC_MP_INTRO_LINK": {
+            "en": "Intro Session",
+            "zh": "新手村"
+        },
+        "TOPIC_MP_ADV_LINK": {
+            "en": "Advanced Session",
+            "zh": "進階場"
+        },
+        "TOPIC_MP_DOC_LINK": {
+            "en": "Introduction",
+            "zh": "說明文件"
+        },
         "TOPIC_CAT_TITLE": {
             "en": "Hacker Meow",
             "zh": "駭客喵喵"
