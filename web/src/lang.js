@@ -54,7 +54,7 @@ export function langText(key) {
         },
         "UNAUTH_STEP_SEARCH_MAIL": {
             "en": 'Search "HITCON 2021 Pre-departure notification"',
-            "zh": "搜尋「HITCON 2021 行前通知信"
+            "zh": "搜尋「HITCON 2021 行前通知信」"
         },
         "UNAUTH_STEP_LOGIN": {
             "en": "Click the link inside the mail to login",
@@ -175,6 +175,150 @@ export function langText(key) {
         "TOPIC_VILLAGE_DESC": {
             "en": "HITCON Village will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.",
             "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣"
+        },
+        "COUPON_YOUR_COUPON": {
+            "en": "My Coupons",
+            "zh": "擁有的折價券"
+        },
+        "COUPON_DEADLINE_NOTICE": {
+            "en": "Points can be used to redeem for HITCON online store coupons until XX/XX. Please complete your redemption before the deadline.",
+            "zh": "大會點數可用於兌換 HITCON 線上賣場折價券，兌換期間開放至 XX/XX，請於截止日前兌換完畢。"
+        },
+        "COUPON_PRICE": {
+            "en": "Price",
+            "zh": "金額"
+        },
+        "COUPON_DEADLINE": {
+            "en": "Valid Before",
+            "zh": "有效期限"
+        },
+        "COUPON_TOKEN": {
+            "en": "Coupon Code",
+            "zh": "兌換券代碼"
+        },
+        "COUPON_HITCON_STORE": {
+            "en": "HITCON Online Store",
+            "zh": "HITCON 線上賣場"
+        },
+        "BACK": {
+            "en": "Back",
+            "zh": "返回"
+        },
+        "COUPON_NAME": {
+            "en": "$ Coupon",
+            "zh": "$ 折價券"
+        },
+        "COUPON_COST": {
+            "en": "Needs",
+            "zh": "需要"
+        },
+        "COUPON_EXCHANGE": {
+            "en": "Exchange",
+            "zh": "兌換"
+        },
+        "COUPON_EXCH_ITEM": {
+            "en": "Exchangable items",
+            "zh": "可兌換項目"
+        },
+        "COUPON_CONFIRM_EXCH": {
+            "en": "Comfirm to exchange",
+            "zh": "確認兌換"
+        },
+        "COUPON_USING_POINTS": {
+            "en": "<div>Using {cost} points to exange for</div><div>{value}$ coupon.</div><div>Remaining points: xxxP </div>",
+            "zh": "<div>您即將使用 {cost} 點兌換</div><div>「 {value} $折價券 」</div><div>完成後將剩餘 3000 點</div>"
+        },
+        "CANCEL": {
+            "en": "Cancel",
+            "zh": "取消"
+        },
+        "COUPON_EXCH_DONE": {
+            "en": "Completed",
+            "zh": "兌換完成"
+        },
+        "COUPON_DONE_NOTICE": {
+            "en": 'You can check the Coupon Code in "My Coupon" section. Please complete your redemption before the deadline',
+            "zh": "兌換券代碼可於「擁有的兌換券」中確認 請於效期內兌換完成"
+        },
+        "DONE": {
+            "en": "Done",
+            "zh": "完成"
+        },
+        "COUPON_POINTS_EXCH": {
+            "en": "Exchange Points",
+            "zh": "點數兌換"
+        },
+        "POINTS_OWNED": {
+            "en": "You have {points} points",
+            "zh": "您目前共有 {points} 點"
+        },
+        "TRADE_SEND_POINTS": {
+            "en": "Send points",
+            "zh": "發送點數"
+        },
+        "TRADE_SCAN_QR": {
+            "en": "Please scan the QR code provided by the receiver",
+            "zh": "請掃描欲發送對象的 QR code"
+        },
+        "TRADE_SENDING_QTY": {
+            "en": "Please enter the point quantity you're going to send. You have {points} points.",
+            "zh": "請輸入欲發送的點數數量 您目前共有 {points} 點"
+        },
+        "TRADE_SENDING_TARGET": {
+            "en": "Sending to: ",
+            "zh": "發送對象："
+        },
+        "TRADE_SENT_SUCESS": {
+            "en": "Succeeded",
+            "zh": "發送成功"
+        },
+        "TRADE_SENT_DESC": {
+            "en": "Sent {sendPoint} points to nickname",
+            "zh": "您已將 {sendPoint} 點給予 nickname"
+        },
+        "TRADE_SENT_REMAINING": {
+            "en": "{points} points remaining",
+            "zh": "剩餘 {points} 點"
+        },
+        "TRADE_RECEIVING": {
+            "en": "Receive points",
+            "zh": "接收點數"
+        },
+        "TRADE_PROVIDE_QR": {
+            "en": "Please show the QR code to the sender",
+            "zh": "請出示下方 QR code 給發送對象"
+        },
+        "TRADE_REDEEM_POINTS": {
+            "en": "Redeem Points",
+            "zh": "領取點數"
+        },
+        "TRADE_REDEEM_QR": {
+            "en": "Please scan the QR code",
+            "zh": "請掃描大會提供的 QR code"
+        },
+        "TRADE_REDEEM_CONFIRM": {
+            "en": "Redeem",
+            "zh": "領取"
+        },
+        "TRADE_REDEEM_DONE": {
+            "en": "Received {points} points",
+            "zh": "您已收到 {points} 點"
+        },
+        "TRADE_TRADING_POINTS": {
+            "en": "Trade Points",
+            "zh": "交易點數"
+        },
+        "TRADE_SEND": {
+            "en": "Send",
+            "zh": "發送"
+        },
+        "TRADE_RECEIVE": {
+            "en": "Receive",
+            "zh": "接收"
+        },
+        "TRADE_REDEEM": {
+            "en": "Redeem",
+            "zh": "領取"
         }
     }
 

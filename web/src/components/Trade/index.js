@@ -9,6 +9,7 @@ import Modal from "../Modal";
 import SendIcon from "../../public/ionic-ios-send.svg";
 import ReceivedIcon from "../../public/material-call_received.svg";
 import GiftIcon from "../../public/ionic-ios-gift.svg";
+import { langText } from "../../lang";
 
 const TradingContainer = styled(Modal)`
   @media(min-width: 1280px) {
@@ -144,30 +145,30 @@ const SendPage = ({setPage}) => {
   <Content>
     { step === 0 ?
       <>
-        <Title>發送點數</Title>
-        <Description>請掃描欲發送對象的 QR code</Description>
+        <Title>{langText("TRADE_SEND_POINTS")}</Title>
+        <Description>{langText("TRADE_SCAN_QR")}</Description>
         <QrReader
           onScan={handleScan}
           onError={handleError}
           style={{ width: '100%' }}
         />
-        <Cancel onClick={handleCancel}>取消</Cancel>
+        <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
      </> : "" }
     { step === 1 ?
       <>
-        <Title>發送點數</Title>
-        <div>請輸入欲發送的點數數量 您目前共有 {points} 點</div>
-        <div>發送對象：{receiver}</div>
+        <Title>{langText("TRADE_SEND_POINTS")}</Title>
+        <div>{langText("TRADE_SENDING_QTY").replace("{points}", points)}</div>
+        <div>{langText("TRADE_SENDING_TARGET")}{receiver}</div>
         <input type="text" onChange={(e) => setSendPoint(e.target.value)}/>
-        <Button onClick={handleSend}>確認</Button>
-        <Cancel onClick={handleBack}>取消</Cancel>
+        <Button onClick={handleSend}>{langText("CONFIRM")}</Button>
+        <Cancel onClick={handleBack}>{langText("CANCEL")}</Cancel>
       </> : "" }
     { step === 2 ?
       <>
-       <Title>發送成功</Title>
-       <Description>您已將 {sentPoint} 點給予 nickname</Description>
-       <Description>剩餘 {points} 點</Description>
-       <Button onClick={handleCancel}>完成</Button>
+       <Title>{langText("TRADE_SENT_SUCESS")}</Title>
+       <Description>{langText("TRADE_SENT_DESC").replace("{sendPoint}", sendPoint)}</Description>
+       <Description>{langText("TRADE_SENT_REMAINING").replace("{points}", points)}</Description>
+       <Button onClick={handleCancel}>{langText("DONE")}</Button>
       </>: "" }
   </Content>
   )
@@ -177,11 +178,11 @@ const ReceivedPage = ({uid, setPage}) => {
   const handleCancel = () => setPage(0)
   return(
     <Content>
-      <Title>接收點數</Title>
-      <Description>請出示下方 QR code 給發送對象</Description>
+      <Title>{langText("TRADE_RECEIVING")}</Title>
+      <Description>{langText("TRADE_PROVIDE_QR")}</Description>
       <QRCode value={uid} />
       <span>value: {uid}</span>
-      <Cancel onClick={handleCancel}>取消</Cancel>
+      <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
     </Content>
   )
 }
@@ -220,19 +221,19 @@ const TakePage = ({setPage}) => {
     <Content>
       { step === 0 ?
       <>
-        <Title>領取點數</Title>
-        <Description>請掃描大會提供的 QR code</Description>
+        <Title>{langText("TRADE_REDEEM_POINTS")}</Title>
+        <Description>{langText("TRADE_REDEEM_QR")}</Description>
         <QrReader
             onScan={handleScan}
             onError={handleError}
             style={{ width: '100%' }}
         />
-        <Cancel onClick={handleCancel}>取消</Cancel>
+        <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
       </> : "" }
       { step === 1 ?
       <>
-        <Title>領取</Title>
-        <Description>您已收到 {points} 點</Description>
+        <Title>{langText("TRADE_REDEEM_CONFIRM")}</Title>
+        <Description>{langText("TRADE_REDEEM_DONE").replace("{points}", points)}</Description>
       </> : "" }
     </Content>
   )
@@ -268,21 +269,21 @@ const Trading = ({setIsTradningOpen}) => {
     <TradingContainer>
       { page === 0 ?
       <TradingMain>
-        <Title>交易點數</Title>
-        <Description>您目前共有 {points} 點</Description>
+        <Title>{langText("TRADE_TRADING_POINTS")}</Title>
+        <Description>{langText("POINTS_OWNED").replace("{points}", points)}</Description>
         <Button onClick={switchSend}>
           <img src={SendIcon}/>
-          發送
+          {langText("TRADE_SEND")}
         </Button>
         <Button onClick={switchRecivied}>
           <img src={ReceivedIcon}/>
-          接收
+          {langText("TRADE_RECEIVE")}
         </Button>
         <Button onClick={switchTake}>
           <img src={GiftIcon}/>
-          領取
+          {langText("TRADE_REDEEM")}
         </Button>
-        <Cancel onClick={handleCancel}>取消</Cancel>
+        <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
       </TradingMain> : null }
       { page === 1 ? <SendPage setPage={setPage}/> : null }
       { page === 2 ? <ReceivedPage setPage={setPage} uid={uid}/> : null }

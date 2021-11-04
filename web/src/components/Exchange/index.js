@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Cookies from "js-cookie";
 import Modal from "../Modal";
-
+import { langText } from "../../lang";
+import ReactHtmlParser from "react-html-parser"
 
 const Container = styled(Modal)`
   @media(min-width: 1280px) {
@@ -90,18 +91,18 @@ const Table = styled.table`
 `
 
 
-const CouponPage = ({setPage}) => {
+const CouponPage = ({ setPage }) => {
   const handleCancel = () => setPage(0);
-  return(
+  return (
     <Content>
-      <Title>擁有的兌換券</Title>
-      <Description>大會點數可用於兌換 HITCON 線上賣場折價券，兌換期間開放至 XX/XX，請於截止日前兌換完畢。</Description>
+      <Title>{langText("COUPON_YOUR_COUPON")}</Title>
+      <Description>{langText("COUPON_DEADLINE_NOTICE")}</Description>
       <Table>
         <thead>
           <tr>
-            <th>金額</th>
-            <th>有效期限</th>
-            <th>兌換券代碼</th>
+            <th>{langText("COUPON_PRICE")}</th>
+            <th>{langText("COUPON_DEADLINE")}</th>
+            <th>{langText("COUPON_TOKEN")}</th>
           </tr>
         </thead>
         <tbody>
@@ -127,8 +128,8 @@ const CouponPage = ({setPage}) => {
           </tr>
         </tbody>
       </Table>
-      <Button><a href="#">HITCON線上賣場</a></Button>
-      <Cancel onClick={handleCancel}>返回</Cancel>
+      <Button><a href="#">{langText("COUPON_HITCON_STORE")}</a></Button>
+      <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
     </Content>
   )
 }
@@ -182,22 +183,22 @@ const Action = styled.div`
   cursor: pointer;
 `;
 
-const Coupon = ({value, cost, setTargetCoupon}) => {
+const Coupon = ({ value, cost, setTargetCoupon }) => {
   const handleExchange = () => {
-    setTargetCoupon({value, cost});
+    setTargetCoupon({ value, cost });
   }
-  return(
+  return (
     <Wrapper>
-     <Info>
-       <Value>{value} $折價券</Value>
-       <Cost>需要 {cost}P</Cost>
-     </Info>
-     <Action onClick={handleExchange}>兌換</Action>
+      <Info>
+        <Value>{value}{langText("COUPON_NAME")}</Value>
+        <Cost>{langText("COUPON_COST")} {cost}P</Cost>
+      </Info>
+      <Action onClick={handleExchange}>{langText("COUPON_EXCHANGE")}</Action>
     </Wrapper>
   )
 }
 
-const ExchangePage = ({points, setPage}) => {
+const ExchangePage = ({ points, setPage }) => {
   const [step, setStep] = useState(0);
   const [targetCoupon, setTargetCoupon] = useState(null);
   const handleExchange = () => {
@@ -211,47 +212,46 @@ const ExchangePage = ({points, setPage}) => {
     cost: 300,
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     if (targetCoupon === null) return;
     setStep(1);
   }, [targetCoupon])
   return (
     <>
-    { step === 0 ?
-      <Content>
-        <Title>可兌換項目</Title>
-        <List>
-          { Array(20).fill(0).map((key, index) => <Coupon key={index} {...couponData} setTargetCoupon={setTargetCoupon} />) }
-        </List>
-        <Cancel onClick={handleCancel}>返回</Cancel>
-      </Content> : null }
-    { step === 1 ?
-      <Content>
-        <Title>確認兌換</Title>
-        <div>您即將使用 {targetCoupon.cost} 點兌換</div>
-        <div>「 {targetCoupon.value} $折價券 」</div>
-        <div>完成後將剩餘 3000 點</div>
-        <Cancel onClick={handleBack}>取消</Cancel>
-        <Button onClick={handleExchange}>確認</Button>
-      </Content> : null }
-    { step === 2 ?
-      <Content>
-        <Title>兌換完成</Title>
-        <div>兌換券代碼可於「擁有的兌換券」中確認 請於效期內兌換完成</div>
-        <Button onClick={handleBack}>完成</Button>
-      </Content> : null }
+      {step === 0 ?
+        <Content>
+          <Title>{langText("COUPON_EXCH_ITEM")}</Title>
+          <List>
+            {Array(20).fill(0).map((key, index) => <Coupon key={index} {...couponData} setTargetCoupon={setTargetCoupon} />)}
+          </List>
+          <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
+        </Content> : null}
+      {step === 1 ?
+        <Content>
+          <Title>{langText("COUPON_CONFIRM_EXCH")}</Title>
+          {ReactHtmlParser(langText("COUPON_USING_POINTS").replace("{cost}", targetCoupon.cost)
+            .replace("{value}", targetCoupon.value))}
+          <Cancel onClick={handleBack}>{langText("CANCEL")}</Cancel>
+          <Button onClick={handleExchange}>{langText("CONFIRM")}</Button>
+        </Content> : null}
+      {step === 2 ?
+        <Content>
+          <Title>{langText("COUPON_EXCH_DONE")}</Title>
+          <div>{langText("COUPON_DONE_NOTICE")}</div>
+          <Button onClick={handleBack}>{langText("DONE")}</Button>
+        </Content> : null}
     </>
   )
 }
 
-const Exchange = ({setIsExchangeOpen}) => {
+const Exchange = ({ setIsExchangeOpen }) => {
   const [points, setPointes] = useState(() => {
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const token = Cookies.get('token');
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })
       .then((resp) => {
-        const { data:{ points }} = resp.data;
+        const { data: { points } } = resp.data;
         return parseInt(points, 10);
       })
       .catch((error) => {
@@ -262,22 +262,22 @@ const Exchange = ({setIsExchangeOpen}) => {
   const switchCoupon = () => setPage(1);
   const switchExchange = () => setPage(2);
   const handleCancel = () => setIsExchangeOpen(false);
-  return(
+  return (
     <Container>
-      { page === 0 ?
+      {page === 0 ?
         <>
-          <Title>點數兌換</Title>
-          <Description>您目前共有 {points} 點</Description>
+          <Title>{langText("COUPON_POINTS_EXCH")}</Title>
+          <Description>{langText("POINTS_OWNED").replace("{points}", points)}</Description>
           <Button onClick={switchCoupon}>
-            擁有的兌換券
+            {langText("COUPON_YOUR_COUPON")}
           </Button>
           <Button onClick={switchExchange}>
-            可兌換的項目
+            {langText("COUPON_EXCH_ITEM")}
           </Button>
-          <Cancel onClick={handleCancel}>返回</Cancel>
-        </> : null }
-      { page === 1 ? <CouponPage points={points} setPage={setPage} /> : null }
-      { page === 2 ? <ExchangePage points={points} setPage={setPage} /> : null }
+          <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
+        </> : null}
+      {page === 1 ? <CouponPage points={points} setPage={setPage} /> : null}
+      {page === 2 ? <ExchangePage points={points} setPage={setPage} /> : null}
     </Container>
   )
 }
