@@ -31,5 +31,6 @@ const router = express.Router();
 
 router.get('/', coupons.findAll);
 router.post('/', coupons.bind);
+router.get('/types', coupons.findAllTypes);
 
 module.exports = router;

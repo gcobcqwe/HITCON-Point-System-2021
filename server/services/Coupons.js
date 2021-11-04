@@ -81,6 +81,16 @@ class Coupons {
       throw e;
     }
   }
+
+  /**
+   * @description Attempt to get all coupon types.
+   * @return {Object}
+   */
+  async findAllTypes() {
+    return this._db.coupons_types.findAll({
+      attributes: ['id', 'name', 'points']
+    });
+  }
 }
 
 module.exports = Coupons;

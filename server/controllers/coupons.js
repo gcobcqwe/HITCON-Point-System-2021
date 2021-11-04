@@ -66,7 +66,23 @@ async function bind( req, res ) {
   }
 }
 
+/**
+ * @description Attempt to get all coupon types.
+ * @param {Request} req
+ * @param {Response} res
+ */
+async function findAllTypes( req, res ) {
+  try {
+    const result = await CouponsServiceInstance.findAllTypes();
+    res.status(StatusCodes.OK).send({success: true, data: result});
+  } catch (e) {
+    logger.error(e);
+    res.status(StatusCodes.BAD_REQUEST).send({success: false, message: msgAdaptor(e.message)});
+  }
+}
+
 module.exports = {
   findAll,
-  bind
+  bind,
+  findAllTypes
 };
