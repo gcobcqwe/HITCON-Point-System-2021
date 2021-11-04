@@ -248,9 +248,77 @@ export function langText(key) {
             "en": "Exchange Points",
             "zh": "點數兌換"
         },
-        "COUPON_POINTS_OWNED": {
+        "POINTS_OWNED": {
             "en": "You have {points} points",
             "zh": "您目前共有 {points} 點"
+        },
+        "TRADE_SEND_POINTS": {
+            "en": "Send points",
+            "zh": "發送點數"
+        },
+        "TRADE_SCAN_QR": {
+            "en": "Please scan the QR code provided by the receiver",
+            "zh": "請掃描欲發送對象的 QR code"
+        },
+        "TRADE_SENDING_QTY": {
+            "en": "Please enter the point quantity you're going to send. You have {points} points.",
+            "zh": "請輸入欲發送的點數數量 您目前共有 {points} 點"
+        },
+        "TRADE_SENDING_TARGET": {
+            "en": "Sending to: ",
+            "zh": "發送對象："
+        },
+        "TRADE_SENT_SUCESS": {
+            "en": "Succeeded",
+            "zh": "發送成功"
+        },
+        "TRADE_SENT_DESC": {
+            "en": "Sent {sendPoint} points to nickname",
+            "zh": "您已將 {sendPoint} 點給予 nickname"
+        },
+        "TRADE_SENT_REMAINING": {
+            "en": "{points} points remaining",
+            "zh": "剩餘 {points} 點"
+        },
+        "TRADE_RECEIVING": {
+            "en": "Receive points",
+            "zh": "接收點數"
+        },
+        "TRADE_PROVIDE_QR": {
+            "en": "Please show the QR code to the sender",
+            "zh": "請出示下方 QR code 給發送對象"
+        },
+        "TRADE_REDEEM_POINTS": {
+            "en": "Redeem Points",
+            "zh": "領取點數"
+        },
+        "TRADE_REDEEM_QR": {
+            "en": "Please scan the QR code",
+            "zh": "請掃描大會提供的 QR code"
+        },
+        "TRADE_REDEEM_CONFIRM": {
+            "en": "Redeem",
+            "zh": "領取"
+        },
+        "TRADE_REDEEM_DONE": {
+            "en": "Received {points} points",
+            "zh": "您已收到 {points} 點"
+        },
+        "TRADE_TRADING_POINTS": {
+            "en": "Trade Points",
+            "zh": "交易點數"
+        },
+        "TRADE_SEND": {
+            "en": "Send",
+            "zh": "發送"
+        },
+        "TRADE_RECEIVE": {
+            "en": "Receive",
+            "zh": "接收"
+        },
+        "TRADE_REDEEM": {
+            "en": "Redeem",
+            "zh": "領取"
         }
     }
 

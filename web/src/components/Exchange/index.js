@@ -267,7 +267,7 @@ const Exchange = ({ setIsExchangeOpen }) => {
       {page === 0 ?
         <>
           <Title>{langText("COUPON_POINTS_EXCH")}</Title>
-          <Description>{langText("COUPON_POINTS_OWNED").replace("{points}", points)}</Description>
+          <Description>{langText("POINTS_OWNED").replace("{points}", points)}</Description>
           <Button onClick={switchCoupon}>
             {langText("COUPON_YOUR_COUPON")}
           </Button>
