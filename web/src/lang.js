@@ -238,7 +238,7 @@ export function langText(key) {
         },
         "COUPON_USING_POINTS": {
             "en": "<div>Using {cost} points to exange for</div><div>{value}$ coupon.</div><div>Remaining points: xxxP </div>",
-            "zh": "<div>您即將使用 {cost} 點兌換</div><div>「 {value} $折價券 」</div><div>完成後將剩餘 3000 點</div>"
+            "zh": "<div>您即將使用 {cost} 點兌換</div><div>「 {value} $折價券 」</div><div>完成後將剩餘 {points} 點</div>"
         },
         "CANCEL": {
             "en": "Cancel",
