@@ -147,7 +147,8 @@ const Topics = ({eventToken}) => {
           text: "GO!"
         }]);
       }).catch((error) => {
-        console.error('get tg code', error);
+        const { state, data: {message} } = error.response;
+        console.error('get tg code', message);
       });
   }, [token])
 
@@ -230,7 +231,8 @@ const App = () => {
         const { success, data } = resp.data;
         if (success) setEventToken(data)
       }).catch((error) => {
-        console.error('get users error', error);
+        const { state, data: {message} } = error.response;
+        console.error('get users error: ', message);
       });
   }, [token])
 

@@ -113,7 +113,8 @@ const Redeem = ({ setIsRedeemOpen }) => {
         if (success) setRedeems(data);
       })
       .catch((error) => {
-        console.error('get coupons error', error);
+        const { state, data: {message} } = error.response;
+        console.error('get redeem-code error', message);
     });
   }, [step, displayCode]);
 

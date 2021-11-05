@@ -132,8 +132,9 @@ const SendPage = ({setPage}) => {
           setPoints(points - sendPoint);
         }
       })
-      .catch((err) => {
-        console.error('transactions error', err);
+      .catch((error) => {
+        const { state, data: {message} } = error.response;
+        console.error('transactions error: ', message);
       })
   }
   const handleCancel = () => setPage(0);
@@ -208,8 +209,9 @@ const TakePage = ({setPage}) => {
           setStep(1);
         }
       })
-      .catch((err) => {
-        console.error('exchange redeem-code error', err);
+      .catch((error) => {
+        const { state, data: {message} } = error.response;
+        console.error('exchange redeem-code error: ', message);
       });
   }
   const handleError = (err) => {
@@ -261,7 +263,8 @@ const Trading = ({setIsTradningOpen}) => {
         setUid(uid)
       })
       .catch((error) => {
-        console.error('get users error', error);
+        const { state, data: {message} } = error.response;
+        console.error('get users error: ', message);
       });
   }, []);
 

@@ -114,7 +114,8 @@ const CouponPage = ({ setPage }) => {
         setCoupons(data);
       })
       .catch((error) => {
-        console.error('get coupons error', error);
+        const { state, data: {message} } = error.response;
+        console.error('get coupons error: ', message);
     });
   },[]);
 
@@ -222,7 +223,8 @@ const ExchangePage = ({ points, setPage }) => {
         console.log(success);
         console.log(data);
       }).catch((error) => {
-        console.error('get coupons error', error);
+        const { state, data: {message} } = error.response;
+        console.error('exchange Coupons error: ', message);
     });
     setStep(2);
   };
@@ -236,7 +238,8 @@ const ExchangePage = ({ points, setPage }) => {
         setCouponList(data);
       })
       .catch((error) => {
-        console.error('get coupons/types error', error);
+        const { state, data: {message} } = error.response;
+        console.error('get coupons/types error: ', message);
     });
   },[]);
 
@@ -304,7 +307,8 @@ const Exchange = ({ setIsExchangeOpen }) => {
         setPointes(data.points);
       })
       .catch((error) => {
-        console.error('get users error', error);
+        const { state, data: {message} } = error.response;
+        console.error('get users error: ', message);
       });
   },[token])
 
