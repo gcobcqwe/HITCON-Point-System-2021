@@ -89,12 +89,13 @@ const Content = styled.div`
 
 const Table = styled.table``;
 
-const CouponRow = ({code, couponsType}) => {
+const CouponRow = ({code, changedAt, couponsType}) => {
   const [,value] = couponsType.name.split("_");
+  const time = new Date(changedAt);
   return(
     <tr>
       <td>{value}</td>
-      <td>2021/01/02</td>
+      <td>{`${time.getFullYear()}/${time.getMonth()+1}/${time.getDate()}`}</td>
       <td>{code} | <button onClick={() => {navigator.clipboard.writeText(code)}}>copy</button></td>
     </tr>
   )
@@ -109,12 +110,13 @@ const CouponPage = ({ setPage }) => {
     axios.get(apiURL, { headers })
       .then((resp) => {
         const { success, data } = resp.data;
+        console.log('coupons: ', data);
         setCoupons(data);
       })
       .catch((error) => {
         console.error('get coupons error', error);
     });
-  });
+  },[]);
 
   const handleCancel = () => setPage(0);
   return (
@@ -125,12 +127,12 @@ const CouponPage = ({ setPage }) => {
         <thead>
           <tr>
             <th>{langText("COUPON_PRICE")}</th>
-            <th>{langText("COUPON_DEADLINE")}</th>
+            <th>{langText("COUPON_CHANGED_DATE")}</th>
             <th>{langText("COUPON_TOKEN")}</th>
           </tr>
         </thead>
         <tbody>
-          {coupons.map((c, idx) => <CouponRow key={idx} code={c.code} couponsType={c.coupons_type} />) }
+          {coupons.map((c, idx) => <CouponRow key={idx} changedAt={c.updated_at} code={c.code} couponsType={c.coupons_type} />) }
         </tbody>
       </Table>
       <Button><a href="#">{langText("COUPON_HITCON_STORE")}</a></Button>
