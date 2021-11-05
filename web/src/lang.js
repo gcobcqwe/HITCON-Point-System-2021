@@ -200,9 +200,9 @@ export function langText(key) {
             "en": "Price",
             "zh": "金額"
         },
-        "COUPON_DEADLINE": {
-            "en": "Valid Before",
-            "zh": "有效期限"
+        "COUPON_CHANGED_DATE": {
+            "en": "Redemption date",
+            "zh": "兌換日期"
         },
         "COUPON_TOKEN": {
             "en": "Coupon Code",
