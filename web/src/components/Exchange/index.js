@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import QRCode from "react-qr-code";
 import Cookies from "js-cookie";
 import Modal from "../Modal";
 import { langText } from "../../lang";
@@ -86,12 +87,35 @@ const Content = styled.div`
   }
 `;
 
-const Table = styled.table`
+const Table = styled.table``;
 
-`
+const CouponRow = ({code, couponsType}) => {
+  const [,value] = couponsType.name.split("_");
+  return(
+    <tr>
+      <td>{value}</td>
+      <td>2021/01/02</td>
+      <td>{code} | <button onClick={() => {navigator.clipboard.writeText(code)}}>copy</button></td>
+    </tr>
+  )
+}
 
 
 const CouponPage = ({ setPage }) => {
+  const [coupons, setCoupons] = useState([]);
+  useEffect(()=>{
+    const apiURL = `${process.env.POINT_URL}/coupons`;
+    const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
+    axios.get(apiURL, { headers })
+      .then((resp) => {
+        const { success, data } = resp.data;
+        setCoupons(data);
+      })
+      .catch((error) => {
+        console.error('get coupons error', error);
+    });
+  });
+
   const handleCancel = () => setPage(0);
   return (
     <Content>
@@ -106,26 +130,7 @@ const CouponPage = ({ setPage }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>123</td>
-            <td>2021/01/02</td>
-            <td>lkxjcvlkjxcvl;lks;ldkf</td>
-          </tr>
-          <tr>
-            <td>123</td>
-            <td>2021/01/02</td>
-            <td>lkxjcvlkjxcvl;lks;ldkf</td>
-          </tr>
-          <tr>
-            <td>123</td>
-            <td>2021/01/02</td>
-            <td>lkxjcvlkjxcvl;lks;ldkf</td>
-          </tr>
-          <tr>
-            <td>123</td>
-            <td>2021/01/02</td>
-            <td>lkxjcvlkjxcvl;lks;ldkf</td>
-          </tr>
+          {coupons.map((c, idx) => <CouponRow key={idx} code={c.code} couponsType={c.coupons_type} />) }
         </tbody>
       </Table>
       <Button><a href="#">{langText("COUPON_HITCON_STORE")}</a></Button>
@@ -202,12 +207,22 @@ const ExchangePage = ({ points, setPage }) => {
   const [step, setStep] = useState(0);
   const [targetCoupon, setTargetCoupon] = useState(null);
   const handleExchange = () => {
-    // TODO API if ok
+    const apiURL = `${process.env.POINT_URL}/coupons`;
+    const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
+    axios.post(apiURL,{type}, { headers })
+      .then((resp) => {
+        const { success, data } = resp.data;
+        setCoupons(data);
+      })
+      .catch((error) => {
+        console.error('get coupons error', error);
+    });
     setStep(2);
   };
   const handleBack = () => setStep(0);
   const handleCancel = () => setPage(0);
   const couponData = {
+    coupons_type: "shopee_500",
     value: 100,
     cost: 300,
   }
@@ -245,29 +260,34 @@ const ExchangePage = ({ points, setPage }) => {
 }
 
 const Exchange = ({ setIsExchangeOpen }) => {
-  const [points, setPointes] = useState(() => {
-    const apiURL = `${process.env.POINT_URL}/users/me`;
-    const token = Cookies.get('token');
-    const headers = { 'Authorization': `Bearer ${token}` }
-    axios.get(apiURL, { headers })
-      .then((resp) => {
-        const { data: { points } } = resp.data;
-        return parseInt(points, 10);
-      })
-      .catch((error) => {
-        console.error('get users error', error);
-      });
-  });
+  const [role, setRole] = useState(null);
+  const [points, setPointes] = useState(0);
   const [page, setPage] = useState(0);
   const switchCoupon = () => setPage(1);
   const switchExchange = () => setPage(2);
   const handleCancel = () => setIsExchangeOpen(false);
+
+  useEffect(() => {
+    const apiURL = `${process.env.POINT_URL}/users/me`;
+    const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
+    axios.get(apiURL, { headers })
+      .then((resp) => {
+        const { data } = resp.data;
+        setPointes(data.points);
+      })
+      .catch((error) => {
+        console.error('get users error', error);
+      });
+  },[])
+
   return (
     <Container>
       {page === 0 ?
         <>
           <Title>{langText("COUPON_POINTS_EXCH")}</Title>
-          <Description>{langText("POINTS_OWNED").replace("{points}", points)}</Description>
+          <Description>
+            {langText("POINTS_OWNED").replace("{points}", points)}
+          </Description>
           <Button onClick={switchCoupon}>
             {langText("COUPON_YOUR_COUPON")}
           </Button>

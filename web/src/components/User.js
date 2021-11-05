@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import Mask from "./Mask";
 import Trade from "./Trade";
 import Exchange from "./Exchange";
+import Redeem from "./Redeem";
 import { langText } from "../lang";
 
 const PositionFixed = styled.div`
@@ -201,8 +202,10 @@ const UserContiner = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTradingOpen, setIsTradningOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
+  const [isRedeemOpen, setIsRedeemOpen] = useState(false);
   const [nickname, setNickname] = useState();
   const [points, setPoints] = useState();
+  const [role, setRole] = useState();
 
   const [user, setUser] = useState(() => {
     const token = Cookies.get('token');
@@ -212,8 +215,10 @@ const UserContiner = () => {
       .then((resp) => {
         const { success, data} = resp.data;
         if (success) {
-          setPoints(data.points)
+          setRole(data.role);
+          setPoints(data.points);
           setNickname(data.nick_name);
+          console.log('user data: ', data);
           return data;
         }
       }).catch((error) => {
@@ -240,7 +245,8 @@ const UserContiner = () => {
           </Points>
           <Actions>
             <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
-            <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
+            <ActionButton
+          onClick={() => role === "vendor" ? setIsRedeemOpen(true): setIsExchangeOpen(true)}>{role === "vendor" ?langText("REDEEM_LIST_TITLE") : langText("USER_REDEEM_POINTS")}</ActionButton>
           </Actions>
         </Menu> :
         null
@@ -265,11 +271,13 @@ const UserContiner = () => {
       </Points>
       <Actions>
         <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
-        <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
+        <ActionButton
+          onClick={() => role === "vendor" ? setIsRedeemOpen(true): setIsExchangeOpen(true)}>{role === "vendor" ?langText("REDEEM_LIST_TITLE") : langText("USER_REDEEM_POINTS")}</ActionButton>
       </Actions>
     </UserWide>
     { isTradingOpen ? <Trade setIsTradningOpen={setIsTradningOpen} /> : null }
     { isExchangeOpen ? <Exchange setIsExchangeOpen={setIsExchangeOpen} /> : null}
+    { isRedeemOpen ? <Redeem setIsRedeemOpen={setIsRedeemOpen} /> : null}
     </>
   )
 }

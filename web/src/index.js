@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import { langText, LANG } from "./lang";
 import "./index.css";
 
+import Exchange from "./components/Exchange"
+
 import TopicTGImg from "./public/tg.png";
 import TopicOnlineImg from "./public/online.png";
 import TopicADVImg from "./public/online.png";
@@ -195,18 +197,19 @@ const App = () => {
   const [isTopic, setIsTopic] = useState(true);
   const [eventToken, setEventToken] = useState({});
   const [authorized, setAuthorized] = useState(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const tokenFromParams = urlParams.get('token');
+    if (tokenFromParams !== null) {
+      setToken(tokenFromParams);
+      Cookies.set('token', tokenFromParams);
+      return true;
+    }
+
     const tokenFromCookies = Cookies.get('token');
     if (tokenFromCookies !== undefined) {
       setToken(tokenFromCookies);
       return true;
-    } else {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const tokenFromParams = urlParams.get('token');
-      if (tokenFromParams !== null) {
-        setToken(tokenFromParams);
-        return true;
-      }
     }
     return false;
   });
@@ -223,7 +226,6 @@ const App = () => {
         console.error('get users error', error);
       });
   }, [token])
-
 
   return (
     <>

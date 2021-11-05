@@ -252,6 +252,38 @@ export function langText(key) {
             "en": 'You can check the Coupon Code in "My Coupon" section. Please complete your redemption before the deadline',
             "zh": "兌換券代碼可於「擁有的兌換券」中確認 請於效期內兌換完成"
         },
+        "REDEEM_LIST_TITLE": {
+            "en": "",
+            "zh": "兌換碼發放"
+        },
+        "REDEEM_VALUE": {
+            "en": "",
+            "zh": "金額"
+        },
+        "REDEEM_STATE": {
+            "en": "",
+            "zh": "狀態"
+        },
+        "REDEEM_STATE_AVAIABLE": {
+            "en": "",
+            "zh": "可發送"
+        },
+        "REDEEM_STATE_SENT": {
+            "en": "",
+            "zh": "已發送"
+        },
+        "REDEEM_CODE": {
+            "en": "",
+            "zh": "兌換券代碼"
+        },
+        "REDEEM_TARGET": {
+            "en": "?",
+            "zh": "請出示給欲發送對象"
+        },
+        "REDEEM_COUNTER": {
+            "en": "",
+            "zh": "尚有 {number} 份兌換碼可發送"
+        },
         "DONE": {
             "en": "Done",
             "zh": "完成"
