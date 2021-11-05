@@ -102,6 +102,7 @@ const Tab = styled.div`
 
 
 const Topics = ({eventToken}) => {
+  const [token, setToken] = useState();
   const [tgLink, setTgLink] = useState([]);
 
   const onlineLink = [{
@@ -130,8 +131,14 @@ const Topics = ({eventToken}) => {
 
   useEffect(() => {
     const tokenFromCookies = Cookies.get('token');
+    if (tokenFromCookies === undefined) return;
+    setToken(tokenFromCookies);
+  })
+
+  useEffect(() => {
+    if (token === undefined) return;
     const apiURL = `${process.env.POINT_URL}/tg/generate-code`;
-    const headers = { 'Authorization': `Bearer ${tokenFromCookies}` }
+    const headers = { 'Authorization': `Bearer ${token}` }
     axios.post(apiURL, headers, { headers })
       .then((resp) => {
         const { code } = resp.data;
@@ -142,7 +149,7 @@ const Topics = ({eventToken}) => {
       }).catch((error) => {
         console.error('get tg code', error);
       });
-  }, [])
+  }, [token])
 
   return (
     <>
@@ -192,8 +199,8 @@ const Topics = ({eventToken}) => {
 }
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useState();
+  const [token, setToken] = useState();
   const [isTopic, setIsTopic] = useState(true);
   const [eventToken, setEventToken] = useState({});
   const [authorized, setAuthorized] = useState(() => {
@@ -215,7 +222,7 @@ const App = () => {
   });
 
   useEffect(() => {
-    if (token === null) return;
+    if (token === undefined) return;
     const apiURL = `${process.env.POINT_URL}/users/me/events`;
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })

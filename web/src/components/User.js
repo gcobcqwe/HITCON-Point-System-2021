@@ -195,10 +195,10 @@ const UserWide = styled.div`
   ${ActionButton} {
     width: 48%;
   }
-
 `;
 
 const UserContiner = () => {
+  const [token, setToken] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTradingOpen, setIsTradningOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
@@ -206,15 +206,37 @@ const UserContiner = () => {
   const [nickname, setNickname] = useState();
   const [points, setPoints] = useState();
   const [role, setRole] = useState();
+  const [user, setUser] = useState()
 
-  const [user, setUser] = useState(() => {
-    const token = Cookies.get('token');
+  const openMenu = () => setIsMenuOpen(!isMenuOpen);
+  const handleMask = () => {
+    document.getElementById("menuCheck").checked = false;
+    setIsMenuOpen(false);
+    setIsTradningOpen(false);
+  }
+
+  useEffect(() => {
+    const tokenFromCookies = Cookies.get('token');
+    if (tokenFromCookies === undefined) {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const tokenFromParams = urlParams.get('token');
+      if (tokenFromParams !== undefined) setToken(tokenFromParams)
+      return;
+    } else {
+      setToken(tokenFromCookies);
+    }
+  })
+
+  useEffect(() => {
+    if (token === undefined) return;
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })
       .then((resp) => {
         const { success, data} = resp.data;
         if (success) {
+          setUser(data);
           setRole(data.role);
           setPoints(data.points);
           setNickname(data.nick_name);
@@ -224,13 +246,7 @@ const UserContiner = () => {
       }).catch((error) => {
         console.error('get users error', error);
       })
-  })
-  const openMenu = () => setIsMenuOpen(!isMenuOpen);
-  const handleMask = () => {
-    document.getElementById("menuCheck").checked = false;
-    setIsMenuOpen(false);
-    setIsTradningOpen(false);
-  }
+  },[token]);
 
   useEffect(() => {
     const token = Cookies.get('token');

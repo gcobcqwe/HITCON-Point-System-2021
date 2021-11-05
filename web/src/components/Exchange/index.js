@@ -191,7 +191,7 @@ const Action = styled.div`
 `;
 
 const Coupon = ({ name, points, setTargetCoupon }) => {
-  const handleExchange = () => {
+  const setCoupon = () => {
     setTargetCoupon({ name, points });
   }
   const value = name.split('_')[1];
@@ -201,14 +201,18 @@ const Coupon = ({ name, points, setTargetCoupon }) => {
         <Value>{value}{langText("COUPON_NAME")}</Value>
         <Cost>{langText("COUPON_COST")} {points}P</Cost>
       </Info>
-      <Action onClick={handleExchange}>{langText("COUPON_EXCHANGE")}</Action>
+      <Action onClick={setCoupon}>{langText("COUPON_EXCHANGE")}</Action>
     </Wrapper>
   )
 }
 
 const ExchangePage = ({ points, setPage }) => {
+  const [token, setToken] = useState();
   const [step, setStep] = useState(0);
+  const handleBack = () => setStep(0);
+  const handleCancel = () => setPage(0);
   const [targetCoupon, setTargetCoupon] = useState(null);
+  const [couponList, setCouponList] = useState([]);
   const handleExchange = () => {
     const apiURL = `${process.env.POINT_URL}/coupons`;
     const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
@@ -222,9 +226,7 @@ const ExchangePage = ({ points, setPage }) => {
     });
     setStep(2);
   };
-  const handleBack = () => setStep(0);
-  const handleCancel = () => setPage(0);
-  const [couponList, setCouponList] = useState([]);
+
   useEffect(() => {
     const apiURL = `${process.env.POINT_URL}/coupons/types`;
     const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
@@ -273,7 +275,7 @@ const ExchangePage = ({ points, setPage }) => {
 }
 
 const Exchange = ({ setIsExchangeOpen }) => {
-  const [role, setRole] = useState(null);
+  const [token, setToken] = useState();
   const [points, setPointes] = useState(0);
   const [page, setPage] = useState(0);
   const switchCoupon = () => setPage(1);
@@ -281,6 +283,19 @@ const Exchange = ({ setIsExchangeOpen }) => {
   const handleCancel = () => setIsExchangeOpen(false);
 
   useEffect(() => {
+    const tokenFromCookies = Cookies.get('token');
+    if (tokenFromCookies === undefined) {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const tokenFromParams = urlParams.get('token');
+      if (tokenFromParams !== undefined) setToken(tokenFromParams)
+    } else {
+      setToken(tokenFromCookies);
+    }
+  })
+
+  useEffect(() => {
+    if (token === undefined) return;
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
     axios.get(apiURL, { headers })
@@ -291,7 +306,7 @@ const Exchange = ({ setIsExchangeOpen }) => {
       .catch((error) => {
         console.error('get users error', error);
       });
-  },[])
+  },[token])
 
   return (
     <Container>
