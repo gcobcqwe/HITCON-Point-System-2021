@@ -188,15 +188,16 @@ const Action = styled.div`
   cursor: pointer;
 `;
 
-const Coupon = ({ value, cost, setTargetCoupon }) => {
+const Coupon = ({ name, points, setTargetCoupon }) => {
   const handleExchange = () => {
-    setTargetCoupon({ value, cost });
+    setTargetCoupon({ name, points });
   }
+  const value = name.split('_')[1];
   return (
     <Wrapper>
       <Info>
         <Value>{value}{langText("COUPON_NAME")}</Value>
-        <Cost>{langText("COUPON_COST")} {cost}P</Cost>
+        <Cost>{langText("COUPON_COST")} {points}P</Cost>
       </Info>
       <Action onClick={handleExchange}>{langText("COUPON_EXCHANGE")}</Action>
     </Wrapper>
@@ -209,23 +210,31 @@ const ExchangePage = ({ points, setPage }) => {
   const handleExchange = () => {
     const apiURL = `${process.env.POINT_URL}/coupons`;
     const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
-    axios.post(apiURL,{type}, { headers })
+    axios.post(apiURL,{ type: targetCoupon.name }, { headers })
       .then((resp) => {
         const { success, data } = resp.data;
-        setCoupons(data);
-      })
-      .catch((error) => {
+        console.log(success);
+        console.log(data);
+      }).catch((error) => {
         console.error('get coupons error', error);
     });
     setStep(2);
   };
   const handleBack = () => setStep(0);
   const handleCancel = () => setPage(0);
-  const couponData = {
-    coupons_type: "shopee_500",
-    value: 100,
-    cost: 300,
-  }
+  const [couponList, setCouponList] = useState([]);
+  useEffect(() => {
+    const apiURL = `${process.env.POINT_URL}/coupons/types`;
+    const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
+    axios.get(apiURL, { headers })
+      .then((resp) => {
+        const { success, data } = resp.data;
+        setCouponList(data);
+      })
+      .catch((error) => {
+        console.error('get coupons/types error', error);
+    });
+  },[]);
 
   useEffect(() => {
     if (targetCoupon === null) return;
@@ -237,15 +246,17 @@ const ExchangePage = ({ points, setPage }) => {
         <Content>
           <Title>{langText("COUPON_EXCH_ITEM")}</Title>
           <List>
-            {Array(20).fill(0).map((key, index) => <Coupon key={index} {...couponData} setTargetCoupon={setTargetCoupon} />)}
+            {couponList.map((c, index) => <Coupon name={c.name} points={c.points} key={index}  setTargetCoupon={setTargetCoupon} />)}
           </List>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </Content> : null}
       {step === 1 ?
         <Content>
           <Title>{langText("COUPON_CONFIRM_EXCH")}</Title>
-          {ReactHtmlParser(langText("COUPON_USING_POINTS").replace("{cost}", targetCoupon.cost)
-            .replace("{value}", targetCoupon.value))}
+          {ReactHtmlParser(langText("COUPON_USING_POINTS")
+            .replace("{cost}", targetCoupon.points)
+            .replace("{value}", targetCoupon.name.split('_')[1])
+            .replace("{points}", (points - targetCoupon.points)))}
           <Cancel onClick={handleBack}>{langText("CANCEL")}</Cancel>
           <Button onClick={handleExchange}>{langText("CONFIRM")}</Button>
         </Content> : null}
