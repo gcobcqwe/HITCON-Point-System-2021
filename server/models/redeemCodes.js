@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       notEmpty: true
     },
     issuer: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       notEmpty: true
     },
     points: {

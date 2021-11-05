@@ -52,11 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       notEmpty: true
     },
     sender: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       notEmpty: true
     },
     receiver: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       notEmpty: true
     },
     type: {
