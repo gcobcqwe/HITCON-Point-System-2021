@@ -7,6 +7,8 @@ import TableScrollbar from 'react-table-scrollbar';
 import Modal from "../Modal";
 import { langText } from "../../lang";
 
+import QRcodeImg from "../../public/qrcode.svg";
+
 const Container = styled(Modal)`
   padding: 20px 15px 15px 20px;
   @media(min-width: 1280px) {
@@ -72,6 +74,10 @@ const Cancel = styled(Button)`
 `;
 
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   @media(min-width: 1280px) {
     display: block;
     height: 100%;
@@ -88,7 +94,65 @@ const Content = styled.div`
   }
 `;
 
+const TableWrapper = styled.div`
+  max-height: 60vh;
+  overflow: auto;
+
+  @media(min-width: 1280px) {
+    max-height: 35vh;
+  }
+`;
+
 const Table = styled.table`
+  position: relative;
+
+
+  th, td {
+    padding: 15px 10px;
+    box-sizing: border-box;
+  }
+
+  th {
+    padding: 10px;
+    z-index: 1;
+    background: #002680;
+    color: #fff;
+    position: sticky;
+    top: 0;
+  }
+
+  tr {
+    background: #EDEDED;
+
+    td:nth-child(1) {
+      min-width: 85px;
+      text-align: center;
+    }
+    td:nth-child(2) {
+      min-width: 100px;
+    }
+    td:nth-child(3) {
+      position: relative;
+      max-width: 162px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 15px 40px 15px 10px;
+
+
+      button {
+        position: absolute;
+        top: 7px;
+        right: 0;
+      }
+
+      img {
+        background: inherit;
+        border: 4px solid #fff;
+        border-radius: 5px;
+        box-shadow: 0px 2px 4px #101010d9;
+      }
+    }
 `;
 
 
@@ -98,7 +162,12 @@ const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
     <tr>
       <td>{points}</td>
       <td>{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</td>
-      <td>{code} | <button onClick={handleShow}>show</button></td>
+      <td>
+        {code}
+        <button onClick={handleShow}>
+          <img src={QRcodeImg} />
+        </button>
+      </td>
     </tr>
   )
 }
@@ -134,8 +203,6 @@ const Redeem = ({ setIsRedeemOpen }) => {
     setDisplayCode(null);
   }
 
-
-
   return (
     <Container>
       {step === 0 ?
@@ -145,20 +212,20 @@ const Redeem = ({ setIsRedeemOpen }) => {
             return r.is_used === false;
           }).length)}
           </Description>
-          <TableScrollbar>
-            <Table>
-              <thead>
-                <tr>
-                  <th>{langText("REDEEM_VALUE")}</th>
-                  <th>{langText("REDEEM_STATE")}</th>
-                  <th>{langText("REDEEM_CODE")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {redeems.map((r, idx) => <RedeemRow key={idx} isUsed={r.is_used} code={r.code} points={r.points} setDisplayCode={setDisplayCode} />)}
-              </tbody>
-            </Table>
-          </TableScrollbar>
+          <TableWrapper>
+          <Table>
+            <thead>
+              <tr>
+                <th>{langText("REDEEM_VALUE")}</th>
+                <th>{langText("REDEEM_STATE")}</th>
+                <th>{langText("REDEEM_CODE")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {redeems.map((r, idx) => <RedeemRow key={idx} isUsed={r.is_used} code={r.code} points={r.points} setDisplayCode={setDisplayCode} />)}
+            </tbody>
+          </Table>
+          </TableWrapper>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </Content> : null}
       {step === 1 ?
