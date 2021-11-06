@@ -101,10 +101,17 @@ const SendPage = ({setPage}) => {
   const [sendPoint, setSendPoint] = useState(0);
   const [step, setStep] = useState(0);
   const [receiver, setReceiver] = useState('null');
-  const handleScan = (data) => {
-    if (data === null) return;
-    setReceiver(data);
-    setStep(1);
+  const handleScan = (stringData) => {
+    if (stringData === null) return;
+    const data = JSON.parse(stringData);
+    const {uid, amount} = data;
+    setReceiver(uid);
+    if (amount !== undefined) {
+      setSendPoint(amount);
+      setStep(2);
+    } else {
+      setStep(1);
+    }
   };
   const handleError = (error) => {
     console.error({error});
@@ -178,7 +185,7 @@ const ReceivedPage = ({uid, setPage}) => {
       <Title>{langText("TRADE_RECEIVING")}</Title>
       <Description>{langText("TRADE_PROVIDE_QR")}</Description>
       <QRCode value={uid} />
-      <span>value: {uid}</span>
+      <span style={{"wordBreak": "break-word"}}>value: {uid}</span>
       <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
     </Content>
   )
@@ -260,7 +267,7 @@ const Trading = ({setIsTradningOpen}) => {
         const { data:{ points, uid }} = resp.data;
         user.points = points;
         setUser(user);
-        setUid(uid)
+        setUid(JSON.stringify({uid}));
       })
       .catch((error) => {
         const { state, data: {message} } = error.response;
