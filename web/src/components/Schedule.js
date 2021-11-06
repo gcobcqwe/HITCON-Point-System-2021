@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import Program from "./Program";
 const SessionInfo = require('../session.json');
 import moment from "moment";
 import { langText, LANG } from "../lang";
+import UserContext from '../UserContext.js';
 
 const Wrapper = styled.div`
   display:flex;
@@ -32,6 +33,12 @@ const Link = styled.a`
 
 
 const Schedule = () => {
+  const streamProvider = 'https://hitcon.opass.app';
+  const [user, setUser] = useContext(UserContext);
+  const code = user.private_kktix_code;
+  const composeStreamLink = (room) => {
+    return `${streamProvider}/${room}/${code}`
+  }
   let time = moment();
   let currentSessions = {};
   for (var session of SessionInfo.sessions) {
@@ -56,7 +63,7 @@ const Schedule = () => {
         }).map(function (element) {
           return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R0"]?.[LANG].description} />
+      } brief={currentSessions["R0"]?.[LANG].description} streamLink={composeStreamLink('r0')} />
 
       <Program location="R1" title={currentSessions["R1"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
@@ -64,7 +71,7 @@ const Schedule = () => {
         }).map(function (element) {
           return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R1"]?.[LANG].description} />
+      } brief={currentSessions["R1"]?.[LANG].description} streamLink={composeStreamLink('r1')} />
 
       <Program location="R2" title={currentSessions["R2"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
@@ -72,7 +79,7 @@ const Schedule = () => {
         }).map(function (element) {
           return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R2"]?.[LANG].description} />
+      } brief={currentSessions["R2"]?.[LANG].description} streamLink={composeStreamLink('r2')} />
 
       {/* <Program location="R3" title={currentSessions["R3"]?.[LANG].title} speaker={
         SessionInfo.speakers.filter(function (s) {
