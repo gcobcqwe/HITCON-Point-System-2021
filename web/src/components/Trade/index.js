@@ -11,7 +11,7 @@ import ReceivedIcon from "../../public/material-call_received.svg";
 import GiftIcon from "../../public/ionic-ios-gift.svg";
 import { langText } from "../../lang";
 
-import { ThemeContext } from '../../index.js';
+import UserContext from '../../UserContext.js';
 
 const TradingContainer = styled(Modal)`
   @media(min-width: 1280px) {
@@ -97,7 +97,7 @@ const Content = styled.div`
 `;
 
 const SendPage = ({setPage}) => {
-  const [user, setUser] = useContext(ThemeContext);
+  const [user, setUser] = useContext(UserContext);
   const [sendPoint, setSendPoint] = useState(0);
   const [step, setStep] = useState(0);
   const [receiver, setReceiver] = useState('null');
@@ -189,7 +189,7 @@ ReceivedPage.defaultProps = {
 }
 
 const TakePage = ({setPage}) => {
-  const [user, setUser] = useContext(ThemeContext);
+  const [user, setUser] = useContext(UserContext);
   const [step, setStep] = useState(0);
   const [points, setPoints] = useState();
   const handleScan = (data) => {
@@ -243,7 +243,7 @@ const TakePage = ({setPage}) => {
 const TradingMain = styled.div``;
 
 const Trading = ({setIsTradningOpen}) => {
-  const [user, setUser] = useContext(ThemeContext);
+  const [user, setUser] = useContext(UserContext);
   const [uid, setUid] = useState();
   const [page, setPage] = useState(0);
   const switchSend = () => setPage(1);
