@@ -204,27 +204,22 @@ const App = () => {
   const [token, setToken] = useState();
   const [isTopic, setIsTopic] = useState(true);
   const [eventToken, setEventToken] = useState({});
-  const [authorized, setAuthorized] = useState(() => {
+  const [authorized, setAuthorized] = useState(true);
+
+  useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const tokenFromParams = urlParams.get('token');
     if (tokenFromParams !== null) {
       setToken(tokenFromParams);
-      Cookies.set('token', tokenFromParams);
-      window.history.replaceState({}, document.title, "/");
-      return true;
+    } else {
+      const tokenFromCookies = Cookies.get('token');
+      if (tokenFromCookies !== undefined) {
+        setToken(tokenFromCookies);
+      }
     }
-
-    const tokenFromCookies = Cookies.get('token');
-    if (tokenFromCookies !== undefined) {
-      setToken(tokenFromCookies);
-      return true;
-    }
-    return false;
-  });
-
-  useEffect(() => {
     if (token === undefined) return;
+
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })
@@ -232,12 +227,15 @@ const App = () => {
         const { success, data} = resp.data;
         if (success) {
           setUser(data);
+          Cookies.set('token', token);
+          window.history.replaceState({}, document.title, "/");
           console.log('user data: ', data);
           return data;
         }
       }).catch((error) => {
         const { state, data: {message} } = error.response;
         console.error('get users error', message);
+        setAuthorized(false);
       })
   },[token]);
 
