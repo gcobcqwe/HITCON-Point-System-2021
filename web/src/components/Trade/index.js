@@ -124,7 +124,7 @@ const SendPage = ({setPage}) => {
     const apiURL = `${process.env.POINT_URL}/points/transactions`;
     const token = Cookies.get('token');
     const headers = { 'Authorization': `Bearer ${token}` }
-    axios.post(apiURL, {points: sendPoint, receiver})
+    axios.post(apiURL, {points: parseInt(sendPoint), receiver}, {headers})
       .then((resp) => {
         const { success } = resp.data;
         if (success) {
