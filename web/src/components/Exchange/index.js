@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import QRCode from "react-qr-code";
 import Cookies from "js-cookie";
 import Modal from "../Modal";
 import { langText } from "../../lang";
 import ReactHtmlParser from "react-html-parser"
+import { ThemeContext } from '../../index.js';
 
 const Container = styled(Modal)`
   @media(min-width: 1280px) {
@@ -279,7 +280,7 @@ const ExchangePage = ({ points, setPage }) => {
 
 const Exchange = ({ setIsExchangeOpen }) => {
   const [token, setToken] = useState();
-  const [points, setPointes] = useState(0);
+  const [user, setUser] = useContext(ThemeContext);
   const [page, setPage] = useState(0);
   const switchCoupon = () => setPage(1);
   const switchExchange = () => setPage(2);
@@ -304,7 +305,8 @@ const Exchange = ({ setIsExchangeOpen }) => {
     axios.get(apiURL, { headers })
       .then((resp) => {
         const { data } = resp.data;
-        setPointes(data.points);
+        user.points = data.points;
+        setUser(user);
       })
       .catch((error) => {
         const { state, data: {message} } = error.response;

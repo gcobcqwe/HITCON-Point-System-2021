@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
 import Cookies from "js-cookie";
 import Mask from "./Mask";
@@ -7,6 +7,7 @@ import Trade from "./Trade";
 import Exchange from "./Exchange";
 import Redeem from "./Redeem";
 import { langText } from "../lang";
+import { ThemeContext } from '../index.js';
 
 const PositionFixed = styled.div`
   position: fixed;
@@ -203,10 +204,10 @@ const UserContiner = () => {
   const [isTradingOpen, setIsTradningOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
   const [isRedeemOpen, setIsRedeemOpen] = useState(false);
-  const [nickname, setNickname] = useState();
-  const [points, setPoints] = useState();
-  const [role, setRole] = useState();
-  const [user, setUser] = useState()
+  const [user, setUser] = useContext(ThemeContext);
+  const nickname = user.nick_name;
+  const role = user.role;
+  const points = user.points;
 
   const openMenu = () => setIsMenuOpen(!isMenuOpen);
   const handleMask = () => {
@@ -227,27 +228,6 @@ const UserContiner = () => {
       setToken(tokenFromCookies);
     }
   })
-
-  useEffect(() => {
-    if (token === undefined) return;
-    const apiURL = `${process.env.POINT_URL}/users/me`;
-    const headers = { 'Authorization': `Bearer ${token}` }
-    axios.get(apiURL, { headers })
-      .then((resp) => {
-        const { success, data} = resp.data;
-        if (success) {
-          setUser(data);
-          setRole(data.role);
-          setPoints(data.points);
-          setNickname(data.nick_name);
-          console.log('user data: ', data);
-          return data;
-        }
-      }).catch((error) => {
-        const { state, data: {message} } = error.response;
-        console.error('get users error', message);
-      })
-  },[token]);
 
   return (
     <>

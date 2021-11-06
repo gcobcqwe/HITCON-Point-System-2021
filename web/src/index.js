@@ -196,9 +196,9 @@ const Topics = ({eventToken}) => {
     </>
   )
 }
-
+export const ThemeContext = React.createContext();
 const App = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [token, setToken] = useState();
   const [isTopic, setIsTopic] = useState(true);
   const [eventToken, setEventToken] = useState({});
@@ -222,6 +222,24 @@ const App = () => {
 
   useEffect(() => {
     if (token === undefined) return;
+    const apiURL = `${process.env.POINT_URL}/users/me`;
+    const headers = { 'Authorization': `Bearer ${token}` }
+    axios.get(apiURL, { headers })
+      .then((resp) => {
+        const { success, data} = resp.data;
+        if (success) {
+          setUser(data);
+          console.log('user data: ', data);
+          return data;
+        }
+      }).catch((error) => {
+        const { state, data: {message} } = error.response;
+        console.error('get users error', message);
+      })
+  },[token]);
+
+  useEffect(() => {
+    if (token === undefined) return;
     const apiURL = `${process.env.POINT_URL}/users/me/events`;
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })
@@ -236,27 +254,29 @@ const App = () => {
 
   return (
     <>
-      <Main>
-        <Header>
-          <Title>HITCON 2021</Title>
-          <Language>
-            <span onClick={() => { Cookies.set("lang", "en"); location.reload() }}>EN</span>|<span onClick={() => { Cookies.set("lang", "zh"); location.reload() }}>TW</span>
-          </Language>
-        </Header>
-        {authorized ?
-          (<>
-            <User />
-            <Tab>
-              <button className={isTopic ? "active" : ""} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_EVENT")}</button>
-              <button className={isTopic ? "" : "active"} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_AGENDA")}</button>
-            </Tab>
-            { isTopic ?
-              <Topics eventToken={eventToken} /> :
-              <Schedule />
-            }
-          </>) : <Unauth />
-        }
-      </Main>
+      <ThemeContext.Provider value={[user, setUser]}>
+        <Main>
+          <Header>
+            <Title>HITCON 2021</Title>
+            <Language>
+              <span onClick={() => { Cookies.set("lang", "en"); location.reload() }}>EN</span>|<span onClick={() => { Cookies.set("lang", "zh"); location.reload() }}>TW</span>
+            </Language>
+          </Header>
+          {authorized ?
+            (<>
+              <User />
+              <Tab>
+                <button className={isTopic ? "active" : ""} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_EVENT")}</button>
+                <button className={isTopic ? "" : "active"} onClick={() => setIsTopic(!isTopic)}>{langText("TAB_AGENDA")}</button>
+              </Tab>
+              { isTopic ?
+                <Topics eventToken={eventToken} /> :
+                <Schedule />
+              }
+            </>) : <Unauth />
+          }
+        </Main>
+      </ThemeContext.Provider>
       <Footer />
     </>
   )
