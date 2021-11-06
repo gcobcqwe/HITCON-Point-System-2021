@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import { langText } from "../../lang";
 
 const Container = styled(Modal)`
+  padding: 20px 15px 15px 20px;
   @media(min-width: 1280px) {
     flex-direction: row;
     align-items: flex-start;
@@ -86,11 +87,12 @@ const Content = styled.div`
   }
 `;
 
-const Table = styled.table``;
+const Table = styled.table`
+`;
 
 
 const RedeemRow = ({points, isUsed, code, setDisplayCode}) => {
-  const handleShow = () => setDisplayCode(code);
+  const handleShow = () => setDisplayCode(JSON.stringify({code}));
   return(
     <tr>
       <td>{points}</td>
