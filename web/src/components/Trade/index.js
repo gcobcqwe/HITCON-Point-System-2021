@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
 import QRCode from "react-qr-code";
 import QrReader from "react-qr-reader";
@@ -10,6 +10,8 @@ import SendIcon from "../../public/ionic-ios-send.svg";
 import ReceivedIcon from "../../public/material-call_received.svg";
 import GiftIcon from "../../public/ionic-ios-gift.svg";
 import { langText } from "../../lang";
+
+import { ThemeContext } from '../../index.js';
 
 const TradingContainer = styled(Modal)`
   @media(min-width: 1280px) {
@@ -95,19 +97,7 @@ const Content = styled.div`
 `;
 
 const SendPage = ({setPage}) => {
-  const [points, setPoints] = useState(() => {
-    const apiURL = `${process.env.POINT_URL}/users/me`;
-    const token = Cookies.get('token');
-    const headers = { 'Authorization': `Bearer ${token}` }
-    axios.get(apiURL, { headers })
-      .then((resp) => {
-        const { data:{ points }} = resp.data;
-        return parseInt(points, 10);
-      }).catch((error) => {
-        console.error('get users error', error);
-        return 0;
-      });
-  });
+  const [user, setUser] = useContext(ThemeContext);
   const [sendPoint, setSendPoint] = useState(0);
   const [step, setStep] = useState(0);
   const [receiver, setReceiver] = useState('null');
@@ -129,7 +119,8 @@ const SendPage = ({setPage}) => {
         const { success } = resp.data;
         if (success) {
           setStep(2);
-          setPoints(points - sendPoint);
+          user.points = (user.points - sendPoint);
+          setUser(user);
         }
       })
       .catch((error) => {
@@ -158,7 +149,7 @@ const SendPage = ({setPage}) => {
     { step === 1 ?
       <>
         <Title>{langText("TRADE_SEND_POINTS")}</Title>
-        <div>{langText("TRADE_SENDING_QTY").replace("{points}", points)}</div>
+        <div>{langText("TRADE_SENDING_QTY").replace("{points}", user.points)}</div>
         <div>{langText("TRADE_SENDING_TARGET")}{receiver}</div>
         <input type="text" onChange={(e) => setSendPoint(e.target.value)}/>
         <Button onClick={handleSend}>{langText("CONFIRM")}</Button>
@@ -167,8 +158,8 @@ const SendPage = ({setPage}) => {
     { step === 2 ?
       <>
        <Title>{langText("TRADE_SENT_SUCESS")}</Title>
-       <Description>{langText("TRADE_SENT_DESC").replace("{sendPoint}", sendPoint)}</Description>
-       <Description>{langText("TRADE_SENT_REMAINING").replace("{points}", points)}</Description>
+       <Description>{langText("TRADE_SENT_DESC").replace("{sendPoint}", sendPoint).replace("{uid}", receiver)}</Description>
+       <Description>{langText("TRADE_SENT_REMAINING").replace("{points}", (user.points - sendPoint))}</Description>
        <Button onClick={handleCancel}>{langText("DONE")}</Button>
       </>: "" }
   </Content>
@@ -193,8 +184,8 @@ ReceivedPage.defaultProps = {
 }
 
 const TakePage = ({setPage}) => {
+  const [user, setUser] = useContext(ThemeContext);
   const [step, setStep] = useState(0);
-  const [code,setCode] = useState();
   const [points, setPoints] = useState();
   const handleScan = (data) => {
     if (data === null) return;
@@ -206,6 +197,8 @@ const TakePage = ({setPage}) => {
         const { success, data:{ points }} = resp.data;
         if (success) {
           setPoints(points);
+          user.points = user.points + points;
+          setUser(user);
           setStep(1);
         }
       })
@@ -245,7 +238,7 @@ const TakePage = ({setPage}) => {
 const TradingMain = styled.div``;
 
 const Trading = ({setIsTradningOpen}) => {
-  const [points, setPoints] = useState(0);
+  const [user, setUser] = useContext(ThemeContext);
   const [uid, setUid] = useState();
   const [page, setPage] = useState(0);
   const switchSend = () => setPage(1);
@@ -260,7 +253,8 @@ const Trading = ({setIsTradningOpen}) => {
     axios.get(apiURL, { headers })
       .then((resp) => {
         const { data:{ points, uid }} = resp.data;
-        setPoints(points);
+        user.points = points;
+        setUser(user);
         setUid(uid)
       })
       .catch((error) => {
@@ -274,7 +268,7 @@ const Trading = ({setIsTradningOpen}) => {
       { page === 0 ?
       <TradingMain>
         <Title>{langText("TRADE_TRADING_POINTS")}</Title>
-        <Description>{langText("POINTS_OWNED").replace("{points}", points)}</Description>
+        <Description>{langText("POINTS_OWNED").replace("{points}", user.points)}</Description>
         <Button onClick={switchSend}>
           <img src={SendIcon}/>
           {langText("TRADE_SEND")}
