@@ -253,7 +253,7 @@ export function langText(key) {
             "zh": "兌換券代碼可於「擁有的兌換券」中確認 請於效期內兌換完成"
         },
         "REDEEM_LIST_TITLE": {
-            "en": "Send Redemption Code",
+            "en": "Send",
             "zh": "兌換碼發放"
         },
         "REDEEM_VALUE": {
