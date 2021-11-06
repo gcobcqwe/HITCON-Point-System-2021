@@ -95,7 +95,7 @@ const Content = styled.div`
 `;
 
 const SendPage = ({setPage}) => {
-  const [points, setPointes] = useState(() => {
+  const [points, setPoints] = useState(() => {
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const token = Cookies.get('token');
     const headers = { 'Authorization': `Bearer ${token}` }
