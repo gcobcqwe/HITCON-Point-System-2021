@@ -192,7 +192,7 @@ const Topics = ({eventToken}) => {
           title={langText("TOPIC_VILLAGE_TOPIC")}
           description={langText("TOPIC_VILLAGE_DESC")}
           imageSrc={TopicVillageImg}
-          links={villageLink}
+          // links={villageLink}
         />
       </TopicList>
     </>
