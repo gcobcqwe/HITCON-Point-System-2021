@@ -133,7 +133,7 @@ export function langText(key) {
             "zh": "交易點數"
         },
         "USER_REDEEM_POINTS": {
-            "en": "Redeem",
+            "en": "Exchange",
             "zh": "兌換點數"
         },
         "TOPIC_ONLINE_TITLE": {
