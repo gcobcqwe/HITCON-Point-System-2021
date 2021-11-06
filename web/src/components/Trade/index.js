@@ -236,6 +236,7 @@ const TakePage = ({setPage}) => {
       <>
         <Title>{langText("TRADE_REDEEM_CONFIRM")}</Title>
         <Description>{langText("TRADE_REDEEM_DONE").replace("{points}", points)}</Description>
+        <Button onClick={handleCancel}>{langText("DONE")}</Button>
       </> : "" }
     </Content>
   )
