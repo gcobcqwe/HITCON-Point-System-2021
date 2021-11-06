@@ -129,11 +129,11 @@ export function langText(key) {
             "zh": "現有點數："
         },
         "USER_TRADE_POINTS": {
-            "en": "Trade points",
+            "en": "Trade",
             "zh": "交易點數"
         },
         "USER_REDEEM_POINTS": {
-            "en": "Redeem points",
+            "en": "Redeem",
             "zh": "兌換點數"
         },
         "TOPIC_ONLINE_TITLE": {
@@ -253,35 +253,35 @@ export function langText(key) {
             "zh": "兌換券代碼可於「擁有的兌換券」中確認 請於效期內兌換完成"
         },
         "REDEEM_LIST_TITLE": {
-            "en": "",
+            "en": "Send Redemption Code",
             "zh": "兌換碼發放"
         },
         "REDEEM_VALUE": {
-            "en": "",
+            "en": "Points",
             "zh": "金額"
         },
         "REDEEM_STATE": {
-            "en": "",
+            "en": "State",
             "zh": "狀態"
         },
         "REDEEM_STATE_AVAIABLE": {
-            "en": "",
+            "en": "Available",
             "zh": "可發送"
         },
         "REDEEM_STATE_SENT": {
-            "en": "",
+            "en": "Sent",
             "zh": "已發送"
         },
         "REDEEM_CODE": {
-            "en": "",
+            "en": "Redemption Code",
             "zh": "兌換券代碼"
         },
         "REDEEM_TARGET": {
-            "en": "?",
+            "en": "Please provide this to the reciever.",
             "zh": "請出示給欲發送對象"
         },
         "REDEEM_COUNTER": {
-            "en": "",
+            "en": "You have {number} Redemption Code available",
             "zh": "尚有 {number} 份兌換碼可發送"
         },
         "DONE": {

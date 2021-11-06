@@ -156,7 +156,7 @@ const Redeem = ({ setIsRedeemOpen }) => {
     </Content> : null }
     { step === 1 ?
     <Content>
-      <Title>請出示給欲發送對象</Title>
+      <Title>{langText('REDEEM_TARGET')}</Title>
       <QRCode value={displayCode} />
       <Button onClick={handleFinish}>{langText("DONE")}</Button>
     </Content> : null }
