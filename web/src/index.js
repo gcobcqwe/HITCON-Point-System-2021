@@ -211,6 +211,7 @@ const App = () => {
     if (tokenFromParams !== null) {
       setToken(tokenFromParams);
       Cookies.set('token', tokenFromParams);
+      window.history.replaceState({}, document.title, "/");
       return true;
     }
 
