@@ -139,7 +139,7 @@ const Redeem = ({ setIsRedeemOpen }) => {
     <Content>
       <Title>{langText("REDEEM_LIST_TITLE")}</Title>
       <Description>{langText("REDEEM_COUNTER").replace("{number}", redeems.filter((r) => {
-        return r.is_used = false;
+        return r.is_used === false;
       }).length)}
       </Description>
       <Table>
