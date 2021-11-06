@@ -20,6 +20,8 @@ import TopicADVImg from "./public/online.png";
 import TopicMpImg from "./public/mp.png";
 import TopicVillageImg from "./public/online.png";
 
+import UserContext from "./UserContext";
+
 const Main = styled.main`
   padding: 0 28px;
   margin: 0 auto;
@@ -196,7 +198,7 @@ const Topics = ({eventToken}) => {
     </>
   )
 }
-export const ThemeContext = React.createContext();
+
 const App = () => {
   const [user, setUser] = useState({});
   const [token, setToken] = useState();
@@ -254,7 +256,7 @@ const App = () => {
 
   return (
     <>
-      <ThemeContext.Provider value={[user, setUser]}>
+      <UserContext.Provider value={[user, setUser]}>
         <Main>
           <Header>
             <Title>HITCON 2021</Title>
@@ -276,7 +278,7 @@ const App = () => {
             </>) : <Unauth />
           }
         </Main>
-      </ThemeContext.Provider>
+      </UserContext.Provider>
       <Footer />
     </>
   )

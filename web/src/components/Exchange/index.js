@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import Modal from "../Modal";
 import { langText } from "../../lang";
 import ReactHtmlParser from "react-html-parser"
-import { ThemeContext } from '../../index.js';
+import UserContext from '../../UserContext.js';
 
 const Container = styled(Modal)`
   @media(min-width: 1280px) {
@@ -280,7 +280,7 @@ const ExchangePage = ({ points, setPage }) => {
 
 const Exchange = ({ setIsExchangeOpen }) => {
   const [token, setToken] = useState();
-  const [user, setUser] = useContext(ThemeContext);
+  const [user, setUser] = useContext(UserContext);
   const [page, setPage] = useState(0);
   const switchCoupon = () => setPage(1);
   const switchExchange = () => setPage(2);

@@ -7,7 +7,7 @@ import Trade from "./Trade";
 import Exchange from "./Exchange";
 import Redeem from "./Redeem";
 import { langText } from "../lang";
-import { ThemeContext } from '../index.js';
+import UserContext from '../UserContext.js';
 
 const PositionFixed = styled.div`
   position: fixed;
@@ -204,7 +204,7 @@ const UserContiner = () => {
   const [isTradingOpen, setIsTradningOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
   const [isRedeemOpen, setIsRedeemOpen] = useState(false);
-  const [user, setUser] = useContext(ThemeContext);
+  const [user, setUser] = useContext(UserContext);
   const nickname = user.nick_name;
   const role = user.role;
   const points = user.points;
