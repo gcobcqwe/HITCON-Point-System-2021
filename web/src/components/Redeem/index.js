@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import QRCode from "react-qr-code";
 import Cookies from "js-cookie";
+import TableScrollbar from 'react-table-scrollbar';
 import Modal from "../Modal";
 import { langText } from "../../lang";
 
@@ -91,9 +92,9 @@ const Table = styled.table`
 `;
 
 
-const RedeemRow = ({points, isUsed, code, setDisplayCode}) => {
-  const handleShow = () => setDisplayCode(JSON.stringify({code}));
-  return(
+const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
+  const handleShow = () => setDisplayCode(JSON.stringify({ code }));
+  return (
     <tr>
       <td>{points}</td>
       <td>{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</td>
@@ -115,9 +116,9 @@ const Redeem = ({ setIsRedeemOpen }) => {
         if (success) setRedeems(data);
       })
       .catch((error) => {
-        const { state, data: {message} } = error.response;
+        const { state, data: { message } } = error.response;
         console.error('get redeem-code error', message);
-    });
+      });
   }, [step, displayCode]);
 
 
@@ -125,7 +126,7 @@ const Redeem = ({ setIsRedeemOpen }) => {
     if (displayCode !== null) {
       setStep(1);
     }
-  },[displayCode]);
+  }, [displayCode]);
 
   const handleCancel = () => setIsRedeemOpen(false);
   const handleFinish = () => {
@@ -135,36 +136,38 @@ const Redeem = ({ setIsRedeemOpen }) => {
 
 
 
-  return(
-  <Container>
-  { step === 0 ?
-    <Content>
-      <Title>{langText("REDEEM_LIST_TITLE")}</Title>
-      <Description>{langText("REDEEM_COUNTER").replace("{number}", redeems.filter((r) => {
-        return r.is_used === false;
-      }).length)}
-      </Description>
-      <Table>
-        <thead>
-          <tr>
-            <th>{langText("REDEEM_VALUE")}</th>
-            <th>{langText("REDEEM_STATE")}</th>
-            <th>{langText("REDEEM_CODE")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {redeems.map((r, idx) => <RedeemRow key={idx} isUsed={r.is_used} code={r.code} points={r.points} setDisplayCode={setDisplayCode} />) }
-        </tbody>
-      </Table>
-      <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
-    </Content> : null }
-    { step === 1 ?
-    <Content>
-      <Title>{langText('REDEEM_TARGET')}</Title>
-      <QRCode value={displayCode} />
-      <Button onClick={handleFinish}>{langText("DONE")}</Button>
-    </Content> : null }
-  </Container>
+  return (
+    <Container>
+      {step === 0 ?
+        <Content>
+          <Title>{langText("REDEEM_LIST_TITLE")}</Title>
+          <Description>{langText("REDEEM_COUNTER").replace("{number}", redeems.filter((r) => {
+            return r.is_used === false;
+          }).length)}
+          </Description>
+          <TableScrollbar>
+            <Table>
+              <thead>
+                <tr>
+                  <th>{langText("REDEEM_VALUE")}</th>
+                  <th>{langText("REDEEM_STATE")}</th>
+                  <th>{langText("REDEEM_CODE")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {redeems.map((r, idx) => <RedeemRow key={idx} isUsed={r.is_used} code={r.code} points={r.points} setDisplayCode={setDisplayCode} />)}
+              </tbody>
+            </Table>
+          </TableScrollbar>
+          <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
+        </Content> : null}
+      {step === 1 ?
+        <Content>
+          <Title>{langText('REDEEM_TARGET')}</Title>
+          <QRCode value={displayCode} />
+          <Button onClick={handleFinish}>{langText("DONE")}</Button>
+        </Content> : null}
+    </Container>
   )
 }
 
