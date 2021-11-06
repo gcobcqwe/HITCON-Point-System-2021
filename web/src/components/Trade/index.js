@@ -185,7 +185,6 @@ const ReceivedPage = ({uid, setPage}) => {
       <Title>{langText("TRADE_RECEIVING")}</Title>
       <Description>{langText("TRADE_PROVIDE_QR")}</Description>
       <QRCode value={uid} />
-      <span style={{"wordBreak": "break-word"}}>value: {uid}</span>
       <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
     </Content>
   )
