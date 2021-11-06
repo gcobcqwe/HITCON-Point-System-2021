@@ -242,7 +242,7 @@ const App = () => {
         <Header>
           <Title>HITCON 2021</Title>
           <Language>
-            <span onClick={() => { Cookies.set("lang", "zh"); location.reload() }}>中</span>|<span onClick={() => { Cookies.set("lang", "en"); location.reload() }}>Eng</span>
+            <span onClick={() => { Cookies.set("lang", "en"); location.reload() }}>EN</span>|<span onClick={() => { Cookies.set("lang", "zh"); location.reload() }}>TW</span>
           </Language>
         </Header>
         {authorized ?
