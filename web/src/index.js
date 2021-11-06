@@ -218,7 +218,6 @@ const App = () => {
         setToken(tokenFromCookies);
       }
     }
-    if (token === undefined) return;
 
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const headers = { 'Authorization': `Bearer ${token}` }
