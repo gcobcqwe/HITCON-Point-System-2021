@@ -210,12 +210,13 @@ const Coupon = ({ name, points, setTargetCoupon }) => {
 
 const ExchangePage = ({ points, setPage }) => {
   const [token, setToken] = useState();
+  const [user, setUser] = useContext(UserContext);
   const [step, setStep] = useState(0);
   const handleBack = () => setStep(0);
   const handleCancel = () => setPage(0);
   const [targetCoupon, setTargetCoupon] = useState(null);
   const [couponList, setCouponList] = useState([]);
-  const handleExchange = () => {
+  const handleExchange = (remainingPoints) => {
     const apiURL = `${process.env.POINT_URL}/coupons`;
     const headers = { 'Authorization': `Bearer ${Cookies.get('token')}` }
     axios.post(apiURL,{ type: targetCoupon.name }, { headers })
@@ -223,6 +224,8 @@ const ExchangePage = ({ points, setPage }) => {
         const { success, data } = resp.data;
         console.log(success);
         console.log(data);
+        user.points = remainingPoints;
+        setUser(user);
       }).catch((error) => {
         const { state, data: {message} } = error.response;
         console.error('exchange Coupons error: ', message);
@@ -266,7 +269,7 @@ const ExchangePage = ({ points, setPage }) => {
             .replace("{value}", targetCoupon.name.split('_')[1])
             .replace("{points}", (points - targetCoupon.points)))}
           <Cancel onClick={handleBack}>{langText("CANCEL")}</Cancel>
-          <Button onClick={handleExchange}>{langText("CONFIRM")}</Button>
+          <Button onClick={() => handleExchange((points - targetCoupon.points))}>{langText("CONFIRM")}</Button>
         </Content> : null}
       {step === 2 ?
         <Content>
@@ -320,7 +323,7 @@ const Exchange = ({ setIsExchangeOpen }) => {
         <>
           <Title>{langText("COUPON_POINTS_EXCH")}</Title>
           <Description>
-            {langText("POINTS_OWNED").replace("{points}", points)}
+            {langText("POINTS_OWNED").replace("{points}", user.points)}
           </Description>
           <Button onClick={switchCoupon}>
             {langText("COUPON_YOUR_COUPON")}
@@ -330,8 +333,8 @@ const Exchange = ({ setIsExchangeOpen }) => {
           </Button>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </> : null}
-      {page === 1 ? <CouponPage points={points} setPage={setPage} /> : null}
-      {page === 2 ? <ExchangePage points={points} setPage={setPage} /> : null}
+      {page === 1 ? <CouponPage points={user.points} setPage={setPage} /> : null}
+      {page === 2 ? <ExchangePage points={user.points} setPage={setPage} /> : null}
     </Container>
   )
 }
