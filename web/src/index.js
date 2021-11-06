@@ -113,11 +113,9 @@ const Topics = ({eventToken}) => {
 
   const mpLink = [{
     link: process.env.MP_INTRO_URL,
-    token: eventToken.kof_server_token,
     text: langText("TOPIC_MP_INTRO_LINK")
   },{
     link: process.env.MP_ADV_URL,
-    token: eventToken.kof_server_token,
     text: langText("TOPIC_MP_ADV_LINK")
   },{
     link: process.env.MP_DOCS_URL,
