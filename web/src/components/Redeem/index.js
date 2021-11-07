@@ -141,6 +141,7 @@ const Table = styled.table`
       white-space: nowrap;
       overflow: hidden;
       padding: 15px 40px 15px 10px;
+      font-family: monospace;
 
 
       button {
