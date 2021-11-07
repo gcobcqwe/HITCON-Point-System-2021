@@ -106,6 +106,9 @@ const TableWrapper = styled.div`
 const Table = styled.table`
   position: relative;
 
+  .isUsed {
+    background: #6b6b6b
+  }
 
   th, td {
     padding: 15px 10px;
@@ -138,16 +141,18 @@ const Table = styled.table`
       white-space: nowrap;
       overflow: hidden;
       padding: 15px 40px 15px 10px;
+      font-family: monospace;
 
 
       button {
         position: absolute;
         top: 7px;
         right: 0;
+        background: none;
       }
 
       img {
-        background: inherit;
+        background: #fff;
         border: 4px solid #fff;
         border-radius: 5px;
         box-shadow: 0px 2px 4px #101010d9;
@@ -156,10 +161,11 @@ const Table = styled.table`
 `;
 
 
+
 const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
   const handleShow = () => setDisplayCode(JSON.stringify({ code }));
   return (
-    <tr>
+    <tr className={isUsed ? "isUsed" : "notUsed"}>
       <td>{points}</td>
       <td>{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</td>
       <td>
