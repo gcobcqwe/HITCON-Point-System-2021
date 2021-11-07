@@ -49,7 +49,7 @@ const error = {
   THE_USER_IS_NOT_FOUND: 'The user is not found.',
   THE_EMAIL_SENDER_IS_COOLING_DOWN: 'The email sender is cooling down.',
   FAILED_TO_DELIVER_EMAIL: 'Failed to deliver email.',
-  THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME: 'The sender and the receiver are the same'
+  THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME: 'The sender and the receiver are the same.'
 };
 
 module.exports = error;
