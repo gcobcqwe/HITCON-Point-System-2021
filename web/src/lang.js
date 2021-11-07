@@ -210,7 +210,7 @@ export function langText(key) {
         },
         "COUPON_HITCON_STORE": {
             "en": "HITCON Online Store",
-            "zh": "HITCON 線上賣場"
+            "zh": "HITCON 線上商店"
         },
         "BACK": {
             "en": "Back",
