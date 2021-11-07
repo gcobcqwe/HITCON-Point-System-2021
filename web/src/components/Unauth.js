@@ -212,7 +212,7 @@ const Unauth = () => {
     const apiURL = `${process.env.POINT_URL}/users/token`;
     axios.post(apiURL, {private_kktix_code: data})
       .then((response) => {
-        const { data: { token: respToken } } = response.data;
+        const { data: { one_page_token: respToken } } = response.data;
         if (respToken !== undefined) {
           setToken(respToken);
           Cookies.set('token', respToken);
