@@ -51,6 +51,7 @@ module.exports = {
         REDIS_PORT: '<REDIS_PORT>',
         MAILCHIMP_API_KEY: '<MAILCHIMP_API_KEY>',
         MAILCHIMP_TEMPLATE_NAME: '<MAILCHIMP_TEMPLATE_NAME>',
+        EMAIL_SUBJECT: '<EMAIL_SUBJECT>',
         EMAIL_FROM: '<EMAIL_FROM>',
         EMAIL_NAME_FROM: '<EMAIL_NAME_FROM>'
       },
@@ -68,6 +69,7 @@ module.exports = {
         REDIS_PORT: 6379,
         MAILCHIMP_API_KEY: '',
         MAILCHIMP_TEMPLATE_NAME: 'HITCON2021_TEST',
+        EMAIL_SUBJECT: 'HITCON 2021 參與通知信',
         EMAIL_FROM: 'edm@testmail.hitcon2021.online',
         EMAIL_NAME_FROM: 'HITCON EDM'
       }

@@ -106,7 +106,7 @@ class Users {
         nickname: user.nickname,
         onePageLink: `${config.web_endpoint}/?token=${user.event.one_page_token}`
       };
-      const template = composeTemplate(emailContent, config.email_from, config.email_name_from, email, config.mailchimp_template_name);
+      const template = composeTemplate(config.email_subject, emailContent, config.email_from, config.email_name_from, email, config.mailchimp_template_name);
       const emailResponse = await mailchimpClient.messages.sendTemplate(template);
       if (emailResponse[0].status !== 'sent') {
         console.error(emailResponse);
@@ -129,6 +129,7 @@ class Users {
 
 /**
  * @description Compose an email template.
+ * @param {String} emailSubject The email subject
  * @param {Object} emailContent The email content, e.g. {nickname: 'test3', one_page_link:<LINK>}
  * @param {String} fromEmail The sender email
  * @param {String} fromEmailName The sender name
@@ -136,9 +137,9 @@ class Users {
  * @param {String} templateName The mailChimp template name
  * @return {Object}
  */
-function composeTemplate(emailContent, fromEmail, fromEmailName, toEmail, templateName) {
+function composeTemplate(emailSubject, emailContent, fromEmail, fromEmailName, toEmail, templateName) {
   const message = {
-    'subject': 'HITCON 2021 參與通知信',
+    'subject': emailSubject,
     'from_email': fromEmail,
     'from_name': fromEmailName,
     'to': [{

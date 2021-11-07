@@ -74,6 +74,10 @@ if [[ ! -z "$MAILCHIMP_TEMPLATE_NAME" ]]; then
   sed -i 's,<MAILCHIMP_TEMPLATE_NAME>,'"$MAILCHIMP_TEMPLATE_NAME"',' /etc/pm2/ecosystem.config.js
 fi
 
+if [[ ! -z "$EMAIL_SUBJECT" ]]; then
+  sed -i 's,<EMAIL_SUBJECT>,'"$EMAIL_SUBJECT"',' /etc/pm2/ecosystem.config.js
+fi
+
 if [[ ! -z "$EMAIL_FROM" ]]; then
   sed -i 's/<EMAIL_FROM>/'"$EMAIL_FROM"'/' /etc/pm2/ecosystem.config.js
 fi

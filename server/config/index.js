@@ -64,6 +64,7 @@ const config = {
   },
   mailchimp_api_key: process.env.MAILCHIMP_API_KEY || '',
   mailchimp_template_name: process.env.MAILCHIMP_TEMPLATE_NAME || 'HITCON2021_TEST',
+  email_subject: process.env.EMAIL_SUBJECT || 'HITCON 2021 參與通知信',
   email_from: process.env.EMAIL_FROM || 'edm@testmail.hitcon2021.online',
   email_name_from: process.env.EMAIL_NAME_FROM || 'HITCON EDM'
 };
