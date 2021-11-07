@@ -201,24 +201,24 @@ const Topics = ({eventToken}) => {
 
 const App = () => {
   const [user, setUser] = useState({});
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const tokenFromParams = urlParams.get('token');
+    if (tokenFromParams !== null) {
+      return tokenFromParams;
+    } else {
+      const tokenFromCookies = Cookies.get('token');
+      if (tokenFromCookies !== undefined) {
+        return tokenFromCookies;
+      }
+    }
+  });
   const [isTopic, setIsTopic] = useState(true);
   const [eventToken, setEventToken] = useState({});
   const [authorized, setAuthorized] = useState(true);
 
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const tokenFromParams = urlParams.get('token');
-    if (tokenFromParams !== null) {
-      setToken(tokenFromParams);
-    } else {
-      const tokenFromCookies = Cookies.get('token');
-      if (tokenFromCookies !== undefined) {
-        setToken(tokenFromCookies);
-      }
-    }
-
     const apiURL = `${process.env.POINT_URL}/users/me`;
     const headers = { 'Authorization': `Bearer ${token}` }
     axios.get(apiURL, { headers })
