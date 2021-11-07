@@ -134,7 +134,7 @@ export function langText(key) {
         },
         "USER_REDEEM_POINTS": {
             "en": "Exchange",
-            "zh": "兌換點數"
+            "zh": "兌換折價券"
         },
         "TOPIC_ONLINE_TITLE": {
             "en": "HITCON Online",
@@ -206,7 +206,7 @@ export function langText(key) {
         },
         "COUPON_TOKEN": {
             "en": "Coupon Code",
-            "zh": "兌換券代碼"
+            "zh": "折價券代碼"
         },
         "COUPON_HITCON_STORE": {
             "en": "HITCON Online Store",
@@ -250,7 +250,7 @@ export function langText(key) {
         },
         "COUPON_DONE_NOTICE": {
             "en": 'You can check the Coupon Code in "My Coupon" section. Please complete your redemption before the deadline',
-            "zh": "兌換券代碼可於「擁有的兌換券」中確認 請於效期內兌換完成"
+            "zh": "兌換券代碼可於「擁有的折價券」中確認 請於效期內使用完畢"
         },
         "REDEEM_LIST_TITLE": {
             "en": "Send",
