@@ -203,7 +203,7 @@ const TakePage = ({setPage}) => {
     const apiURL = `${process.env.POINT_URL}/points/redeem-code`;
     const token = Cookies.get('token');
     const headers = { 'Authorization': `Bearer ${token}` }
-    axios.post(apiURL, {code: data},{ headers })
+    axios.post(apiURL, {code: JSON.parse(data).code},{ headers })
       .then((resp) => {
         const { success, data:{ points }} = resp.data;
         if (success) {
