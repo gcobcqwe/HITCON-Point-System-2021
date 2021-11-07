@@ -26,65 +26,13 @@
  */
 
 'use strict';
-const {Model} = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
-  /**
-   * Users Model
-   * @class
-   */
-  class Users extends Model {
-    /**
-     * Associate
-     * @static
-     * @param {Model} models
-     */
-    static associate(models) {
-      Users.hasOne(models.events, {foreignKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'sender', targetKey: 'uid'});
-      Users.hasMany(models.transactions, {foreignKey: 'receiver', targetKey: 'uid'});
-      Users.hasMany(models.redeem_codes, {foreignKey: 'issuer', targetKey: 'uid'});
-      Users.hasMany(models.coupons, {foreignKey: 'uid'});
-    }
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.renameColumn('users', 'nick_name', 'nickname');
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.renameColumn('users', 'nickname', 'nick_name');
   }
-  Users.init({
-    uid: {
-      type: DataTypes.TEXT,
-      primaryKey: true,
-      unique: true,
-      notEmpty: true
-    },
-    private_kktix_code: {
-      type: DataTypes.TEXT,
-      unique: true,
-      notEmpty: true
-    },
-    nickname: {
-      type: DataTypes.STRING(200),
-      defaultValue: ''
-    },
-    role: {
-      type: DataTypes.STRING(10),
-      notEmpty: true
-    },
-    points: {
-      type: DataTypes.INTEGER,
-      notEmpty: true
-    },
-    email: {
-      type: DataTypes.STRING(200),
-      notEmpty: true
-    },
-    is_email_sent: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    }
-  }, {
-    sequelize,
-    modelName: 'users',
-    createdAt: false,
-    updatedAt: false
-  });
-  return Users;
 };

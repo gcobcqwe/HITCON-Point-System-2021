@@ -38,35 +38,35 @@ module.exports = {
       [{
         uid: 'SHOP_UID',
         private_kktix_code: 'SHOP_CODE',
-        nick_name: 'shop',
+        nickname: 'shop',
         role: 'admin',
         points: 0,
         email: 'shop@gmail.com'
       }, {
         uid: 'ADMIN_UID',
         private_kktix_code: 'ADMIN_CODE',
-        nick_name: 'admin',
+        nickname: 'admin',
         role: 'admin',
         points: 10000000,
         email: 'admin@gmail.com'
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f053',
         private_kktix_code: '1qnv3KIdgGcTaHXfHtPJda9kDZ5uwqFUT6voH',
-        nick_name: 'test3',
+        nickname: 'test3',
         role: 'admin',
         points: 10000000,
         email: 'test3@gmail.com'
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f052',
         private_kktix_code: '2lnv3OKdgGcaLHLfHtPJda8kDZ5uwqCCT3vuu',
-        nick_name: 'test2',
+        nickname: 'test2',
         role: 'vendor',
         points: 10000000,
         email: 'test2@gmail.com'
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
         private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
-        nick_name: 'test',
+        nickname: 'test',
         role: 'client',
         points: 10000000,
         email: 'test@gmail.com'

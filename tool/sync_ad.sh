@@ -41,7 +41,7 @@ function sql_exec() {
 
 for user in ${users_diff_array[@]}
 do
-  sql="INSERT INTO users(uid,private_kktix_code,nick_name,role,points,email) VALUES('`echo $user | sed -e "s/,/','/g" | sed -e "s/%2B/+/g" | sed -e "s/%2C/,/g" | sed -e "s/%20/ /g"`') ON CONFLICT(uid) DO NOTHING;"
+  sql="INSERT INTO users(uid,private_kktix_code,nickname,role,points,email) VALUES('`echo $user | sed -e "s/,/','/g" | sed -e "s/%2B/+/g" | sed -e "s/%2C/,/g" | sed -e "s/%20/ /g"`') ON CONFLICT(uid) DO NOTHING;"
   sql_exec "$sql"
 done 
 # TODO: Exec batch sql.

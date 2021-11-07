@@ -47,7 +47,7 @@ const db = {
       return Promise.resolve({
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
         private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
-        nick_name: 'test',
+        nickname: 'test',
         role: 'client',
         points: 100
       });
@@ -56,13 +56,13 @@ const db = {
       return Promise.resolve([{
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
         private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
-        nick_name: 'test',
+        nickname: 'test',
         role: 'client',
         points: 100
       }, {
         uid: 'eea2faf2ec64ae85df1da5a16348f052',
         private_kktix_code: '2lnv3OKdgGcaLHLfHtPJda8kDZ5uwqCCT3vuu',
-        nick_name: 'test2',
+        nickname: 'test2',
         role: 'vendor',
         points: 200
       }]);
@@ -71,7 +71,7 @@ const db = {
       return Promise.resolve({
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
         private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
-        nick_name: 'test',
+        nickname: 'test',
         role: 'client',
         points: 100
       });
@@ -80,7 +80,7 @@ const db = {
       return Promise.resolve({
         uid: 'eea2faf2ec64ae85df1da5a16348f051',
         private_kktix_code: '6lev45OKdgGcaPSODdtP1da8kDZ5uwqCCT4vfy3',
-        nick_name: 'test',
+        nickname: 'test',
         role: 'client',
         points: 150
       });

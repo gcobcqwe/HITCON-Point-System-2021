@@ -40,7 +40,7 @@ module.exports = {
         unique: true,
         notEmpty: true
       },
-      nick_name: {
+      nickname: {
         type: Sequelize.STRING(200),
         defaultValue: ''
       },

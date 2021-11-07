@@ -205,7 +205,7 @@ const UserContiner = () => {
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
   const [isRedeemOpen, setIsRedeemOpen] = useState(false);
   const [user, setUser] = useContext(UserContext);
-  const nickname = user.nick_name;
+  const nickname = user.nickname;
   const role = user.role;
   const points = user.points;
 

@@ -34,14 +34,14 @@ module.exports = {
       [{
         uid: 'SHOP_UID',
         private_kktix_code: 'SHOP_CODE',
-        nick_name: 'shop',
+        nickname: 'shop',
         role: 'admin',
         points: 0,
         email: 'shop@gmail.com'
       }, {
         uid: 'ADMIN_UID',
         private_kktix_code: 'ADMIN_CODE',
-        nick_name: 'admin',
+        nickname: 'admin',
         role: 'admin',
         points: 10000000,
         email: 'admin@gmail.com'

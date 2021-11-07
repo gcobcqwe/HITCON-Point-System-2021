@@ -85,7 +85,7 @@ class Users {
   async sendEmail(email) {
     const usersArray = await this._db.users.findAll({
       where: {email},
-      attributes: ['uid', 'nick_name'],
+      attributes: ['uid', 'nickname'],
       include: {
         model: this._db.events,
         attributes: ['one_page_token'],
@@ -103,7 +103,7 @@ class Users {
 
       // Send an email.
       const emailContent = {
-        nickName: user.nick_name,
+        nickname: user.nickname,
         onePageLink: `${config.web_endpoint}/?token=${user.event.one_page_token}`
       };
       const template = composeTemplate(emailContent, config.email_from, config.email_name_from, email, config.mailchimp_template_name);
@@ -129,7 +129,7 @@ class Users {
 
 /**
  * @description Compose an email template.
- * @param {Object} emailContent The email content, e.g. {nick_name: 'test3', one_page_link:<LINK>}
+ * @param {Object} emailContent The email content, e.g. {nickname: 'test3', one_page_link:<LINK>}
  * @param {String} fromEmail The sender email
  * @param {String} fromEmailName The sender name
  * @param {String} toEmail The receiver email

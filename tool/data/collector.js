@@ -9,7 +9,7 @@ const userFilePath = "./users.csv";
 const eventFilePath = "./events.csv";
 const USERS_COLUMN = {
   PRIVATE_KKTIX_CODE: 0,
-  NICK_NAME: 1,
+  NICKNAME: 1,
   ROLE: 2,
   POINTS: 3,
   EMAIL: 4,
