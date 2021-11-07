@@ -27,7 +27,7 @@
 
 
 const {THE_BALANCE_IS_NOT_ENOUGH, THE_CODE_IS_NOT_FOUND, THE_CODE_IS_ALREADY_USED,
-  THE_SENDER_DOES_NOT_EXIST, THE_RECEIVER_DOES_NOT_EXIST} = require('../config/error');
+  THE_SENDER_DOES_NOT_EXIST, THE_RECEIVER_DOES_NOT_EXIST, THE_POINT_IS_INVALID, THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME} = require('../config/error');
 /**
  * Create a new Points service.
  * @class
@@ -118,6 +118,9 @@ class Points {
       const receiverReturning = await this._db.users.findByPk(receiver, {transaction, lock: transaction.LOCK.UPDATE});
       if (!receiverReturning) throw new Error(THE_RECEIVER_DOES_NOT_EXIST);
       if (senderReturning.points < points) throw new Error(THE_BALANCE_IS_NOT_ENOUGH);
+      if (points <= 0) throw new Error(THE_POINT_IS_INVALID);
+      if (!Number.isInteger(points)) throw new Error(THE_POINT_IS_INVALID);
+      if (sender === receiver) throw new Error(THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME);
       await this._db.users.decrement('points', {by: points, transaction, where: {uid: sender}});
       await this._db.users.increment('points', {by: points, transaction, where: {uid: receiver}});
       await this._db.transactions.create({sender, receiver, points, type: 'transactions'}, {transaction});
