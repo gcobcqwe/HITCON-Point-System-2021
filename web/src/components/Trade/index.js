@@ -99,6 +99,7 @@ const Content = styled.div`
 const SendPage = ({setPage}) => {
   const [user, setUser] = useContext(UserContext);
   const [sendPoint, setSendPoint] = useState(0);
+  const [isFixedAmount, setIsFixedAmount] = useState(false);
   const [step, setStep] = useState(0);
   const [receiver, setReceiver] = useState('null');
   const handleScan = (stringData) => {
@@ -108,10 +109,9 @@ const SendPage = ({setPage}) => {
     setReceiver(uid);
     if (amount !== undefined) {
       setSendPoint(amount);
-      setStep(2);
-    } else {
-      setStep(1);
+      setIsFixedAmount(true);
     }
+    setStep(1);
   };
   const handleError = (error) => {
     console.error({error});
@@ -141,9 +141,10 @@ const SendPage = ({setPage}) => {
       })
   }
   const handleCancel = () => setPage(0);
-  const handleBack = () => {
-    const num = step - 1 > 0 ? step : 0;
-    setStep(num);
+  const handleBackToScan = () => {
+    setIsFixedAmount(false);
+    setSendPoint(0);
+    setStep(0);
   }
   return(
   <Content>
@@ -163,9 +164,12 @@ const SendPage = ({setPage}) => {
         <Title>{langText("TRADE_SEND_POINTS")}</Title>
         <div>{langText("TRADE_SENDING_QTY").replace("{points}", user.points)}</div>
         <div>{langText("TRADE_SENDING_TARGET")}{receiver}</div>
-        <input type="text" onChange={(e) => setSendPoint(e.target.value)}/>
+        {isFixedAmount
+          ? <div>{sendPoint}</div>
+          : <input type="text" onChange={(e) => setSendPoint(e.target.value)}/>
+        }
         <Button onClick={handleSend}>{langText("CONFIRM")}</Button>
-        <Cancel onClick={handleBack}>{langText("CANCEL")}</Cancel>
+        <Cancel onClick={handleBackToScan}>{langText("CANCEL")}</Cancel>
       </> : "" }
     { step === 2 ?
       <>
