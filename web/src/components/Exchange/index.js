@@ -137,7 +137,7 @@ const CouponPage = ({ setPage }) => {
           {coupons.map((c, idx) => <CouponRow key={idx} changedAt={c.updated_at} code={c.code} couponsType={c.coupons_type} />) }
         </tbody>
       </Table>
-      <Button><a href="#">{langText("COUPON_HITCON_STORE")}</a></Button>
+      <Button><a target="_blank" rel="noopener noreferrer" href="https://shopee.tw/hitcon">{langText("COUPON_HITCON_STORE")}</a></Button>
       <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
     </Content>
   )
