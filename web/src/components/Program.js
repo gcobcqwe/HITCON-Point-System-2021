@@ -20,6 +20,7 @@ const Location = styled.div`
   border-right: 1px solid #B5B5B5;
   padding-right: 55px;
   margin-right: 55px;
+  font-family: monospace;
 
   @media (max-width: 1040px) {
     border-right: none;
@@ -70,7 +71,7 @@ const Link = styled.button`
   }
 `
 
-const Program = ({location, title, speaker, brief, streamLink}) => {
+const Program = ({ location, title, speaker, brief, streamLink, translate }) => {
   return (
     <Container>
       <Location>{location}</Location>
@@ -78,7 +79,9 @@ const Program = ({location, title, speaker, brief, streamLink}) => {
         <Title>{title}</Title>
         <Speaker>{speaker}</Speaker>
         <Brief>{brief}</Brief>
-          <Link><a href={streamLink} target="_blank" rel="noreferrer">{langText("PROGRAM_VIEW_LIVESTREAM")} →</a></Link>
+        <Link><a href={streamLink} target="_blank" rel="noreferrer">{langText("PROGRAM_VIEW_LIVESTREAM")} →</a></Link>
+        <br />
+        <Link><a href={translate} target="_blank" rel="noreferrer">{langText("PROGRAM_VIEW_TRANSLATION")} →</a></Link>
       </Context>
     </Container>
   )
