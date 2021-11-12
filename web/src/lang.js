@@ -40,6 +40,10 @@ export function langText(key) {
             "en": "View Session Livestream",
             "zh": "前往議程直播"
         },
+        "PROGRAM_VIEW_TRANSLATION": {
+            "en": "View Translated Livestream",
+            "zh": "前往議程口譯（英）"
+        },
         "UNAUTH_GREETING_TITLE": {
             "en": "Welcome to HITCON 2021",
             "zh": "歡迎來到 HITCON 2021"

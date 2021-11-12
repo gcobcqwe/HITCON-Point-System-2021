@@ -47,7 +47,11 @@ const Schedule = () => {
   const [testTime, setTestTime] = useState();
 
   const composeStreamLink = (room) => {
-    return `${streamProvider}/${room}/${code}`
+    return `${streamProvider}/${room}/${code}`;
+  }
+
+  const composeTranslationLink = (room) => {
+    return `${streamProvider}/${room}-translate/${code}`;
   }
 
   const forceUpdate = () => {
@@ -89,7 +93,7 @@ const Schedule = () => {
     if (sessionInfo === undefined) return;
     let _currentSessions = {};
     let time = moment(`${testDate} ${testTime}`);
-    console.log({sessionInfo});
+    console.log({ sessionInfo });
     if (sessionInfo) {
       for (var session of sessionInfo.sessions) {
         if (time.isAfter(session.start) && time.isBefore(session.end)) {
@@ -97,7 +101,7 @@ const Schedule = () => {
         }
       }
       setCurrentSessions(_currentSessions);
-      console.log({currentSessions});
+      console.log({ currentSessions });
     }
   }, [sessionInfo, update, testDate, testTime]);
 
@@ -108,10 +112,10 @@ const Schedule = () => {
         <span>
           更新倒數:{counter}
           <button onClick={forceUpdate}>立即更新</button>
-          <br/><br/>
+          <br /><br />
           自訂測試時間:
-          <input type="date" onChange={changeDate}/>
-          <input type="time" onChange={changeTime}/>
+          <input type="date" onChange={changeDate} />
+          <input type="time" onChange={changeTime} />
         </span>
         <Link href="https://hitcon.org/2021/agenda/" target="_blank">{langText("SCHEDULE_FULL_AGENDA")}</Link>
       </Wrapper>
@@ -122,7 +126,7 @@ const Schedule = () => {
         }).map(function (element) {
           return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R0"]?.[LANG].description} streamLink={composeStreamLink('r0')} />
+      } brief={currentSessions["R0"]?.[LANG].description} streamLink={composeStreamLink('r0')} translate={composeTranslationLink('r0')} />
 
       <Program location="R1" title={currentSessions["R1"]?.[LANG].title} speaker={
         sessionInfo?.speakers?.filter(function (s) {
@@ -130,7 +134,7 @@ const Schedule = () => {
         }).map(function (element) {
           return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R1"]?.[LANG].description} streamLink={composeStreamLink('r1')} />
+      } brief={currentSessions["R1"]?.[LANG].description} streamLink={composeStreamLink('r1')} translate={composeTranslationLink('r1')} />
 
       <Program location="R2" title={currentSessions["R2"]?.[LANG].title} speaker={
         sessionInfo?.speakers?.filter(function (s) {
@@ -138,7 +142,7 @@ const Schedule = () => {
         }).map(function (element) {
           return element[LANG].name || element["zh"].name;
         }).join(", ")
-      } brief={currentSessions["R2"]?.[LANG].description} streamLink={composeStreamLink('r2')} />
+      } brief={currentSessions["R2"]?.[LANG].description} streamLink={composeStreamLink('r2')} translate={composeTranslationLink('r2')} />
     </div>
   )
 }
