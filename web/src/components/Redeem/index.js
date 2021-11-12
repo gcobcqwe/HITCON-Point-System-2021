@@ -178,8 +178,13 @@ const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
   )
 }
 
+const RedeemSteps = Object.freeze({
+  'Listing': 0,
+  'ShowingCode': 1,
+});
+
 const Redeem = ({ setIsRedeemOpen }) => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(RedeemSteps.Listing);
   const [redeems, setRedeems] = useState([]);
   const [displayCode, setDisplayCode] = useState(null);
   useEffect(() => {
@@ -199,19 +204,19 @@ const Redeem = ({ setIsRedeemOpen }) => {
 
   useEffect(() => {
     if (displayCode !== null) {
-      setStep(1);
+      setStep(RedeemSteps.ShowingCode);
     }
   }, [displayCode]);
 
   const handleCancel = () => setIsRedeemOpen(false);
   const handleFinish = () => {
-    setStep(0);
+    setStep(RedeemSteps.Listing);
     setDisplayCode(null);
   }
 
   return (
     <Container>
-      {step === 0 ?
+      {step === RedeemSteps.Listing ?
         <Content>
           <Title>{langText("REDEEM_LIST_TITLE")}</Title>
           <Description>{langText("REDEEM_COUNTER").replace("{number}", redeems.filter((r) => {
@@ -234,7 +239,7 @@ const Redeem = ({ setIsRedeemOpen }) => {
           </TableWrapper>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </Content> : null}
-      {step === 1 ?
+      {step === RedeemSteps.ShowingCode ?
         <Content>
           <Title>{langText('REDEEM_TARGET')}</Title>
           <QRCode value={displayCode} />

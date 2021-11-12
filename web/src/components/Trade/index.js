@@ -96,11 +96,17 @@ const Content = styled.div`
   }
 `;
 
+const SendingSteps = Object.freeze({
+  'Scan': 0,
+  'Sending': 1,
+  'Success': 2,
+});
+
 const SendPage = ({setPage}) => {
   const [user, setUser] = useContext(UserContext);
   const [sendPoint, setSendPoint] = useState(0);
   const [isFixedAmount, setIsFixedAmount] = useState(false);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(SendingSteps.Scan);
   const [receiver, setReceiver] = useState('null');
   const handleScan = (stringData) => {
     if (stringData === null) return;
@@ -111,7 +117,7 @@ const SendPage = ({setPage}) => {
       setSendPoint(amount);
       setIsFixedAmount(true);
     }
-    setStep(1);
+    setStep(SendingSteps.Sending);
   };
   const handleError = (error) => {
     console.error({error});
@@ -130,7 +136,7 @@ const SendPage = ({setPage}) => {
       .then((resp) => {
         const { success } = resp.data;
         if (success) {
-          setStep(2);
+          setStep(SendingSteps.Success);
           user.points = (user.points - sendPoint);
           setUser(user);
         }
@@ -140,15 +146,15 @@ const SendPage = ({setPage}) => {
         console.error('transactions error: ', message);
       })
   }
-  const handleCancel = () => setPage(0);
+  const handleCancel = () => setPage(TradingPages.Init);
   const handleBackToScan = () => {
     setIsFixedAmount(false);
     setSendPoint(0);
-    setStep(0);
+    setStep(SendingSteps.Scan);
   }
   return(
   <Content>
-    { step === 0 ?
+    { step === SendingSteps.Scan ?
       <>
         <Title>{langText("TRADE_SEND_POINTS")}</Title>
         <Description>{langText("TRADE_SCAN_QR")}</Description>
@@ -159,7 +165,7 @@ const SendPage = ({setPage}) => {
         />
         <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
      </> : "" }
-    { step === 1 ?
+    { step === SendingSteps.Sending ?
       <>
         <Title>{langText("TRADE_SEND_POINTS")}</Title>
         <div>{langText("TRADE_SENDING_QTY").replace("{points}", user.points)}</div>
@@ -171,7 +177,7 @@ const SendPage = ({setPage}) => {
         <Button onClick={handleSend}>{langText("CONFIRM")}</Button>
         <Cancel onClick={handleBackToScan}>{langText("CANCEL")}</Cancel>
       </> : "" }
-    { step === 2 ?
+    { step === SendingSteps.Success ?
       <>
        <Title>{langText("TRADE_SENT_SUCESS")}</Title>
        <Description>{langText("TRADE_SENT_DESC").replace("{sendPoint}", sendPoint).replace("{uid}", receiver)}</Description>
@@ -183,7 +189,7 @@ const SendPage = ({setPage}) => {
 }
 
 const ReceivedPage = ({uid, setPage}) => {
-  const handleCancel = () => setPage(0)
+  const handleCancel = () => setPage(TradingPages.Init)
   return(
     <Content>
       <Title>{langText("TRADE_RECEIVING")}</Title>
@@ -198,9 +204,14 @@ ReceivedPage.defaultProps = {
   uid: 'unknown',
 }
 
+const TakingSteps = Object.freeze({
+  'Scan': 0,
+  'Success': 1,
+});
+
 const TakePage = ({setPage}) => {
   const [user, setUser] = useContext(UserContext);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(TakingSteps.Scan);
   const [points, setPoints] = useState();
   const handleScan = (data) => {
     if (data === null) return;
@@ -214,7 +225,7 @@ const TakePage = ({setPage}) => {
           setPoints(points);
           user.points = user.points + points;
           setUser(user);
-          setStep(1);
+          setStep(TakingSteps.Success);
         }
       })
       .catch((error) => {
@@ -226,10 +237,10 @@ const TakePage = ({setPage}) => {
     console.error('take point scan error',err);
   }
 
-  const handleCancel = () => setPage(0)
+  const handleCancel = () => setPage(TradingPages.Init)
   return(
     <Content>
-      { step === 0 ?
+      { step === TakingSteps.Scan ?
       <>
         <Title>{langText("TRADE_REDEEM_POINTS")}</Title>
         <Description>{langText("TRADE_REDEEM_QR")}</Description>
@@ -240,7 +251,7 @@ const TakePage = ({setPage}) => {
         />
         <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
       </> : "" }
-      { step === 1 ?
+      { step === TakingSteps.Success ?
       <>
         <Title>{langText("TRADE_REDEEM_CONFIRM")}</Title>
         <Description>{langText("TRADE_REDEEM_DONE").replace("{points}", points)}</Description>
@@ -252,13 +263,20 @@ const TakePage = ({setPage}) => {
 
 const TradingMain = styled.div``;
 
+const TradingPages = Object.freeze({
+  'Init': 0,
+  'Send': 1,
+  'Received': 2,
+  'Take': 3
+});
+
 const Trading = ({setIsTradningOpen}) => {
   const [user, setUser] = useContext(UserContext);
   const [uid, setUid] = useState();
-  const [page, setPage] = useState(0);
-  const switchSend = () => setPage(1);
-  const switchRecivied = () => setPage(2);
-  const switchTake = () => setPage(3);
+  const [page, setPage] = useState(TradingPages.Init);
+  const switchSend = () => setPage(TradingPages.Send);
+  const switchRecivied = () => setPage(TradingPages.Received);
+  const switchTake = () => setPage(TradingPages.Take);
   const handleCancel = () => setIsTradningOpen(false);
 
   useEffect(() => {
@@ -280,7 +298,7 @@ const Trading = ({setIsTradningOpen}) => {
 
   return (
     <TradingContainer>
-      { page === 0 ?
+      { page === TradingPages.Init ?
       <TradingMain>
         <Title>{langText("TRADE_TRADING_POINTS")}</Title>
         <Description>{langText("POINTS_OWNED").replace("{points}", user.points)}</Description>
@@ -298,9 +316,9 @@ const Trading = ({setIsTradningOpen}) => {
         </Button>
         <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
       </TradingMain> : null }
-      { page === 1 ? <SendPage setPage={setPage}/> : null }
-      { page === 2 ? <ReceivedPage setPage={setPage} uid={uid}/> : null }
-      { page === 3 ? <TakePage setPage={setPage}/> : null }
+      { page === TradingPages.Send ? <SendPage setPage={setPage}/> : null }
+      { page === TradingPages.Received ? <ReceivedPage setPage={setPage} uid={uid}/> : null }
+      { page === TradingPages.Take ? <TakePage setPage={setPage}/> : null }
     </TradingContainer>
   );
 }
