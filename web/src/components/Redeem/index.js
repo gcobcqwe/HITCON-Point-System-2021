@@ -106,8 +106,16 @@ const TableWrapper = styled.div`
 const Table = styled.table`
   position: relative;
 
+  .statusText {
+    color: #729b55;
+  }
+
   .isUsed {
-    background: #6b6b6b
+    background: #D0D0D0;
+
+    .statusText {
+      color: #b29d9c;
+    }
   }
 
   th, td {
@@ -167,7 +175,7 @@ const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
   return (
     <tr className={isUsed ? "isUsed" : "notUsed"}>
       <td>{points}</td>
-      <td>{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</td>
+      <td className="statusText">{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</td>
       <td>
         {code}
         <button onClick={handleShow}>
@@ -216,7 +224,7 @@ const Redeem = ({ setIsRedeemOpen }) => {
 
   return (
     <Container>
-      {step === RedeemSteps.Listing ?
+      {step === RedeemSteps.Listing &&
         <Content>
           <Title>{langText("REDEEM_LIST_TITLE")}</Title>
           <Description>{langText("REDEEM_COUNTER").replace("{number}", redeems.filter((r) => {
@@ -238,13 +246,13 @@ const Redeem = ({ setIsRedeemOpen }) => {
           </Table>
           </TableWrapper>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
-        </Content> : null}
-      {step === RedeemSteps.ShowingCode ?
+        </Content>}
+      {step === RedeemSteps.ShowingCode &&
         <Content>
           <Title>{langText('REDEEM_TARGET')}</Title>
           <QRCode value={displayCode} />
           <Button onClick={handleFinish}>{langText("DONE")}</Button>
-        </Content> : null}
+        </Content>}
     </Container>
   )
 }
