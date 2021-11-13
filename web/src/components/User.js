@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
 import Cookies from "js-cookie";
@@ -198,6 +197,10 @@ const UserWide = styled.div`
   }
 `;
 
+const SubMenuMask = styled(Mask)`
+  z-index: 5;
+`;
+
 const UserContiner = () => {
   const [token, setToken] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -213,7 +216,11 @@ const UserContiner = () => {
   const handleMask = () => {
     document.getElementById("menuCheck").checked = false;
     setIsMenuOpen(false);
+  }
+  const handleSubMenuMaskClose = () => {
     setIsTradningOpen(false);
+    setIsExchangeOpen(false);
+    setIsRedeemOpen(false);
   }
 
   useEffect(() => {
@@ -272,9 +279,10 @@ const UserContiner = () => {
           onClick={() => role === "vendor" ? setIsRedeemOpen(true): setIsExchangeOpen(true)}>{role === "vendor" ?langText("REDEEM_LIST_TITLE") : langText("USER_REDEEM_POINTS")}</ActionButton>
       </Actions>
     </UserWide>
-    { isTradingOpen ? <Trade setIsTradningOpen={setIsTradningOpen} /> : null }
-    { isExchangeOpen ? <Exchange setIsExchangeOpen={setIsExchangeOpen} /> : null}
-    { isRedeemOpen ? <Redeem setIsRedeemOpen={setIsRedeemOpen} /> : null}
+    {(isTradingOpen || isExchangeOpen || isRedeemOpen) && <SubMenuMask onClick={handleSubMenuMaskClose} />}
+    {isTradingOpen && <Trade setIsTradningOpen={setIsTradningOpen} />}
+    {isExchangeOpen && <Exchange setIsExchangeOpen={setIsExchangeOpen} />}
+    {isRedeemOpen && <Redeem setIsRedeemOpen={setIsRedeemOpen} />}
     </>
   )
 }
