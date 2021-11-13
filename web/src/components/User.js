@@ -209,7 +209,7 @@ const UserContiner = () => {
   const [isRedeemOpen, setIsRedeemOpen] = useState(false);
   const [user, setUser] = useContext(UserContext);
   const nickname = user.nickname;
-  const role = user.role;
+  const isVendor = user.role === 'vendor';
   const points = user.points;
 
   const openMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -249,8 +249,10 @@ const UserContiner = () => {
           </Points>
           <Actions>
             <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
-            <ActionButton
-          onClick={() => role === "vendor" ? setIsRedeemOpen(true): setIsExchangeOpen(true)}>{role === "vendor" ?langText("REDEEM_LIST_TITLE") : langText("USER_REDEEM_POINTS")}</ActionButton>
+            {isVendor 
+              ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
+              : <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
+            }
           </Actions>
         </Menu> :
         null
@@ -275,8 +277,10 @@ const UserContiner = () => {
       </Points>
       <Actions>
         <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
-        <ActionButton
-          onClick={() => role === "vendor" ? setIsRedeemOpen(true): setIsExchangeOpen(true)}>{role === "vendor" ?langText("REDEEM_LIST_TITLE") : langText("USER_REDEEM_POINTS")}</ActionButton>
+        {isVendor
+          ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
+          : <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
+        }
       </Actions>
     </UserWide>
     {(isTradingOpen || isExchangeOpen || isRedeemOpen) && <SubMenuMask onClick={handleSubMenuMaskClose} />}
