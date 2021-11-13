@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import Cookies from "js-cookie";
 import Mask from "./Mask";
@@ -13,13 +13,11 @@ const PositionFixed = styled.div`
   bottom: 150px;
   right: 15px;
   z-index: 5;
-
   @media(min-width: 1280px) {
     bottom: unset;
     top: 150px;
     right: 120px;
   }
-
   @media(min-width: 1920px) {
     display: none;
   }
@@ -89,9 +87,7 @@ const ActionBar = styled.div`
   width: 48px;
   height: 48px;
   margin-right: 10px;
-
   user-select: none;
-
   input {
     display: block;
     width: 45px;
@@ -103,7 +99,6 @@ const ActionBar = styled.div`
     z-index: 2;
     -webkit-touch-callout: none;
   }
-
   span {
     display: block;
     width: 20px;
@@ -119,26 +114,21 @@ const ActionBar = styled.div`
     background 0.5s ease,
     opacity 0.55s ease;
   }
-
   span:first-child {
     transform-origin: 0% 0%;
   }
-
   span:nth-last-child(2) {
     transform-origin: 0% 100%;
   }
-
   input:checked ~ span {
     opacity: 1;
     transform: rotate(135deg) translate(-11px, 4px);
     background: #FFFFFF;
   }
-
   input:checked ~ span:nth-last-child(3) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
   }
-
   input:checked ~ span:nth-last-child(2) {
     transform: rotate(45deg) translate(0px, -12px);
   }
@@ -167,7 +157,6 @@ const ActionButton = styled.div`
 
 const UserWide = styled.div`
   display: none;
-
   @media(min-width: 1920px) {
     position: fixed;
     left: 65%;
@@ -178,20 +167,16 @@ const UserWide = styled.div`
     box-shadow: 0px 3px 6px #1B3A76B5;
     border-radius: 39px;
   }
-
   ${Username} {
     margin-bottom: 10px;
   }
-
   ${UserSignout} {
     margin: 0;
   }
-
   ${Points} {
     margin-top: 30px;
     margin-bottom: 20px;
   }
-
   ${ActionButton} {
     width: 48%;
   }
@@ -238,55 +223,61 @@ const UserContiner = () => {
 
   return (
     <>
-    <PositionFixed>
-    <Container>
-      {
-        isMenuOpen ?
-        <Menu>
-          <Mask onClick={handleMask} />
-          <Points>
+      <PositionFixed>
+        <Container>
+          {
+            isMenuOpen ?
+              <Menu>
+                <Mask onClick={handleMask} />
+                <Points>
+                  {langText("USER_CURRENT_POINTS")}{points} P
+                </Points>
+                <Actions>
+                  {isVendor
+                    ? null
+                    : <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+                  }
+                  {isVendor
+                    ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
+                    : <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
+                  }
+                </Actions>
+              </Menu> :
+              null
+          }
+          <UserInfo>
+            <Username>
+              {nickname}
+            </Username>
+            <ActionBar onClick={openMenu}>
+              <input type="checkbox" id="menuCheck" />
+              <span />
+              <span />
+              <span />
+            </ActionBar>
+          </UserInfo>
+        </Container>
+      </PositionFixed>
+      <UserWide>
+        <Username>{nickname}</Username>
+        <Points>
           {langText("USER_CURRENT_POINTS")}{points} P
-          </Points>
-          <Actions>
-            <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
-            {isVendor 
-              ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
-              : <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
-            }
-          </Actions>
-        </Menu> :
-        null
-      }
-      <UserInfo>
-        <Username>
-          {nickname}
-        </Username>
-        <ActionBar onClick={openMenu}>
-          <input type="checkbox" id="menuCheck"/>
-          <span />
-          <span />
-          <span />
-        </ActionBar>
-      </UserInfo>
-    </Container>
-    </PositionFixed>
-    <UserWide>
-      <Username>{nickname}</Username>
-      <Points>
-          {langText("USER_CURRENT_POINTS")}{points} P
-      </Points>
-      <Actions>
-        <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
-        {isVendor
-          ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
-          : <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
-        }
-      </Actions>
-    </UserWide>
-    {(isTradingOpen || isExchangeOpen || isRedeemOpen) && <SubMenuMask onClick={handleSubMenuMaskClose} />}
-    {isTradingOpen && <Trade setIsTradningOpen={setIsTradningOpen} />}
-    {isExchangeOpen && <Exchange setIsExchangeOpen={setIsExchangeOpen} />}
-    {isRedeemOpen && <Redeem setIsRedeemOpen={setIsRedeemOpen} />}
+        </Points>
+        <Actions>
+          {isVendor
+            ? null
+            : <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+          }
+          {isVendor
+            ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
+            : <ActionButton onClick={() => setIsExchangeOpen(true)}>{langText("USER_REDEEM_POINTS")}</ActionButton>
+          }
+        </Actions>
+      </UserWide>
+      {(isTradingOpen || isExchangeOpen || isRedeemOpen) && <SubMenuMask onClick={handleSubMenuMaskClose} />}
+      {isTradingOpen && <Trade setIsTradningOpen={setIsTradningOpen} />}
+      {isExchangeOpen && <Exchange setIsExchangeOpen={setIsExchangeOpen} />}
+      {isRedeemOpen && <Redeem setIsRedeemOpen={setIsRedeemOpen} />}
     </>
   )
 }

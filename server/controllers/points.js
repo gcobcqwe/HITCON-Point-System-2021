@@ -30,7 +30,7 @@ const logger = require('../util/logger');
 const db = require('../models');
 const PointsService = require('../services/Points');
 const pointsServiceInstance = new PointsService(db);
-const {THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor, THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME} = require('../config/error');
+const {THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor, THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME, VENDOR_PROHIBITED_ACTIONS} = require('../config/error');
 
 /**
  * @description Attempt to subtract points in the user wallet and generate a redeem code.
@@ -58,8 +58,10 @@ async function generateCode( req, res ) {
 async function redeemCode( req, res ) {
   try {
     const uid = req.token.payload.sub;
+    const scope = req.token.payload.scope.split(' ');
     const code = req.body.code;
     if (typeof code !== 'string') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
+    if ('vendor' in scope) throw new Error(VENDOR_PROHIBITED_ACTIONS);
     const result = await pointsServiceInstance.redeemCode(uid, code);
     res.status(StatusCodes.OK).send({success: true, data: result});
   } catch (e) {
@@ -92,10 +94,12 @@ async function fetchAllRedeemCode( req, res ) {
 async function transactions( req, res ) {
   try {
     const sender = req.token.payload.sub;
+    const scope = req.token.payload.scope.split(' ');
     const receiver = req.body.receiver;
     const points = req.body.points;
     if (typeof points !== 'number' || !Number.isInteger(points) || points <= 0 || typeof receiver !== 'string') throw new Error(THE_REQUEST_PARAMETER_IS_INVALID);
     if (sender === receiver) throw new Error(THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME);
+    if ('vendor' in scope) throw new Error(VENDOR_PROHIBITED_ACTIONS);
     await pointsServiceInstance.transactions(sender, receiver, points);
     res.status(StatusCodes.OK).send({success: true});
   } catch (e) {
