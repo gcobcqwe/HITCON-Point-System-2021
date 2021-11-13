@@ -102,7 +102,6 @@ const CouponRow = ({code, changedAt, couponsType}) => {
   )
 }
 
-
 const CouponPage = ({ setPage }) => {
   const [coupons, setCoupons] = useState([]);
   useEffect(()=>{
@@ -120,7 +119,7 @@ const CouponPage = ({ setPage }) => {
     });
   },[]);
 
-  const handleCancel = () => setPage(0);
+  const handleCancel = () => setPage(PointExchange.BriefInfo);
   return (
     <Content>
       <Title>{langText("COUPON_YOUR_COUPON")}</Title>
@@ -208,12 +207,18 @@ const Coupon = ({ name, points, setTargetCoupon }) => {
   )
 }
 
+const ExchangeSteps = Object.freeze({
+  'CouponList': 0,
+  'ConfirmExchange': 1,
+  'Success': 2,
+});
+
 const ExchangePage = ({ points, setPage }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useContext(UserContext);
-  const [step, setStep] = useState(0);
-  const handleBack = () => setStep(0);
-  const handleCancel = () => setPage(0);
+  const [step, setStep] = useState(ExchangeSteps.CouponList);
+  const handleBack = () => setStep(ExchangeSteps.CouponList);
+  const handleCancel = () => setPage(PointExchange.BriefInfo);
   const [targetCoupon, setTargetCoupon] = useState(null);
   const [couponList, setCouponList] = useState([]);
   const handleExchange = (remainingPoints) => {
@@ -230,7 +235,7 @@ const ExchangePage = ({ points, setPage }) => {
         const { state, data: {message} } = error.response;
         console.error('exchange Coupons error: ', message);
     });
-    setStep(2);
+    setStep(ExchangeSteps.Success);
   };
 
   useEffect(() => {
@@ -249,11 +254,11 @@ const ExchangePage = ({ points, setPage }) => {
 
   useEffect(() => {
     if (targetCoupon === null) return;
-    setStep(1);
+    setStep(ExchangeSteps.ConfirmExchange);
   }, [targetCoupon])
   return (
     <>
-      {step === 0 ?
+      {step === ExchangeSteps.CouponList ?
         <Content>
           <Title>{langText("COUPON_EXCH_ITEM")}</Title>
           <List>
@@ -261,7 +266,7 @@ const ExchangePage = ({ points, setPage }) => {
           </List>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </Content> : null}
-      {step === 1 ?
+      {step === ExchangeSteps.ConfirmExchange ?
         <Content>
           <Title>{langText("COUPON_CONFIRM_EXCH")}</Title>
           {ReactHtmlParser(langText("COUPON_USING_POINTS")
@@ -271,7 +276,7 @@ const ExchangePage = ({ points, setPage }) => {
           <Cancel onClick={handleBack}>{langText("CANCEL")}</Cancel>
           <Button onClick={() => handleExchange((points - targetCoupon.points))}>{langText("CONFIRM")}</Button>
         </Content> : null}
-      {step === 2 ?
+      {step === ExchangeSteps.Success ?
         <Content>
           <Title>{langText("COUPON_EXCH_DONE")}</Title>
           <div>{langText("COUPON_DONE_NOTICE")}</div>
@@ -281,12 +286,18 @@ const ExchangePage = ({ points, setPage }) => {
   )
 }
 
+const PointExchange = Object.freeze({
+  'BriefInfo': 0,
+  'OwnCoupon': 1,
+  'ExchangeCoupon': 2,
+});
+
 const Exchange = ({ setIsExchangeOpen }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useContext(UserContext);
-  const [page, setPage] = useState(0);
-  const switchCoupon = () => setPage(1);
-  const switchExchange = () => setPage(2);
+  const [page, setPage] = useState(PointExchange.BriefInfo);
+  const switchCoupon = () => setPage(PointExchange.OwnCoupon);
+  const switchExchange = () => setPage(PointExchange.ExchangeCoupon);
   const handleCancel = () => setIsExchangeOpen(false);
 
   useEffect(() => {
@@ -319,7 +330,7 @@ const Exchange = ({ setIsExchangeOpen }) => {
 
   return (
     <Container>
-      {page === 0 ?
+      {page === PointExchange.BriefInfo ?
         <>
           <Title>{langText("COUPON_POINTS_EXCH")}</Title>
           <Description>
@@ -333,8 +344,8 @@ const Exchange = ({ setIsExchangeOpen }) => {
           </Button>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </> : null}
-      {page === 1 ? <CouponPage points={user.points} setPage={setPage} /> : null}
-      {page === 2 ? <ExchangePage points={user.points} setPage={setPage} /> : null}
+      {page === PointExchange.OwnCoupon ? <CouponPage points={user.points} setPage={setPage} /> : null}
+      {page === PointExchange.ExchangeCoupon ? <ExchangePage points={user.points} setPage={setPage} /> : null}
     </Container>
   )
 }
