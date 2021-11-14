@@ -287,5 +287,4 @@ UserContiner.defaultProps = {
   points: "9999",
 }
 
-
 export default UserContiner;
