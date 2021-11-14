@@ -28,11 +28,12 @@
 const express = require('express');
 const points = require('../controllers/points');
 const router = express.Router();
+const { isVendor } = require('../middlewares/auth');
 
 router.post('/generate-code', points.generateCode);
-router.post('/redeem-code', points.redeemCode);
+router.post('/redeem-code', isVendor, points.redeemCode);
 router.get('/redeem-code', points.fetchAllRedeemCode);
-router.post('/transactions', points.transactions);
+router.post('/transactions', isVendor, points.transactions);
 router.get('/transactions-history', points.transactionsHistory);
 
 module.exports = router;
