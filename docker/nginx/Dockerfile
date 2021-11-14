@@ -19,8 +19,14 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-FROM nginx:latest
+FROM node:latest as build
+WORKDIR /app
+COPY ./web/ /app/
+RUN yarn
+RUN yarn build
 
-# TODO: Static Website
-COPY index.html /usr/share/nginx/html/index.html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM jonasal/nginx-certbot:latest
+COPY docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/ /usr/share/nginx/html
+
+CMD [ "/scripts/start_nginx_certbot.sh" ]

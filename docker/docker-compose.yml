@@ -75,15 +75,20 @@ services:
 
   nginx: 
     build:
-      context: ./nginx
+      context: ..
+      dockerfile: ./docker/nginx/Dockerfile
     image: nginx
     container_name: nginx
-    restart: always
+    env_file:
+      - nginx/.env
+    restart: unless-stopped
     volumes:
       - nginx-data:/var/log/nginx/*
     ports:
       - "80:80/tcp"
-      # - "443:443/tcp" # TODO: SSL 
+      - "443:443/tcp"
+    volumes:
+      - nginx_secrets:/etc/letsencrypt
     healthcheck:
       test: ["CMD", "service", "nginx", "status"]
       interval: 300s
@@ -100,6 +105,7 @@ volumes:
   postgresql-data:
   redis-data:
   nginx-data:
+  nginx_secrets:
 
 networks:
   frontend:
