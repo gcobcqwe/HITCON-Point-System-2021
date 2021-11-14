@@ -33,12 +33,21 @@ const error = {
    * @param {String} text The error message
    * @return {String}
    */
-  msgAdaptor: (text) => {
-    if (Object.values(error).includes(text)) {
+  msgAdaptor: function(text) {
+    if (Object.values(this).includes(text) && isAllowedResponse(text)) {
       return text;
     }
     return ReasonPhrases.BAD_REQUEST;
-  },
+  }.bind(this),
+  /**
+   * @description Attempt to check error message is allowed to respond.
+   * @param {String} text The error message
+   * @return {Boolean}
+   */
+  isAllowedResponse: function(text) {
+    const blacklist = [THE_SENDER_DOES_NOT_EXIST, THE_RECEIVER_DOES_NOT_EXIST, THE_USER_IS_NOT_FOUND, THE_EMAIL_SENDER_IS_COOLING_DOWN];
+    return !blacklist.includes(text);
+  }.bind(this),
   THE_BALANCE_IS_NOT_ENOUGH: 'The balance is not enough.',
   THE_COUPON_IS_FINISHED: 'The coupon is finished.',
   THE_REQUEST_PARAMETER_IS_INVALID: 'The request parameter is invalid.',
