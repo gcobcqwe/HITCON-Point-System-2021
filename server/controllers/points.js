@@ -30,7 +30,7 @@ const logger = require('../util/logger');
 const db = require('../models');
 const PointsService = require('../services/Points');
 const pointsServiceInstance = new PointsService(db);
-const {THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor, THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME} = require('../config/error');
+const {THE_REQUEST_PARAMETER_IS_INVALID, msgAdaptor, THE_SENDER_AND_THE_RECEIVER_ARE_THE_SAME, VENDOR_PROHIBITED_ACTIONS} = require('../config/error');
 
 /**
  * @description Attempt to subtract points in the user wallet and generate a redeem code.

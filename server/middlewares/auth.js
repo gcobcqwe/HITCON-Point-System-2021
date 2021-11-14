@@ -77,6 +77,20 @@ const isAdmin = (req, res, next) => {
 };
 
 /**
+ * Check the user's role if is it the vendor in the middleware.
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
+ const isVendor = (req, res, next) => {
+  if (!req.token.payload.scope.includes('vendor')) {
+    res.status(StatusCodes.FORBIDDEN).send({success: false, message: ReasonPhrases.FORBIDDEN});
+    return;
+  }
+  next();
+};
+
+/**
  * Convert http post body token to http header authorized format.
  * @param {Request} req
  * @param {Response} res
@@ -91,5 +105,6 @@ const tokenAdapter = (req, res, next) => {
 module.exports = {
   checkAuth,
   isAdmin,
+  isVendor,
   tokenAdapter
 };
