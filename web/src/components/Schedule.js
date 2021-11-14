@@ -98,6 +98,11 @@ const Schedule = () => {
       for (var session of sessionInfo.sessions) {
         if (time.isAfter(session.start) && time.isBefore(session.end)) {
           _currentSessions[session.room] = session;
+          if(session.broadcast) {
+            for (var i of session.broadcast) {
+              _currentSessions[i] = _currentSessions[session.room];
+            }
+          }
         }
       }
       setCurrentSessions(_currentSessions);
