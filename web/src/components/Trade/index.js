@@ -132,7 +132,7 @@ const SendPage = ({setPage}) => {
       return;
     }
 
-    axios.post(apiURL, {points: parseInt(sendPoint), receiver}, {headers})
+    axios.post(apiURL, {points: Number(sendPoint), receiver}, {headers})
       .then((resp) => {
         const { success } = resp.data;
         if (success) {
