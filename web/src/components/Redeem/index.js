@@ -19,6 +19,7 @@ const Container = styled(Modal)`
 
 const Title = styled.div`
   font-size: 36px;
+  font-weight: bold;
   text-align: center;
 
   @media(min-width: 1280px) {

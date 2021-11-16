@@ -23,6 +23,7 @@ const TradingContainer = styled(Modal)`
 
 const Title = styled.div`
   font-size: 36px;
+  font-weight: bold;
 
   @media(min-width: 1280px) {
     padding-left: 30px;
