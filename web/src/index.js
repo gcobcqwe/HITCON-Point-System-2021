@@ -46,10 +46,12 @@ const Header = styled.header`
 
 const Title = styled.div`
   font-size: 34px;
+  font-weight: bold;
 `;
 
 const SectionTitle = styled.div`
   font-size: 28px;
+  font-weight: bold;
   border-bottom: 2px solid #fff;
   padding-bottom: 1.5em;
   margin: 1.5em 0;

@@ -31,6 +31,7 @@ const Info = styled.div`
 
 const Title = styled.div`
   font-size: 28px;
+  font-weight: bold;
   margin-bottom: 22px;
 `;
 

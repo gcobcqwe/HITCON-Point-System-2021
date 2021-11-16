@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   font-size: 36px;
+  font-weight: bold;
 `;
 
 const Link = styled.a`

@@ -32,6 +32,7 @@ const Info = styled.div`
 
 const Title = styled.div`
   font-size: 24px;
+  font-weight: bold;
   margin-bottom: 22px;
   @media(min-width: 1280px) {
     font-size: 28px;
