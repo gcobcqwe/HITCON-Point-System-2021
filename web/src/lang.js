@@ -262,7 +262,7 @@ export function langText(key) {
         },
         "REDEEM_VALUE": {
             "en": "Points",
-            "zh": "金額"
+            "zh": "點數"
         },
         "REDEEM_STATE": {
             "en": "State",

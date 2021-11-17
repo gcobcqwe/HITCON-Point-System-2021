@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
-import QRCode from "react-qr-code";
+import QRCode from "qrcode.react";
 import QrReader from "react-qr-reader";
 import Cookies from "js-cookie";
 import Modal from "../Modal";
@@ -109,11 +109,13 @@ const SendPage = ({setPage}) => {
   const [isFixedAmount, setIsFixedAmount] = useState(false);
   const [step, setStep] = useState(SendingSteps.Scan);
   const [receiver, setReceiver] = useState('null');
+  const [receiverNickname, setReceiverNickname] = useState();
   const handleScan = (stringData) => {
     if (stringData === null) return;
     const data = JSON.parse(stringData);
-    const {uid, amount} = data;
+    const {nickname, uid, amount} = data;
     setReceiver(uid);
+    setReceiverNickname(nickname);
     if (amount !== undefined) {
       setSendPoint(amount);
       setIsFixedAmount(true);
@@ -170,7 +172,7 @@ const SendPage = ({setPage}) => {
       <>
         <Title>{langText("TRADE_SEND_POINTS")}</Title>
         <div>{langText("TRADE_SENDING_QTY").replace("{points}", user.points)}</div>
-        <div>{langText("TRADE_SENDING_TARGET")}{receiver}</div>
+        <div>{langText("TRADE_SENDING_TARGET")}{receiverNickname}</div>
         {isFixedAmount
           ? <div>{sendPoint}</div>
           : <input type="text" onChange={(e) => setSendPoint(e.target.value)}/>
@@ -289,7 +291,10 @@ const Trading = ({setIsTradningOpen}) => {
         const { data:{ points, uid }} = resp.data;
         user.points = points;
         setUser(user);
-        setUid(JSON.stringify({uid}));
+        var qrCodeValue = {};
+        qrCodeValue.nickname = user.nickname;
+        qrCodeValue.uid = uid;
+        setUid(JSON.stringify(qrCodeValue));
       })
       .catch((error) => {
         const { state, data: {message} } = error.response;

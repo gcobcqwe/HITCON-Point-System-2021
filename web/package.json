@@ -13,6 +13,7 @@
     "moment": "^2.29.1",
     "parcel": "^2.0.0",
     "prop-types": "^15.7.2",
+    "qrcode.react": "^1.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
