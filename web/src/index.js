@@ -22,6 +22,9 @@ import TopicVillageImg from "./public/online.png";
 
 import UserContext from "./UserContext";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Main = styled.main`
   padding: 0 28px;
   margin: 0 auto;
@@ -284,4 +287,18 @@ const App = () => {
   )
 }
 
-ReactDom.render(<App />, document.getElementById("root"));
+ReactDom.render(<div>
+                  <App />
+                  <ToastContainer
+                    theme="dark"
+                    position="bottom-center"
+                    autoClose={1000}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
+                </div>, document.getElementById("root"));

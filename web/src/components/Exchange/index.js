@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import { langText } from "../../lang";
 import ReactHtmlParser from "react-html-parser"
 import UserContext from '../../UserContext.js';
+import { toast } from 'react-toastify';
 
 const Container = styled(Modal)`
   @media(min-width: 1280px) {
@@ -91,6 +92,11 @@ const Content = styled.div`
 
 const Table = styled.table``;
 
+const copyHandler = (code) => {
+  navigator.clipboard.writeText(code);
+  toast(`The code ${code} is copied!`);
+}
+
 const CouponRow = ({code, changedAt, couponsType}) => {
   const [,value] = couponsType.name.split("_");
   const time = new Date(changedAt);
@@ -98,7 +104,7 @@ const CouponRow = ({code, changedAt, couponsType}) => {
     <tr>
       <td>{value}</td>
       <td>{`${time.getFullYear()}/${time.getMonth()+1}/${time.getDate()}`}</td>
-      <td>{code} | <button onClick={() => {navigator.clipboard.writeText(code)}}>copy</button></td>
+      <td>{code} | <button onClick={() => copyHandler(code)}>copy</button></td>
     </tr>
   )
 }
