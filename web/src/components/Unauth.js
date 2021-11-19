@@ -248,7 +248,11 @@ const Unauth = () => {
       })
   }
 
-  const handleQRError = (err) => console.log(err);
+  const handleQRError = (err) => {
+    if (err.message === 'Permission denied') {
+      alert('Please allow your camera permission!');
+    }
+  };
   const handleQRScan = (data) => {
     if (data === null) return;
     const result = exchangeToken(data);
