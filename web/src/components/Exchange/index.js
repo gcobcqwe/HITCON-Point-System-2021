@@ -220,7 +220,7 @@ const ExchangeSteps = Object.freeze({
   'Success': 2,
 });
 
-const ExchangePage = ({ points, setPage }) => {
+const ExchangePage = ({ setPage }) => {
   const [token, setToken] = useState();
   const [user, setUser] = useContext(UserContext);
   const [step, setStep] = useState(ExchangeSteps.CouponList);
@@ -261,6 +261,10 @@ const ExchangePage = ({ points, setPage }) => {
 
   useEffect(() => {
     if (targetCoupon === null) return;
+    if (user.points - targetCoupon.points < 0) {
+      toast(`The balance is not enough!`);
+      return;
+    }
     setStep(ExchangeSteps.ConfirmExchange);
   }, [targetCoupon])
   return (
@@ -279,9 +283,9 @@ const ExchangePage = ({ points, setPage }) => {
           {ReactHtmlParser(langText("COUPON_USING_POINTS")
             .replace("{cost}", targetCoupon.points)
             .replace("{value}", targetCoupon.name.split('_')[1])
-            .replace("{points}", (points - targetCoupon.points)))}
+            .replace("{points}", (user.points - targetCoupon.points)))}
           <Cancel onClick={handleBack}>{langText("CANCEL")}</Cancel>
-          <Button onClick={() => handleExchange((points - targetCoupon.points))}>{langText("CONFIRM")}</Button>
+          <Button onClick={() => handleExchange((user.points - targetCoupon.points))}>{langText("CONFIRM")}</Button>
         </Content> : null}
       {step === ExchangeSteps.Success ?
         <Content>
@@ -351,8 +355,8 @@ const Exchange = ({ setIsExchangeOpen }) => {
           </Button>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </> : null}
-      {page === PointExchange.OwnCoupon ? <CouponPage points={user.points} setPage={setPage} /> : null}
-      {page === PointExchange.ExchangeCoupon ? <ExchangePage points={user.points} setPage={setPage} /> : null}
+      {page === PointExchange.OwnCoupon ? <CouponPage setPage={setPage} /> : null}
+      {page === PointExchange.ExchangeCoupon ? <ExchangePage setPage={setPage} /> : null}
     </Container>
   )
 }
