@@ -122,8 +122,10 @@ const SendPage = ({setPage}) => {
     }
     setStep(SendingSteps.Sending);
   };
-  const handleError = (error) => {
-    console.error({error});
+  const handleError = (err) => {
+    if (err.message === 'Permission denied') {
+      alert('Please allow your camera permission!');
+    }
   };
 
   const handleSend = () => {
