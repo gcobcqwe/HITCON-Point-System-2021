@@ -322,7 +322,7 @@ const Unauth = () => {
               <br /><br />
               {langText("UNAUTH_EMAIL_LINK_TITLE")}
             </Desc>
-            <Button onClick={() => setEmailConfirm(false)}>{langText("CONFIRM")}</Button>
+            <Button onClick={() => {setEmailConfirm(false); setEmail('');}}>{langText("CONFIRM")}</Button>
           </EmailConfirmModal> :
           null
         }
@@ -338,7 +338,6 @@ const Unauth = () => {
               onError={handleQRError}
               onScan={handleQRScan}
             />
-            <div>qrcode: {qrData}</div>
           </QRCodeModal> :
           null
         }
