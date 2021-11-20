@@ -130,6 +130,15 @@ const Button = styled.button`
   margin-bottom: 15px;
 `;
 
+const QRCodeCloseButton = styled.button`
+  padding: 8px 15px;
+  font-size: 6px;
+  position: absolute;
+  right: 20px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+`;
+
 const Camera = styled(Button)`
   display: flex;
   align-items: center;
@@ -330,7 +339,7 @@ const Unauth = () => {
           <QRCodeModal>
             <Title>
               {langText("UNAUTH_QRCODE_SCAN")}
-              <button onClick={() => setReader(!reader)}>x</button>
+              <QRCodeCloseButton onClick={() => setReader(!reader)}>x</QRCodeCloseButton>
             </Title>
             <Desc>{langText("UNAUTH_QRCODE_SCAN_KKTIX")}</Desc>
             <QRCodeReader
