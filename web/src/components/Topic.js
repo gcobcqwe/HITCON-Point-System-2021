@@ -10,7 +10,6 @@ const Container = styled.div`
 
   @media(min-width: 1280px) {
     width: 495px;
-    height: 653px;
   }
 `;
 
@@ -55,6 +54,10 @@ const Button = styled.button`
   font-weight: border;
   padding: 15px 20px;
   margin-bottom : 10px;
+
+  @media(min-width: 1280px) {
+    margin-right : 10px;
+  }
 
   a:visited {
     color: #000;
