@@ -7,6 +7,13 @@ import Exchange from "./Exchange";
 import Redeem from "./Redeem";
 import { langText } from "../lang";
 import UserContext from '../UserContext.js';
+import { toast } from 'react-toastify';
+import clipboardIcon from "../public/clipboard.svg";
+
+const Clipboard = styled.img`
+  margin-left: 15px;
+  margin-top: 3.5px;
+`;
 
 const PositionFixed = styled.div`
   position: fixed;
@@ -55,6 +62,7 @@ const UserInfo = styled.div`
 
 const Username = styled.div`
   font-size: 26px;
+  display: flex;
 `;
 
 const UserSignout = styled.a`
@@ -208,6 +216,11 @@ const UserContiner = () => {
     setIsRedeemOpen(false);
   }
 
+  const copyHandler = (code) => {
+    navigator.clipboard.writeText(code);
+    toast(`The uid is copied! (Malware Playground only)`);
+  }
+  
   useEffect(() => {
     const tokenFromCookies = Cookies.get('token');
     if (tokenFromCookies === undefined) {
@@ -248,6 +261,7 @@ const UserContiner = () => {
           <UserInfo>
             <Username>
               {nickname}
+              <Clipboard onClick={() => copyHandler(user.uid)} src={clipboardIcon} />
             </Username>
             <ActionBar onClick={openMenu}>
               <input type="checkbox" id="menuCheck" />
