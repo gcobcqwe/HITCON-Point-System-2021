@@ -233,7 +233,6 @@ const App = () => {
           setUser(data);
           Cookies.set('token', token);
           window.history.replaceState({}, document.title, "/");
-          console.log('user data: ', data);
           return data;
         }
       }).catch((error) => {
