@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import QRCode from "react-qr-code";
 import Cookies from "js-cookie";
+
+import CloseButton from "../CloseButton";
 import Modal from "../Modal";
 import { langText } from "../../lang";
 
@@ -13,6 +15,7 @@ const Container = styled(Modal)`
   @media(min-width: 768px) {
     flex-direction: row;
     align-items: flex-start;
+    padding: 65px 50px;
   }
 `;
 
@@ -20,16 +23,10 @@ const Title = styled.div`
   font-size: 36px;
   font-weight: bold;
   text-align: center;
-
-  @media(min-width: 768px) {
-    padding-left: 30px;
-  }
 `;
 
 const Description = styled.h3`
-  @media(min-width: 768px) {
-    padding-left: 30px;
-  }
+  color: #4B4B4B;
 `;
 
 const Button = styled.button`
@@ -67,6 +64,10 @@ const Button = styled.button`
 `
 
 const Cancel = styled(Button)`
+  display: flex;
+  @media(min-width: 768px) {
+    display: none;
+  }
   background: none;
   color: #8D8D8D;
   padding-left: 10px;
@@ -81,11 +82,10 @@ const Content = styled.div`
   @media(min-width: 768px) {
     display: block;
     height: 100%;
-    padding-left: 3em;
-    border-left: 2px solid #000;
 
     ${Title} {
       font-size: 28px;
+      text-align: left;
     }
 
     ${Description} {
@@ -224,6 +224,7 @@ const Redeem = ({ setIsRedeemOpen }) => {
 
   return (
     <Container>
+      <CloseButton onClick={handleCancel}/>
       {step === RedeemSteps.Listing &&
         <Content>
           <Title>{langText("REDEEM_LIST_TITLE")}</Title>
