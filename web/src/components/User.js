@@ -261,7 +261,10 @@ const UserContainer = () => {
           <UserInfo>
             <Username>
               {nickname}
-              <Clipboard onClick={() => copyHandler(user.uid)} src={clipboardIcon} />
+              {nickname
+                ? <Clipboard onClick={() => copyHandler(user.uid)} src={clipboardIcon} />
+                : null
+              }
             </Username>
             <ActionBar onClick={openMenu}>
               <input type="checkbox" id="menuCheck" />
