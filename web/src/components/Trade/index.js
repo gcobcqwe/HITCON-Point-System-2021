@@ -185,7 +185,7 @@ const SendPage = ({setPage}) => {
     { step === SendingSteps.Success ?
       <>
        <Title>{langText("TRADE_SENT_SUCCESS")}</Title>
-       <Description>{langText("TRADE_SENT_DESC").replace("{sendPoint}", sendPoint).replace("{uid}", receiver)}</Description>
+       <Description>{langText("TRADE_SENT_DESC").replace("{sendPoint}", sendPoint).replace("{receiver}", receiverNickname)}</Description>
        <Description>{langText("TRADE_SENT_REMAINING").replace("{points}", (user.points - sendPoint))}</Description>
        <Button onClick={handleCancel}>{langText("DONE")}</Button>
       </>: "" }

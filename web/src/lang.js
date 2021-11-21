@@ -321,8 +321,8 @@ export function langText(key) {
             "zh": "發送成功"
         },
         "TRADE_SENT_DESC": {
-            "en": "Sent {sendPoint} points to {uid}",
-            "zh": "您已將 {sendPoint} 點給予 {uid}"
+            "en": "Sent {sendPoint} points to {receiver}",
+            "zh": "您已將 {sendPoint} 點給予 {receiver}"
         },
         "TRADE_SENT_REMAINING": {
             "en": "{points} points remaining",
