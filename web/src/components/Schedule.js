@@ -60,16 +60,6 @@ const Schedule = () => {
     setCounter(0);
   }
 
-  const changeDate = (e) => {
-    console.log(e.target.value);
-    setTestDate(e.target.value);
-  }
-
-  const changeTime = (e) => {
-    console.log(e.target.value);
-    setTestTime(e.target.value);
-  }
-
   useEffect(() => {
     let time = setTimeout(() => setCounter((counter) => counter - 1), 1000);
     return () => clearTimeout(time);
@@ -85,7 +75,6 @@ const Schedule = () => {
   useEffect(() => {
     axios.get(sessionUrl)
       .then((resp) => {
-        console.log('source: ', resp.data);
         setSessionInfo(resp.data);
       });
   }, [sourceUpdate]);
@@ -94,7 +83,6 @@ const Schedule = () => {
     if (sessionInfo === undefined) return;
     let _currentSessions = {};
     let time = moment(`${testDate} ${testTime}`);
-    console.log({ sessionInfo });
     if (sessionInfo) {
       for (var session of sessionInfo.sessions) {
         if (time.isAfter(session.start) && time.isBefore(session.end)) {
@@ -107,7 +95,6 @@ const Schedule = () => {
         }
       }
       setCurrentSessions(_currentSessions);
-      console.log({ currentSessions });
     }
   }, [sessionInfo, update, testDate, testTime]);
 

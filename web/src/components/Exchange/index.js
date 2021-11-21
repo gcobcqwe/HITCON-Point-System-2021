@@ -117,7 +117,6 @@ const CouponPage = ({ setPage }) => {
     axios.get(apiURL, { headers })
       .then((resp) => {
         const { success, data } = resp.data;
-        console.log('coupons: ', data);
         setCoupons(data);
       })
       .catch((error) => {
@@ -234,8 +233,6 @@ const ExchangePage = ({ setPage }) => {
     axios.post(apiURL,{ type: targetCoupon.name }, { headers })
       .then((resp) => {
         const { success, data } = resp.data;
-        console.log(success);
-        console.log(data);
         user.points = remainingPoints;
         setUser(user);
       }).catch((error) => {
