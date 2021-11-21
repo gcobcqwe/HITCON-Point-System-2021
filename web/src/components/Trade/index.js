@@ -166,7 +166,7 @@ const SendPage = ({setPage}) => {
         <QrReader
           onScan={handleScan}
           onError={handleError}
-          style={{ width: '100%' }}
+          style={{ 'max-width': '300px' }}
         />
         <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
      </> : "" }
