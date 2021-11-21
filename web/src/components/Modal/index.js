@@ -16,11 +16,11 @@ const Modal = styled.div`
   padding: 46px 65px 0 65px;
   color: #121212;
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     min-height: 623px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 30%;
+    top: 30%;
+    transform: translate(-25%, -25%);
     border-radius: 43px;
     padding: 2em 0;
   }
