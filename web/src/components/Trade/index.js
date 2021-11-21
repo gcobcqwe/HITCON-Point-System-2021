@@ -184,7 +184,7 @@ const SendPage = ({setPage}) => {
       </> : "" }
     { step === SendingSteps.Success ?
       <>
-       <Title>{langText("TRADE_SENT_SUCESS")}</Title>
+       <Title>{langText("TRADE_SENT_SUCCESS")}</Title>
        <Description>{langText("TRADE_SENT_DESC").replace("{sendPoint}", sendPoint).replace("{uid}", receiver)}</Description>
        <Description>{langText("TRADE_SENT_REMAINING").replace("{points}", (user.points - sendPoint))}</Description>
        <Button onClick={handleCancel}>{langText("DONE")}</Button>
@@ -275,14 +275,14 @@ const TradingPages = Object.freeze({
   'Take': 3
 });
 
-const Trading = ({setIsTradningOpen}) => {
+const Trading = ({setIsTradingOpen}) => {
   const [user, setUser] = useContext(UserContext);
   const [uid, setUid] = useState();
   const [page, setPage] = useState(TradingPages.Init);
   const switchSend = () => setPage(TradingPages.Send);
-  const switchRecivied = () => setPage(TradingPages.Received);
+  const switchReceived = () => setPage(TradingPages.Received);
   const switchTake = () => setPage(TradingPages.Take);
-  const handleCancel = () => setIsTradningOpen(false);
+  const handleCancel = () => setIsTradingOpen(false);
 
   useEffect(() => {
     const apiURL = `${process.env.POINT_URL}/users/me`;
@@ -314,7 +314,7 @@ const Trading = ({setIsTradningOpen}) => {
           <img src={SendIcon}/>
           {langText("TRADE_SEND")}
         </Button>
-        <Button onClick={switchRecivied}>
+        <Button onClick={switchReceived}>
           <img src={ReceivedIcon}/>
           {langText("TRADE_RECEIVE")}
         </Button>

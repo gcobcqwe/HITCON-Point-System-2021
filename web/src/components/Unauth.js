@@ -6,7 +6,7 @@ import Greeting from "./Greeting";
 import Cookies from "js-cookie";
 import { langText } from "../lang";
 import CameraIcon from "../public/ionic-camera.svg";
-import ArrorDownIcon from "../public/fa-arrow-down.svg";
+import ArrowDownIcon from "../public/fa-arrow-down.svg";
 import StepLinkIcon from "../public/awesome-link.svg";
 import StepSearchIcon from "../public/awesome-search.svg";
 import StepMailIcon from "../public/ionic-ios-mail.svg";
@@ -286,12 +286,12 @@ const Unauth = () => {
           <StepIcon src={StepMailIcon} />
           {langText("UNAUTH_STEP_INBOX")}
         </Step>
-        <Arrow src={ArrorDownIcon} />
+        <Arrow src={ArrowDownIcon} />
         <Step>
           <StepIcon src={StepSearchIcon} />
           {langText("UNAUTH_STEP_SEARCH_MAIL")}
         </Step>
-        <Arrow src={ArrorDownIcon} />
+        <Arrow src={ArrowDownIcon} />
         <Step>
           <StepIcon src={StepLinkIcon} />
           {langText("UNAUTH_STEP_LOGIN")}

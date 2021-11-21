@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import Modal from "../Modal";
 import { langText } from "../../lang";
 
-import QRcodeImg from "../../public/qrcode.svg";
+import QRCodeImg from "../../public/qrcode.svg";
 
 const Container = styled(Modal)`
   padding: 20px 15px 15px 20px;
@@ -171,7 +171,7 @@ const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
       <td>
         {code}
         <button onClick={handleShow}>
-          <img src={QRcodeImg} />
+          <img src={QRCodeImg} />
         </button>
       </td>
     </tr>

@@ -316,7 +316,7 @@ export function langText(key) {
             "en": "Sending to: ",
             "zh": "發送對象："
         },
-        "TRADE_SENT_SUCESS": {
+        "TRADE_SENT_SUCCESS": {
             "en": "Succeeded",
             "zh": "發送成功"
         },

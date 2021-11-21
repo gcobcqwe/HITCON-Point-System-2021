@@ -65,7 +65,7 @@ const Username = styled.div`
   display: flex;
 `;
 
-const UserSignout = styled.a`
+const UserSignOut = styled.a`
   font-size: 16px;
   text-decoration: underline;
   color: #FFFFFF;
@@ -178,7 +178,7 @@ const UserWide = styled.div`
   ${Username} {
     margin-bottom: 10px;
   }
-  ${UserSignout} {
+  ${UserSignOut} {
     margin: 0;
   }
   ${Points} {
@@ -194,10 +194,10 @@ const SubMenuMask = styled(Mask)`
   z-index: 5;
 `;
 
-const UserContiner = () => {
+const UserContainer = () => {
   const [token, setToken] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isTradingOpen, setIsTradningOpen] = useState(false);
+  const [isTradingOpen, setIsTradingOpen] = useState(false);
   const [isExchangeOpen, setIsExchangeOpen] = useState(false);
   const [isRedeemOpen, setIsRedeemOpen] = useState(false);
   const [user, setUser] = useContext(UserContext);
@@ -211,7 +211,7 @@ const UserContiner = () => {
     setIsMenuOpen(false);
   }
   const handleSubMenuMaskClose = () => {
-    setIsTradningOpen(false);
+    setIsTradingOpen(false);
     setIsExchangeOpen(false);
     setIsRedeemOpen(false);
   }
@@ -248,7 +248,7 @@ const UserContiner = () => {
                 <Actions>
                   {isVendor
                     ? null
-                    : <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+                    : <ActionButton onClick={() => setIsTradingOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
                   }
                   {isVendor
                     ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
@@ -280,7 +280,7 @@ const UserContiner = () => {
         <Actions>
           {isVendor
             ? null
-            : <ActionButton onClick={() => setIsTradningOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
+            : <ActionButton onClick={() => setIsTradingOpen(true)}>{langText("USER_TRADE_POINTS")}</ActionButton>
           }
           {isVendor
             ? <ActionButton onClick={() => setIsRedeemOpen(true)}>{langText("REDEEM_LIST_TITLE")}</ActionButton>
@@ -289,16 +289,16 @@ const UserContiner = () => {
         </Actions>
       </UserWide>
       {(isTradingOpen || isExchangeOpen || isRedeemOpen) && <SubMenuMask onClick={handleSubMenuMaskClose} />}
-      {isTradingOpen && <Trade setIsTradningOpen={setIsTradningOpen} />}
+      {isTradingOpen && <Trade setIsTradingOpen={setIsTradingOpen} />}
       {isExchangeOpen && <Exchange setIsExchangeOpen={setIsExchangeOpen} />}
       {isRedeemOpen && <Redeem setIsRedeemOpen={setIsRedeemOpen} />}
     </>
   )
 }
 
-UserContiner.defaultProps = {
+UserContainer.defaultProps = {
   nickname: "未知人物",
   points: "9999",
 }
 
-export default UserContiner;
+export default UserContainer;
