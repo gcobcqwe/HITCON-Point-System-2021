@@ -216,8 +216,8 @@ const UserContiner = () => {
     setIsRedeemOpen(false);
   }
 
-  const copyHandler = (code) => {
-    navigator.clipboard.writeText(code);
+  const copyHandler = (uid) => {
+    navigator.clipboard.writeText(uid);
     toast(`The uid is copied! (Malware Playground only)`);
   }
   

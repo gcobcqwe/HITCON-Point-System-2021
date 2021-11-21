@@ -7,6 +7,9 @@ import { langText } from "../../lang";
 import ReactHtmlParser from "react-html-parser"
 import UserContext from '../../UserContext.js';
 import { toast } from 'react-toastify';
+import clipboardIcon from "../../public/clipboard.svg";
+
+const Clipboard = styled.img``;
 
 const Container = styled(Modal)`
   @media(min-width: 768px) {
@@ -89,6 +92,20 @@ const Content = styled.div`
   }
 `;
 
+const TableWrapper = styled.div`
+  max-height: 60vh;
+  overflow: auto;
+
+  @media(min-width: 768px) {
+    max-height: 35vh;
+  }
+`;
+
+const CenterTd = styled.td`
+  display: flex;
+  align-items: center;
+`;
+
 const Table = styled.table``;
 
 const copyHandler = (code) => {
@@ -103,7 +120,7 @@ const CouponRow = ({code, changedAt, couponsType}) => {
     <tr>
       <td>{value}</td>
       <td>{`${time.getFullYear()}/${time.getMonth()+1}/${time.getDate()}`}</td>
-      <td>{code} | <button onClick={() => copyHandler(code)}>copy</button></td>
+      <CenterTd>{code} | <Clipboard onClick={() => copyHandler(code)} src={clipboardIcon} /></CenterTd>
     </tr>
   )
 }
@@ -129,7 +146,7 @@ const CouponPage = ({ setPage }) => {
     <Content>
       <Title>{langText("COUPON_YOUR_COUPON")}</Title>
       <Description>{langText("COUPON_DEADLINE_NOTICE")}</Description>
-      <Table>
+      <TableWrapper>
         <thead>
           <tr>
             <th>{langText("COUPON_PRICE")}</th>
@@ -140,7 +157,7 @@ const CouponPage = ({ setPage }) => {
         <tbody>
           {coupons.map((c, idx) => <CouponRow key={idx} changedAt={c.updated_at} code={c.code} couponsType={c.coupons_type} />) }
         </tbody>
-      </Table>
+      </TableWrapper>
       <Button><a target="_blank" rel="noopener noreferrer" href="https://shopee.tw/hitcon">{langText("COUPON_HITCON_STORE")}</a></Button>
       <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
     </Content>
