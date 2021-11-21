@@ -102,14 +102,6 @@ const Schedule = () => {
     <div>
       <Wrapper>
         <Title>{langText("SCHEDULE_TITLE")}</Title>
-        <span>
-          更新倒數:{counter}
-          <button onClick={forceUpdate}>立即更新</button>
-          <br /><br />
-          自訂測試時間:
-          <input type="date" onChange={changeDate} />
-          <input type="time" onChange={changeTime} />
-        </span>
         <Link href="https://hitcon.org/2021/agenda/" target="_blank">{langText("SCHEDULE_FULL_AGENDA")}</Link>
       </Wrapper>
 
