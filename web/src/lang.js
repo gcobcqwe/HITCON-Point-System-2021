@@ -177,20 +177,20 @@ export function langText(key) {
             "zh": "說明文件"
         },
         "TOPIC_CAT_TITLE": {
-            "en": "Hacker Meow",
-            "zh": "駭客喵喵"
+            "en": "Operation：Hacker Cat",
+            "zh": "駭客貓行動 & 駭客喵喵：#現場限定活動"
         },
         "TOPIC_CAT_DESC": {
-            "en": "Meow, I'm Hacker Meow, HITCON's newest cat chatbot, but I don't have the Doraemon bag! I'll be helping out at HITCON 2021 on Telegram and IRC, and there may be a few surprises in store for you! I'm looking forward to seeing you all at the conference! #chatbot #hackermeow",
-            "zh": "喵～我是駭客喵喵，HITCON 最新開發的貓咪聊天機器人，不過我可沒有百寶袋唷！喵喵將會在 Telegram 以及 IRC 上協助大家參與 HITCON 2021，也許還會有一些小驚喜唷！喵～期待大會與各位相見！ #聊天機器人 #駭客喵喵"
+            "en": "Hello everyone ~ I'm Hacker Meow. Do you come to our HITCON event?You said the conference hall is too big and you don't know how to get around?Okay! Then I'll take you around the conference hall!I've put some codes inside the conference hall. Find all of them and answer them correctly.I'll be your assistant, so let's join the Hacker Cat Adventure together!\n\nThis is a live event, and people are invited to visit HITCON 2021 while using Telegram to call the hacker meow and answer the questions.You will receive a nice gift! In addition, I will be on Telegram and IRC to help you communicate with people at HITCON 2021.Looks forward to seeing you all at HITCON! #ChatBot #HackerMeow #On-Site-Only",
+            "zh": "大家好喵～我是駭客喵喵，大家有好好的來參與我們 HITCON 活動嗎？你說會場太大你不知道怎麼逛？ 好吧！那我帶著你們去逛會場好了！但單純的導覽挺無趣的，所以我在會場裡面放了一些編碼，找到他們並且回答我正確答案，我會擔任你的小助理，讓我們一起參與駭客貓行動吧～屆時我也會提供小驚喜給你們呦～快行動吧！\n\n本活動屬於現場限定活動，邀請會眾們一邊參觀會場一邊使用 Telegram 呼叫駭客喵喵並回答他的題目，就能夠獲得精美小禮！另外，我將會在 Telegram 以及 IRC 上協助大家在 HITCON 2021 與大家交流。喵～期待大會與各位相見！ #聊天機器人 #駭客喵喵"
         },
         "TOPIC_VILLAGE_TOPIC": {
-            "en": "HITCON Village",
-            "zh": "HITCON Village"
+            "en": "HITCON Village & Salon Agenda (Unofficial Agenda)",
+            "zh": "HITCON Village & Village 沙龍議程（非官方議程）"
         },
         "TOPIC_VILLAGE_DESC": {
-            "en": "HITCON Village will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.",
-            "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣"
+            "en": "HITCON Village and Salon Agenda will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.",
+            "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣！"
         },
         "COUPON_YOUR_COUPON": {
             "en": "My Coupons",
