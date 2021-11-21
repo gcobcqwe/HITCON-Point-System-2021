@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import QRCode from "react-qr-code";
 import Cookies from "js-cookie";
-import TableScrollbar from 'react-table-scrollbar';
 import Modal from "../Modal";
 import { langText } from "../../lang";
 
@@ -11,7 +10,7 @@ import QRcodeImg from "../../public/qrcode.svg";
 
 const Container = styled(Modal)`
   padding: 20px 15px 15px 20px;
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     flex-direction: row;
     align-items: flex-start;
   }
@@ -22,13 +21,13 @@ const Title = styled.div`
   font-weight: bold;
   text-align: center;
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     padding-left: 30px;
   }
 `;
 
 const Description = styled.h3`
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     padding-left: 30px;
   }
 `;
@@ -54,7 +53,7 @@ const Button = styled.button`
     background: #858383;
   }
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     background: none;
     border-radius: 0;
     min-width: 249px;
@@ -79,7 +78,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     display: block;
     height: 100%;
     padding-left: 3em;
@@ -99,7 +98,7 @@ const TableWrapper = styled.div`
   max-height: 60vh;
   overflow: auto;
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     max-height: 35vh;
   }
 `;

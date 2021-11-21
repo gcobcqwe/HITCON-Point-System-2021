@@ -14,7 +14,7 @@ import { langText } from "../../lang";
 import UserContext from '../../UserContext.js';
 
 const TradingContainer = styled(Modal)`
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     flex-direction: row;
     align-items: flex-start;
   }
@@ -25,7 +25,7 @@ const Title = styled.div`
   font-size: 36px;
   font-weight: bold;
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     padding-left: 30px;
   }
 `;
@@ -34,7 +34,7 @@ const Description = styled.h3`
   font-size: 20px;
   margin-bottom: 48px;
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     padding-left: 30px;
   }
 `;
@@ -60,7 +60,7 @@ const Button = styled.button`
     background: #858383;
   }
 
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     background: none;
     border-radius: 0;
     min-width: 249px;
@@ -81,7 +81,7 @@ const Cancel = styled(Button)`
 `;
 
 const Content = styled.div`
-  @media(min-width: 1280px) {
+  @media(min-width: 768px) {
     display: block;
     height: 100%;
     padding-left: 3em;
