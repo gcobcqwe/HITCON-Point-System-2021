@@ -343,7 +343,7 @@ const Unauth = () => {
             </Title>
             <Desc>{langText("UNAUTH_QRCODE_SCAN_KKTIX")}</Desc>
             <QRCodeReader
-              delay={300}
+              delay={1000}
               onError={handleQRError}
               onScan={handleQRScan}
             />

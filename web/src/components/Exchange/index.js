@@ -254,6 +254,7 @@ const ExchangePage = ({ setPage }) => {
       }).catch((error) => {
         const { state, data: {message} } = error.response;
         console.error('exchange Coupons error: ', message);
+        toast(message);
     });
     setStep(ExchangeSteps.Success);
   };

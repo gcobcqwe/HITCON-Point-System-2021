@@ -12,6 +12,7 @@ import GiftIcon from "../../public/ionic-ios-gift.svg";
 import { langText } from "../../lang";
 
 import UserContext from '../../UserContext.js';
+import { toast } from "react-toastify";
 
 const TradingContainer = styled(Modal)`
   @media(min-width: 768px) {
@@ -19,7 +20,6 @@ const TradingContainer = styled(Modal)`
     align-items: flex-start;
   }
 `;
-
 
 const Title = styled.div`
   font-size: 36px;
@@ -133,7 +133,7 @@ const SendPage = ({setPage}) => {
     const token = Cookies.get('token');
     const headers = { 'Authorization': `Bearer ${token}` }
     if(isNaN(sendPoint)) {
-      // TODO: Add error message handler.
+      toast(`The point format is invalid.`);
       return;
     }
 
@@ -149,6 +149,7 @@ const SendPage = ({setPage}) => {
       .catch((error) => {
         const { state, data: {message} } = error.response;
         console.error('transactions error: ', message);
+        toast(message);
       })
   }
   const handleCancel = () => setPage(TradingPages.Init);
@@ -164,6 +165,7 @@ const SendPage = ({setPage}) => {
         <Title>{langText("TRADE_SEND_POINTS")}</Title>
         <Description>{langText("TRADE_SCAN_QR")}</Description>
         <QrReader
+          delay={1000}
           onScan={handleScan}
           onError={handleError}
           style={{ 'max-width': '300px' }}
@@ -236,6 +238,7 @@ const TakePage = ({setPage}) => {
       .catch((error) => {
         const { state, data: {message} } = error.response;
         console.error('exchange redeem-code error: ', message);
+        toast(message);
       });
   }
   const handleError = (err) => {
@@ -250,9 +253,10 @@ const TakePage = ({setPage}) => {
         <Title>{langText("TRADE_REDEEM_POINTS")}</Title>
         <Description>{langText("TRADE_REDEEM_QR")}</Description>
         <QrReader
-            onScan={handleScan}
-            onError={handleError}
-            style={{ width: '100%' }}
+          delay={1000}
+          onScan={handleScan}
+          onError={handleError}
+          style={{ width: '100%' }}
         />
         <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
       </> : "" }
@@ -293,9 +297,7 @@ const Trading = ({setIsTradingOpen}) => {
         const { data:{ points, uid }} = resp.data;
         user.points = points;
         setUser(user);
-        var qrCodeValue = {};
-        qrCodeValue.nickname = user.nickname;
-        qrCodeValue.uid = uid;
+        let qrCodeValue = {nickname: user.nickname, uid};
         setUid(JSON.stringify(qrCodeValue));
       })
       .catch((error) => {
