@@ -82,8 +82,8 @@ const isAdmin = (req, res, next) => {
  * @param {Response} res
  * @param {NextFunction} next
  */
- const isVendor = (req, res, next) => {
-  if (!req.token.payload.scope.includes('vendor')) {
+ const isNotVendor = (req, res, next) => {
+  if (req.token.payload.scope.includes('vendor')) {
     res.status(StatusCodes.FORBIDDEN).send({success: false, message: ReasonPhrases.FORBIDDEN});
     return;
   }
@@ -105,6 +105,6 @@ const tokenAdapter = (req, res, next) => {
 module.exports = {
   checkAuth,
   isAdmin,
-  isVendor,
+  isNotVendor,
   tokenAdapter
 };
