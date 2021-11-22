@@ -9,24 +9,14 @@ import Modal from "../Modal";
 import { langText } from "../../lang";
 
 import QRCodeImg from "../../public/qrcode.svg";
+import UsedQRCodeImg from "../../public/usedQrcode.svg";
 
 const Container = styled(Modal)`
-  padding: 20px 15px 15px 20px;
   @media(min-width: 768px) {
     flex-direction: row;
     align-items: flex-start;
     padding: 65px 50px;
   }
-`;
-
-const Title = styled.div`
-  font-size: 36px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const Description = styled.h3`
-  color: #4B4B4B;
 `;
 
 const Button = styled.button`
@@ -72,6 +62,17 @@ const Cancel = styled(Button)`
   color: #8D8D8D;
   padding-left: 10px;
   font-size: 24px;
+  margin-top: 20px;
+`;
+
+const Title = styled.div`
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+`;
+
+const Description = styled.h3`
+  color: #4B4B4B;
 `;
 
 const Content = styled.div`
@@ -82,6 +83,8 @@ const Content = styled.div`
   @media(min-width: 768px) {
     display: block;
     height: 100%;
+    align-items: left;
+    max-width: 100%;
 
     ${Title} {
       font-size: 28px;
@@ -94,95 +97,153 @@ const Content = styled.div`
   }
 `;
 
+const SideBarItem = styled.div`
+  font-size: 20px;
+  padding: 20px 40px 20px 50px;
+  margin-left: -50px;
+  font-weight: bold;
+
+  &.selected {
+    color: #002680;
+    background-color: #D9DEEB;
+  }
+`;
+
+const SideBar = styled.div`
+  display: none;
+  flex-direction: column;
+  border-right: 2px solid #000;
+  height: 100%;
+  min-width: 245px;
+
+  ${Title} {
+    text-align: left;
+    font-size: 36px;
+    margin-top: 5px;
+    margin-bottom: 50px;
+  }
+
+  @media(min-width: 1280px) {
+    display: flex;
+    margin-right: 40px;
+  }
+`;
+
 const TableWrapper = styled.div`
   max-height: 60vh;
   overflow: auto;
 
   @media(min-width: 768px) {
-    max-height: 35vh;
+    max-height: 40vh;
   }
 `;
 
-const Table = styled.table`
-  position: relative;
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  .columnHeader > div, .columnHeader > div:nth-child(3) {
+    z-index: 1;
+    color: #fff;
+    background: #002680;
+    padding: 15px 10px;
+    font-family: inherit;
+    text-align: center;
+  }
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
 
   .statusText {
     color: #729b55;
   }
 
-  .isUsed {
-    background: #D0D0D0;
+  &.isUsed {
+    div {
+      background: #D0D0D0;
+    }
 
     .statusText {
       color: #b29d9c;
     }
   }
 
-  th, td {
+  div {
     padding: 15px 10px;
     box-sizing: border-box;
-  }
-
-  th {
-    padding: 10px;
-    z-index: 1;
-    background: #002680;
-    color: #fff;
-    position: sticky;
-    top: 0;
-  }
-
-  tr {
     background: #EDEDED;
+    margin: 1px;
+  }
 
-    td:nth-child(1) {
-      min-width: 85px;
-      text-align: center;
-    }
-    td:nth-child(2) {
-      min-width: 100px;
-    }
-    td:nth-child(3) {
-      position: relative;
-      max-width: 162px;
+  div:nth-child(1) {
+    min-width: 85px;
+    text-align: center;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  div:nth-child(2) {
+    min-width: 100px;
+    text-align: center;
+  }
+
+  div:nth-child(3) {
+    position: relative;
+    max-width: 420px;
+    padding: 15px 40px 15px 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    flex: 1;
+    overflow: hidden;
+
+    div {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      padding: 15px 40px 15px 10px;
       font-family: monospace;
+      text-algin: center;
+      margin-right: 10px;
+      padding: 0;
+    }
 
+    button {
+      position: absolute;
+      top: 7px;
+      right: 0;
+      background: none;
 
-      button {
-        position: absolute;
-        top: 7px;
-        right: 0;
-        background: none;
-      }
+      :disabled {
+        cursor: initial;
 
-      img {
-        background: #fff;
-        border: 4px solid #fff;
-        border-radius: 5px;
-        box-shadow: 0px 2px 4px #101010d9;
+        img {
+          box-shadow: none;
+        }
       }
     }
+
+    img {
+      background: #fff;
+      border: 4px solid #fff;
+      border-radius: 5px;
+      box-shadow: 0px 2px 4px #101010d9;
+    }
+  }
 `;
-
-
 
 const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
   const handleShow = () => setDisplayCode(JSON.stringify({ code }));
   return (
-    <tr className={isUsed ? "isUsed" : "notUsed"}>
-      <td>{points}</td>
-      <td className="statusText">{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</td>
-      <td>
-        {code}
-        <button onClick={handleShow}>
-          <img src={QRCodeImg} />
+    <Row className={isUsed ? "isUsed" : "notUsed"}>
+      <div>{points}</div>
+      <div className="statusText">{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</div>
+      <div>
+        <div>{code}</div>
+        <button onClick={handleShow} disabled={isUsed}>
+          <img src={isUsed ? UsedQRCodeImg : QRCodeImg} />
         </button>
-      </td>
-    </tr>
+      </div>
+    </Row>
   )
 }
 
@@ -225,6 +286,10 @@ const Redeem = ({ setIsRedeemOpen }) => {
   return (
     <Container>
       <CloseButton onClick={handleCancel}/>
+      <SideBar>
+        <Title>{langText("REDEEM_LIST_TITLE")}</Title>
+        <SideBarItem className="selected">{langText("REDEEM_LIST_TITLE")}</SideBarItem>
+      </SideBar>
       {step === RedeemSteps.Listing &&
         <Content>
           <Title>{langText("REDEEM_LIST_TITLE")}</Title>
@@ -233,18 +298,14 @@ const Redeem = ({ setIsRedeemOpen }) => {
           }).length)}
           </Description>
           <TableWrapper>
-          <Table>
-            <thead>
-              <tr>
-                <th>{langText("REDEEM_VALUE")}</th>
-                <th>{langText("REDEEM_STATE")}</th>
-                <th>{langText("REDEEM_CODE")}</th>
-              </tr>
-            </thead>
-            <tbody>
+            <Column>
+              <Row className="columnHeader">
+                <div>{langText("REDEEM_VALUE")}</div>
+                <div>{langText("REDEEM_STATE")}</div>
+                <div>{langText("REDEEM_CODE")}</div>
+              </Row>
               {redeems.map((r, idx) => <RedeemRow key={idx} isUsed={r.is_used} code={r.code} points={r.points} setDisplayCode={setDisplayCode} />)}
-            </tbody>
-          </Table>
+            </Column>
           </TableWrapper>
           <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
         </Content>}
