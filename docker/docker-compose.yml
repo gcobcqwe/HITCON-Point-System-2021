@@ -71,6 +71,7 @@ services:
       - postgresql
       - redis
     networks:
+      - frontend
       - backend
 
   nginx: 
