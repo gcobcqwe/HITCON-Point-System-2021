@@ -233,7 +233,7 @@ export function langText(key) {
             "zh": "兌換"
         },
         "COUPON_EXCH_ITEM": {
-            "en": "Exchangable items",
+            "en": "Exchangeable items",
             "zh": "可兌換項目"
         },
         "COUPON_CONFIRM_EXCH": {
