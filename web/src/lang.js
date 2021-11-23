@@ -145,8 +145,8 @@ export function langText(key) {
             "zh": "HITCON Online"
         },
         "TOPIC_ONLINE_DESC": {
-            "en": "In addition to providing a platform for online communication with sponsors, we will also add online activities and integrate hacker cat adventures to bring a different virtual and real game experience, hoping to bring a different online experience to our members. #NewbieFriendly",
-            "zh": "2021 虛擬會場再次登場，承襲去年的精神，簡化系統設計，以網頁做為介面降低使用門檻及難度。除了原有提供線上會眾與贊助商交流的平台之外，還會加入線上的活動及結合駭客貓歷險記帶來不同的虛實整合遊戲體驗，期望帶給會眾不一樣的線上體驗 #新手友善"
+            "en": "In addition to providing a platform for online communication with sponsors, we will also add online activities and integrate Hacker Cat Adventures to bring a different game experience mixing virtuality and reality, hoping to bring a different online experience to our members.",
+            "zh": "2021 虛擬會場再次登場，承襲去年的精神，簡化系統設計，以網頁做為介面降低使用門檻及難度。除了原有提供線上會眾與贊助商交流的平台之外，還會加入線上的活動及結合駭客貓歷險記帶來不同的虛實整合遊戲體驗，期望帶給會眾不一樣的線上體驗"
         },
         "TOPIC_ADV_TITLE": {
             "en": "HITCON：Hacker Cat Adventure",
@@ -161,8 +161,8 @@ export function langText(key) {
             "zh": "煉蠱"
         },
         "TOPIC_MP_DESC": {
-            "en": "The 2020 Malware Playground will continue to get even more difficult. The contestants will be even more difficult, what kind of tricks will be the king of compulsion this year? Are you ready to fight with each other in the net? The strongest Tricky King 2.0 is waiting for you to challenge!",
-            "zh": "2020 好評延續，更加困難的煉蠱大會將會再度進化！參賽者也會更加的難搞，今年將會是什麼樣的奇技淫巧位居蠱王寶座呢？你準備好一起網內互打了嗎？最強蠱王 2.0 等你來挑戰！"
+            "en": "The 2020 Malware Playground will continue to get even more difficult. The contestants will be even more difficult, what kind of tricks will be the king of compulsion this year?",
+            "zh": "2020 好評延續，煉蠱大會將會再度進化！參賽者也會面對更困難的規則，今年將會是什麼樣高手利用奇技淫巧搶奪蠱王寶座呢？"
         },
         "TOPIC_MP_INTRO_LINK": {
             "en": "Intro Session",
@@ -177,20 +177,20 @@ export function langText(key) {
             "zh": "說明文件"
         },
         "TOPIC_CAT_TITLE": {
-            "en": "Hacker Meow",
-            "zh": "駭客喵喵"
+            "en": "Operation：Hacker Cat #Onsite",
+            "zh": "駭客貓行動 & 駭客喵喵：#現場限定活動"
         },
         "TOPIC_CAT_DESC": {
-            "en": "Meow, I'm Hacker Meow, HITCON's newest cat chatbot, but I don't have the Doraemon bag! I'll be helping out at HITCON 2021 on Telegram and IRC, and there may be a few surprises in store for you! I'm looking forward to seeing you all at the conference! #chatbot #hackermeow",
-            "zh": "喵～我是駭客喵喵，HITCON 最新開發的貓咪聊天機器人，不過我可沒有百寶袋唷！喵喵將會在 Telegram 以及 IRC 上協助大家參與 HITCON 2021，也許還會有一些小驚喜唷！喵～期待大會與各位相見！ #聊天機器人 #駭客喵喵"
+            "en": "Hello everyone ~ I'm Hacker Meow. Do you enjoy the HITCON events? I've put some codes inside the conference hall. Find all of them and answer them correctly! You’ll get points if you finished the mission and meets the criteria. The top few who finish it will even be rewarded with a special gift! Hacker Cat will become your assistant in the conference, please install and apply an account on Telegram.",
+            "zh": "大家好喵～我是駭客喵喵，大家有好好的來參與我們 HITCON 活動嗎？駭客喵喵在會場裡面放了一些機密代號，找到他們並且回答我正確答案，完成任務並達標將會獲得活動點數，前幾位完成更能獲得精美禮品！駭客喵喵 Chatbot 將會擔任各位的助理，請先安裝 Telegram 並申請帳號唷！"
         },
         "TOPIC_VILLAGE_TOPIC": {
-            "en": "HITCON Village",
-            "zh": "HITCON Village"
+            "en": "HITCON Village & Salon Agenda (Unofficial Agenda)",
+            "zh": "HITCON Village & Village 沙龍議程（非官方議程）"
         },
         "TOPIC_VILLAGE_DESC": {
-            "en": "HITCON Village will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.",
-            "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣"
+            "en": "HITCON Village and Salon Agenda will be held by different communities and filled with rich topics, hoping to enlighten the audience on different aspects of information security technology and issues through practice and interactions, as well as experiencing the fun of the hacker life",
+            "zh": "HITCON Village 以及沙龍議程會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣！"
         },
         "COUPON_YOUR_COUPON": {
             "en": "My Coupons",
