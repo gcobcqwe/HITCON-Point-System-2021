@@ -53,6 +53,20 @@ const Button = styled.button`
   }
 `
 
+const CompleteButton = styled(Button)`
+  height: auto;
+  min-width: unset;
+  padding: 5px 40px;
+  border-radius: 22px;
+  width: auto;
+  background: #154ED6;
+  color: #fff;
+
+  :active {
+    background: rgba(21, 78, 214, 0.15);
+  }
+`;
+
 const Cancel = styled(Button)`
   display: flex;
   @media(min-width: 768px) {
@@ -95,6 +109,21 @@ const Content = styled.div`
       font-size: 20px;
     }
   }
+`;
+
+const QRCodeContent = styled(Content)`
+  @media(min-width: 768px) {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+
+    ${Title} {
+      font-size: 28px;
+      text-align: center;
+    }
+  }
+}
 `;
 
 const SideBarItem = styled.div`
@@ -231,6 +260,11 @@ const Row = styled.div`
   }
 `;
 
+const QRCodeWrapper = styled.div`
+  margin: 65px 0;
+  text-align: center;
+`;
+
 const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
   const handleShow = () => setDisplayCode(JSON.stringify({ code }));
   return (
@@ -285,36 +319,40 @@ const Redeem = ({ setIsRedeemOpen }) => {
 
   return (
     <Container>
-      <CloseButton onClick={handleCancel}/>
       <SideBar>
         <Title>{langText("REDEEM_LIST_TITLE")}</Title>
         <SideBarItem className="selected">{langText("REDEEM_LIST_TITLE")}</SideBarItem>
       </SideBar>
       {step === RedeemSteps.Listing &&
-        <Content>
-          <Title>{langText("REDEEM_LIST_TITLE")}</Title>
-          <Description>{langText("REDEEM_COUNTER").replace("{number}", redeems.filter((r) => {
-            return r.is_used === false;
-          }).length)}
-          </Description>
-          <TableWrapper>
-            <Column>
-              <Row className="columnHeader">
-                <div>{langText("REDEEM_VALUE")}</div>
-                <div>{langText("REDEEM_STATE")}</div>
-                <div>{langText("REDEEM_CODE")}</div>
-              </Row>
-              {redeems.map((r, idx) => <RedeemRow key={idx} isUsed={r.is_used} code={r.code} points={r.points} setDisplayCode={setDisplayCode} />)}
-            </Column>
-          </TableWrapper>
-          <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
-        </Content>}
+        <>
+          <CloseButton onClick={handleCancel}/>
+          <Content>
+            <Title>{langText("REDEEM_LIST_TITLE")}</Title>
+            <Description>{langText("REDEEM_COUNTER").replace("{number}", redeems.filter((r) => {
+              return r.is_used === false;
+            }).length)}
+            </Description>
+            <TableWrapper>
+              <Column>
+                <Row className="columnHeader">
+                  <div>{langText("REDEEM_VALUE")}</div>
+                  <div>{langText("REDEEM_STATE")}</div>
+                  <div>{langText("REDEEM_CODE")}</div>
+                </Row>
+                {redeems.map((r, idx) => <RedeemRow key={idx} isUsed={r.is_used} code={r.code} points={r.points} setDisplayCode={setDisplayCode} />)}
+              </Column>
+            </TableWrapper>
+            <Cancel onClick={handleCancel}>{langText("BACK")}</Cancel>
+          </Content>
+        </>}
       {step === RedeemSteps.ShowingCode &&
-        <Content>
+        <QRCodeContent>
           <Title>{langText('REDEEM_TARGET')}</Title>
-          <QRCode value={displayCode} />
-          <Button onClick={handleFinish}>{langText("DONE")}</Button>
-        </Content>}
+          <QRCodeWrapper>
+            <QRCode value={displayCode}/>
+          </QRCodeWrapper>
+          <CompleteButton onClick={handleFinish}>{langText("DONE")}</CompleteButton>
+        </QRCodeContent>}
     </Container>
   )
 }
