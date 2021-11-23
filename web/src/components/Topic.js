@@ -14,9 +14,6 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  @media(min-width: 1280px) {
-    height: 250px;
-  }
 `;
 
 const Info = styled.div`
