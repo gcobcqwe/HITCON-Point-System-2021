@@ -16,9 +16,9 @@ import Exchange from "./components/Exchange"
 
 import TopicTGImg from "./public/tg.png";
 import TopicOnlineImg from "./public/online.png";
-import TopicADVImg from "./public/online.png";
+import TopicADVImg from "./public/adventure.jpg";
 import TopicMpImg from "./public/mp.png";
-import TopicVillageImg from "./public/online.png";
+import TopicVillageImg from "./public/village.png";
 
 import UserContext from "./UserContext";
 
