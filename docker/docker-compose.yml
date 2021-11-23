@@ -26,7 +26,7 @@ services:
       context: ./redis
     image: redis
     container_name: redis
-    restart: unless-stopped
+    restart: always
     volumes:
       - redis-data:/var/lib/redis/data
     env_file:
@@ -39,7 +39,7 @@ services:
       context: ./postgresql
     image: postgresql
     container_name: postgresql
-    restart: unless-stopped
+    restart: always
     volumes:
       - postgresql-data:/var/lib/postgresql/data
     env_file:
@@ -82,14 +82,13 @@ services:
     container_name: nginx
     env_file:
       - nginx/.env
-    restart: unless-stopped
+    restart: always
     volumes:
       - nginx-data:/var/log/nginx/*
+      - nginx_secrets:/etc/letsencrypt
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
-    volumes:
-      - nginx_secrets:/etc/letsencrypt
     healthcheck:
       test: ["CMD", "service", "nginx", "status"]
       interval: 300s
