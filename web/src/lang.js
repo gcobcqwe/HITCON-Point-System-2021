@@ -141,28 +141,28 @@ export function langText(key) {
             "zh": "兌換折價券"
         },
         "TOPIC_ONLINE_TITLE": {
-            "en": "HITCON Online",
-            "zh": "HITCON Online"
+            "en": "HITCON online #NewbieFriendly",
+            "zh": "HITCON online #新手友善"
         },
         "TOPIC_ONLINE_DESC": {
             "en": "In addition to providing a platform for online communication with sponsors, we will also add online activities and integrate Hacker Cat Adventures to bring a different game experience mixing virtuality and reality, hoping to bring a different online experience to our members.",
-            "zh": "2021 虛擬會場再次登場，承襲去年的精神，簡化系統設計，以網頁做為介面降低使用門檻及難度。除了原有提供線上會眾與贊助商交流的平台之外，還會加入線上的活動及結合駭客貓歷險記帶來不同的虛實整合遊戲體驗，期望帶給會眾不一樣的線上體驗"
+            "zh": "2021 虛擬會場再次登場，承襲去年的精神，簡化系統設計，以網頁做為介面降低使用門檻及難度。除了原有提供線上會眾與贊助商交流的平台之外，還會加入線上的活動及結合駭客貓歷險記帶來不同的遊戲體驗，期望帶給會眾不一樣的線上體驗。"
         },
         "TOPIC_ADV_TITLE": {
             "en": "HITCON：Hacker Cat Adventure",
             "zh": "HITCON - 駭客貓歷險記"
         },
         "TOPIC_ADV_DESC": {
-            "en": "Meow ~ hackers, are you ready for an adventure? Hacker Cat Adventures is a real-life puzzle game composed of plot, puzzle and information security elements, with unlimited playing time! Players can not only learn more about HITCON 2021 from the perspective of the hacker cats, but also collect points to redeem limited edition gifts.",
-            "zh": "喵～駭客們，你準備好一起冒險了嗎？駭客貓歷險記是透過劇情、解謎與資安等要素所組成的實境解謎遊戲，不限遊玩時間，只要是年會期間隨時可透過線上線下參與。玩家除了能藉由駭客貓的視角更加認識 HITCON 2021 之外也能同時收集點數換取限量精美禮品"
+            "en": "Meow ~ hackers, are you ready for an adventure? Hacker Cat Adventures is an online puzzle game composed of plot, puzzle and information security elements, with unlimited playing time! Players can not only learn more about HITCON 2021 from the perspective of the hacker cats, but also collect points to redeem limited edition gifts.",
+            "zh": "喵～駭客們，你準備好一起冒險了嗎？駭客貓歷險記是透過劇情、解謎與資安等要素所組成的解謎遊戲，不限遊玩時間只要是年會期間隨時可透過 HITCON Online 參與。進入 HITCON Online 以後，只需要找到 Hacker Cat 並和他說想要參與駭客貓歷險記，即可體驗我們的世界。玩家除了能認識 HITCON 2021 之外，也能同時收集點數換取限量精美禮品。"
         },
         "TOPIC_MP_TITLE": {
             "en": "Malware Playground",
             "zh": "煉蠱"
         },
         "TOPIC_MP_DESC": {
-            "en": "The 2020 Malware Playground will continue to get even more difficult. The contestants will be even more difficult, what kind of tricks will be the king of compulsion this year?",
-            "zh": "2020 好評延續，煉蠱大會將會再度進化！參賽者也會面對更困難的規則，今年將會是什麼樣高手利用奇技淫巧搶奪蠱王寶座呢？"
+            "en": "The 2020 Malware Playground will continue to get even more difficult. The contestants will be even more difficult, what kind of tricks will be the king of compulsion this year? Are you ready to fight with each other on the net? The strongest Tricky King 2.0 is waiting for you to challenge!",
+            "zh": "2020 好評延續，煉蠱大會將會再度進化！參賽者也會面對更困難的規則，今年將會是什麼樣高手利用奇技淫巧搶奪蠱王寶座呢？你準備好一起網內互打了嗎？最強蠱王 2.0 等你來挑戰！"
         },
         "TOPIC_MP_INTRO_LINK": {
             "en": "Intro Session",
@@ -177,20 +177,20 @@ export function langText(key) {
             "zh": "說明文件"
         },
         "TOPIC_CAT_TITLE": {
-            "en": "Operation：Hacker Cat #Onsite",
-            "zh": "駭客貓行動 & 駭客喵喵：#現場限定活動"
+            "en": "Operation：Hacker Cat #OnSiteOnly #ChatBot #HackerMeow",
+            "zh": "駭客喵喵 & 駭客貓行動：#現場限定活動 #聊天機器人 #駭客喵喵"
         },
         "TOPIC_CAT_DESC": {
-            "en": "Hello everyone ~ I'm Hacker Meow. Do you enjoy the HITCON events? I've put some codes inside the conference hall. Find all of them and answer them correctly! You’ll get points if you finished the mission and meets the criteria. The top few who finish it will even be rewarded with a special gift! Hacker Cat will become your assistant in the conference, please install and apply an account on Telegram.",
-            "zh": "大家好喵～我是駭客喵喵，大家有好好的來參與我們 HITCON 活動嗎？駭客喵喵在會場裡面放了一些機密代號，找到他們並且回答我正確答案，完成任務並達標將會獲得活動點數，前幾位完成更能獲得精美禮品！駭客喵喵 Chatbot 將會擔任各位的助理，請先安裝 Telegram 並申請帳號唷！"
+            "en": "Hello everyone ~ I'm Hacker Meow. Do you enjoy our HITCON event? You said the conference hall is so big that you don't know where to start? Okay, then! I'll take you around the conference hall! I've put some codes inside the conference hall.  Find all of them and answer them correctly. I'll be your assistant, so let's join the Operation：Hacker Cat together!  This is an onsite only event. I invite you to visit HITCON 2021 and use Telegram to call Hacker Meow and answer the questions. You will receive a nice gift!  In addition, I will be on Telegram and IRC to help you communicate with people at HITCON 2021. Looking forward to seeing you all at HITCON!",
+            "zh": "大家好喵～我是駭客喵喵，大家有好好的來參與我們 HITCON 活動嗎？你說會場太大你不知道怎麼逛？好吧！那我帶著你們去逛會場好了！但單純的導覽挺無趣的，所以我在會場裡面放了一些機密代號，找到他們並且回答我正確答案，我會擔任你的小助理，讓我們一起參與駭客貓行動吧～ 屆時我也會提供小驚喜給你們呦～快行動吧！本活動屬於現場限定活動，邀請會眾們一邊參觀會場一邊使用 Telegram 呼叫駭客喵喵並回答他的題目，就能夠獲得精美小禮！另外，我將會在 Telegram 以及 IRC 上協助大家在 HITCON 2021 與大家交流。喵～期待大會與各位相見！"
         },
         "TOPIC_VILLAGE_TOPIC": {
-            "en": "HITCON Village & Salon Agenda (Unofficial Agenda)",
-            "zh": "HITCON Village & Village 沙龍議程（非官方議程）"
+            "en": "HITCON Village &  Salon Agenda (Unofficial Agenda) #OnSiteOnly",
+            "zh": "HITCON Village & Village 沙龍議程（非官方議程）#現場限定活動"
         },
         "TOPIC_VILLAGE_DESC": {
-            "en": "HITCON Village and Salon Agenda will be held by different communities and filled with rich topics, hoping to enlighten the audience on different aspects of information security technology and issues through practice and interactions, as well as experiencing the fun of the hacker life",
-            "zh": "HITCON Village 以及沙龍議程會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣！"
+            "en": "HITCON Village and Salon Agenda will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.",
+            "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣！"
         },
         "COUPON_YOUR_COUPON": {
             "en": "My Coupons",
