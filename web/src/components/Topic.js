@@ -17,6 +17,13 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
+  @media(min-width: 414px) {
+    max-height: 266px;
+  }
+
+  @media(min-width: 768px) {
+    max-height: none;
+  }
 `;
 
 const Info = styled.div`
