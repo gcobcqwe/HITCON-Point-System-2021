@@ -197,8 +197,8 @@ export function langText(key) {
             "zh": "擁有的折價券"
         },
         "COUPON_DEADLINE_NOTICE": {
-            "en": "Points can be used to redeem for HITCON online store coupons until 12/05. Please complete your redemption before the deadline.",
-            "zh": "大會點數可用於兌換 HITCON 線上賣場折價券，兌換期間開放至 12/05，請於截止日前兌換完畢。"
+            "en": "Points can be used to redeem for HITCON online store coupons until 12/05. Please complete your redemption before the deadline. The Coupon Code is valid before 2022-02-27 23:59.",
+            "zh": "大會點數可用於兌換 HITCON 線上賣場折價券，兌換期間開放至 12/05，請於截止日前兌換完畢。以兌換的折價券請於 2022-02-27 23:59 前使用完畢"
         },
         "COUPON_PRICE": {
             "en": "Price",
@@ -253,8 +253,8 @@ export function langText(key) {
             "zh": "兌換完成"
         },
         "COUPON_DONE_NOTICE": {
-            "en": 'You can check the Coupon Code in "My Coupon" section. Please complete your redemption before the deadline',
-            "zh": "兌換券代碼可於「擁有的折價券」中確認 請於效期內使用完畢"
+            "en": 'You can check the Coupon Code in "My Coupon" section. The Coupon Code is valid before 2022-02-27 23:59.',
+            "zh": "兌換券代碼可於「擁有的折價券」中確認 請於 2022-02-27 23:59 前使用完畢"
         },
         "REDEEM_LIST_TITLE": {
             "en": "Send",
