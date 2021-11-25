@@ -12,10 +12,7 @@ import clipboardIcon from "../../public/clipboard.svg";
 const Clipboard = styled.img``;
 
 const Container = styled(Modal)`
-  @media(min-width: 768px) {
-    flex-direction: row;
-    align-items: flex-start;
-  }
+  text-align: center;
 `;
 
 const Title = styled.div`
@@ -71,7 +68,6 @@ const Button = styled.button`
 const Cancel = styled(Button)`
   background: none;
   color: #8D8D8D;
-  padding-left: 10px;
   font-size: 24px;
 `;
 
@@ -79,8 +75,6 @@ const Content = styled.div`
   @media(min-width: 768px) {
     display: block;
     height: 100%;
-    padding-left: 3em;
-    border-left: 2px solid #000;
 
     ${Title} {
       font-size: 28px;

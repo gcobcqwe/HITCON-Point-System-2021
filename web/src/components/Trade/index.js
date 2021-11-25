@@ -15,10 +15,7 @@ import UserContext from '../../UserContext.js';
 import { toast } from "react-toastify";
 
 const TradingContainer = styled(Modal)`
-  @media(min-width: 768px) {
-    flex-direction: row;
-    align-items: flex-start;
-  }
+  text-align: center;
 `;
 
 const Title = styled.div`
@@ -81,20 +78,6 @@ const Cancel = styled(Button)`
 `;
 
 const Content = styled.div`
-  @media(min-width: 768px) {
-    display: block;
-    height: 100%;
-    padding-left: 3em;
-    border-left: 2px solid #000;
-
-    ${Title} {
-      font-size: 28px;
-    }
-
-    ${Description} {
-      font-size: 20px;
-    }
-  }
 `;
 
 const SendingSteps = Object.freeze({
@@ -168,7 +151,7 @@ const SendPage = ({setPage}) => {
           delay={1000}
           onScan={handleScan}
           onError={handleError}
-          style={{ 'max-width': '300px' }}
+          style={{ 'maxWidth': '300px' }}
         />
         <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
      </> : "" }
@@ -201,7 +184,10 @@ const ReceivedPage = ({uid, setPage}) => {
     <Content>
       <Title>{langText("TRADE_RECEIVING")}</Title>
       <Description>{langText("TRADE_PROVIDE_QR")}</Description>
-      <QRCode value={uid} />
+      <QRCode
+        value={uid}
+        style={{ 'minWidth': '250px', 'minHeight': '250px' }}
+      />
       <Cancel onClick={handleCancel}>{langText("CANCEL")}</Cancel>
     </Content>
   )
