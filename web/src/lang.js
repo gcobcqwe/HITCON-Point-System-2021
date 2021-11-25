@@ -197,8 +197,8 @@ export function langText(key) {
             "zh": "擁有的折價券"
         },
         "COUPON_DEADLINE_NOTICE": {
-            "en": "Points can be used to redeem for HITCON online store coupons until XX/XX. Please complete your redemption before the deadline.",
-            "zh": "大會點數可用於兌換 HITCON 線上賣場折價券，兌換期間開放至 XX/XX，請於截止日前兌換完畢。"
+            "en": "Points can be used to redeem for HITCON online store coupons until 12/05. Please complete your redemption before the deadline.",
+            "zh": "大會點數可用於兌換 HITCON 線上賣場折價券，兌換期間開放至 12/05，請於截止日前兌換完畢。"
         },
         "COUPON_PRICE": {
             "en": "Price",
