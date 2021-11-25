@@ -48,12 +48,21 @@ const Description = styled.div`
   }
 `;
 
-const Button = styled.button`
-  border-radius: 19px;
+const Button = styled.div`
   font-size: 18px;
-  font-weight: border;
-  padding: 15px 20px;
-  margin-bottom : 10px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0px 3px 6px #00000080;
+  text-align: center;
+  font-weight: bolder;
+  color: #000000;
+  padding: 10px 17px;
+  cursor: pointer;
+  margin-bottom: 1em;
+
+  @media(min-width: 768px) {
+    max-width: 12em;
+  }
 
   @media(min-width: 1280px) {
     margin-right : 10px;
