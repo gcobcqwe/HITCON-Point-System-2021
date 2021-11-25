@@ -40,12 +40,19 @@ const Description = styled.div`
   line-height: 30px;
 `;
 
-const Button = styled.button`
+const Button = styled.div`
   margin-top: 20px;
   border-radius: 19px;
   font-size: 18px;
   font-weight: border;
-  padding: 15px 20px;
+
+  background: #FFFFFF;
+  border-radius: 24px;
+  text-align: center;
+  color: #000000;
+  padding: 10px 17px;
+  cursor: pointer;
+  margin-bottom: 1em;
 
   a:visited {
     color: #000;
@@ -60,7 +67,7 @@ const PostLink = ({link, token, text}) => {
     { token ?
       <form method="POST" action={link}>
         <input type="hidden" name="token" value={token} />
-        <Button type ="submit">{text}</Button>
+        <button><Button type ="submit">{text}</Button></button>
       </form> :
       <Button>
           <a href={link}>{text}</a>

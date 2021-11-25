@@ -81,7 +81,7 @@ const PostLink = ({link, token, text}) => {
     { token ?
       <form method="POST" action={link}>
         <input type="hidden" name="token" value={token} />
-        <Button type ="submit">{text}</Button>
+        <button><Button type ="submit">{text}</Button></button>
       </form> :
       <Button>
           <a href={link}>{text}</a>
