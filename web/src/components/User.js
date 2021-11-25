@@ -61,15 +61,21 @@ const UserInfo = styled.div`
 `;
 
 const Username = styled.div`
+  position: relative;
   font-size: 26px;
   display: flex;
+  flex-grow: 1;
 `;
 
 const UserSignOut = styled.a`
-  font-size: 16px;
+  font-size: 0.5em;
   text-decoration: underline;
-  color: #FFFFFF;
+  color: #8f8c8c;
   margin-left: 10px;
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  cursor: pointer;
 `;
 
 const Points = styled.div`
@@ -220,6 +226,11 @@ const UserContainer = () => {
     navigator.clipboard.writeText(uid);
     toast(`The uid is copied! (Malware Playground only)`);
   }
+
+  const logoutHandler = () => {
+    Cookies.remove('token');
+    window.location = '/';
+  }
   
   useEffect(() => {
     const tokenFromCookies = Cookies.get('token');
@@ -265,6 +276,11 @@ const UserContainer = () => {
                 ? <Clipboard onClick={() => copyHandler(user.uid)} src={clipboardIcon} />
                 : null
               }
+              { isMenuOpen
+                ? <UserSignOut onClick={logoutHandler}>logout</UserSignOut>
+
+                : null
+              }
             </Username>
             <ActionBar onClick={openMenu}>
               <input type="checkbox" id="menuCheck" />
@@ -276,7 +292,14 @@ const UserContainer = () => {
         </Container>
       </PositionFixed>
       <UserWide>
-        <Username>{nickname}</Username>
+        <Username>
+          {nickname}
+          {nickname
+                ? <Clipboard onClick={() => copyHandler(user.uid)} src={clipboardIcon} />
+                : null
+          }
+          <UserSignOut onClick={logoutHandler}>logout</UserSignOut>
+        </Username>
         <Points>
           {langText("USER_CURRENT_POINTS")}{points} P
         </Points>
