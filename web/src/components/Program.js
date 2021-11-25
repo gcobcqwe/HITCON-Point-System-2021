@@ -53,13 +53,21 @@ const Brief = styled.div`
   white-space: pre-wrap;
 `;
 
-const Link = styled.button`
+const Link = styled.div`
   position: relative;
   top: 5px;
   right: 0px;
   left: 10px;
   font-size: 12px;
-  padding: 0 20px;
+  padding: 5px 15px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0px 3px 6px #00000080;
+  text-align: center;
+  font-weight: bolder;
+  color: #000000;
+  cursor: pointer;
+  max-width: 15em;
 
   a:link, a:visited {
     color: #262626;
@@ -80,7 +88,6 @@ const Program = ({ location, title, speaker, brief, streamLink, translate }) => 
         <Speaker>{speaker}</Speaker>
         <Brief>{brief}</Brief>
         <Link><a href={streamLink} target="_blank" rel="noreferrer">{langText("PROGRAM_VIEW_LIVESTREAM")} →</a></Link>
-        <br />
         <Link><a href={translate} target="_blank" rel="noreferrer">{langText("PROGRAM_VIEW_TRANSLATION")} →</a></Link>
       </Context>
     </Container>
