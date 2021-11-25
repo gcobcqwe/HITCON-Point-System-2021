@@ -12,11 +12,7 @@ import QRCodeImg from "../../public/qrcode.svg";
 import UsedQRCodeImg from "../../public/usedQrcode.svg";
 
 const Container = styled(Modal)`
-  @media(min-width: 768px) {
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 65px 50px;
-  }
+  text-align: center;
 `;
 
 const Button = styled.button`
