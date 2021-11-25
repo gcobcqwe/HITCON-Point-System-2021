@@ -145,7 +145,7 @@ export function langText(key) {
             "zh": "HITCON online #新手友善"
         },
         "TOPIC_ONLINE_DESC": {
-            "en": "In addition to providing a platform for online communication with sponsors, we will also add online activities and integrate Hacker Cat Adventures to bring a different game experience mixing virtuality and reality, hoping to bring a different online experience to our members.",
+            "en": "In addition to providing a platform for online communication with sponsors, we will also add online activities and integrate Hacker Cat Adventures to bring a different game experience mixing virtuality, hoping to bring a different online experience to our members.",
             "zh": "2021 虛擬會場再次登場，承襲去年的精神，簡化系統設計，以網頁做為介面降低使用門檻及難度。除了原有提供線上會眾與贊助商交流的平台之外，還會加入線上的活動及結合駭客貓歷險記帶來不同的遊戲體驗，期望帶給會眾不一樣的線上體驗。"
         },
         "TOPIC_ADV_TITLE": {
