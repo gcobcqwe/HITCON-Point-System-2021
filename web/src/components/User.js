@@ -166,6 +166,7 @@ const ActionButton = styled.div`
 const UserWide = styled.div`
   display: none;
   @media(min-width: 1920px) {
+    z-index: 5;
     position: fixed;
     left: 65%;
     display: block;
