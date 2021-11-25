@@ -189,8 +189,8 @@ export function langText(key) {
             "zh": "HITCON Village & Village 沙龍議程（非官方議程）#現場限定活動"
         },
         "TOPIC_VILLAGE_DESC": {
-            "en": "HITCON Village and Salon Agenda will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.",
-            "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣！"
+            "en": "HITCON Village will have different community participation and provide rich topics, hoping to lead the audience to take a look at different aspects of information security technology and issues through practice questions and interactions, as well as experience the fun of the hacker life.\nSalon Agenda (Unofficial Agenda) is provided by our community partners and will be held in R3 conference room on Day 2 (11/27). There's in total of 2 sessions:\n\n13:10-13:55「IR 獵魔士：問題的起源與探討」from the village BlueTeamTown\n14:10 - 14:55「想靠桌遊發大財買小島」from the village 台科大資安研究社 ＆ 逢甲黑客社。\n\nIf you want to get more information of the event, welcome to visit our village booth!",
+            "zh": "HITCON Village 會有不同的社群參與，提供豐富的主題，希望透過實作題與互動帶領會眾一窺不同面向的資安技術與議題，也體驗駭客生活圈的樂趣！\nDay 2 (11/27) 活動會場 R3 會議室將有社群帶來的沙龍議程（非官方議程），共有兩場：\n\n13:10-13:55 由 BlueTeamTown 帶來的「IR 獵魔士：問題的起源與探討」\n14:10 - 14:55 由 台科大資安研究社 ＆ 逢甲黑客社 帶來的「想靠桌遊發大財買小島」。\n\n詳細資訊歡迎詢問各 Village 攤位！"
         },
         "COUPON_YOUR_COUPON": {
             "en": "My Coupons",
