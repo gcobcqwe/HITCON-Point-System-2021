@@ -21,34 +21,27 @@ const TradingContainer = styled(Modal)`
 const Title = styled.div`
   font-size: 36px;
   font-weight: bold;
-
-  @media(min-width: 768px) {
-    padding-left: 30px;
-  }
 `;
 
 const Description = styled.h3`
   font-size: 20px;
   margin-bottom: 48px;
-
-  @media(min-width: 768px) {
-    padding-left: 30px;
-  }
 `;
 
-const Button = styled.button`
+const Button = styled.div`
+  display: flex;
+  justify-content: center;
   position: relative;
   background: #E5E5E5;
   border-radius: 13px;
-  width: 100%;
   height: 57px;
   border: none;
   box-shadow: none;
   margin-bottom: 34px;
   font-size: 24px;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  padding: 10px 17px;
+  cursor: pointer;
   img {
     padding-right: 20px;
   }
@@ -56,13 +49,14 @@ const Button = styled.button`
   :active {
     background: #858383;
   }
+  :hover {
+    background: rgba(229, 229, 229, 0.35);
+  }
 
   @media(min-width: 768px) {
     background: none;
     border-radius: 0;
     min-width: 249px;
-    justify-content: left;
-    padding-left: 30px;
 
     :active {
       background: rgba(0, 38, 128, 0.15);
@@ -75,6 +69,7 @@ const Cancel = styled(Button)`
   color: #8D8D8D;
   padding-left: 10px;
   font-size: 24px;
+  margin-top: 30px;
 `;
 
 const Content = styled.div`
