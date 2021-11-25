@@ -11,6 +11,9 @@ const Container = styled.div`
   @media(min-width: 1280px) {
     width: 495px;
   }
+  
+  white-space: pre-line;
+
 `;
 
 const Image = styled.img`
