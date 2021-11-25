@@ -49,16 +49,16 @@ export function langText(key) {
             "zh": "歡迎來到 HITCON 2021"
         },
         "UNAUTH_GREETING_DESC": {
-            "en": 'You need to log in to access the events of HITCON 2021. You can find the login link in the "HITCON 2021 Pre-departure Notification Letter" in your inbox!',
-            "zh": "需登入才能參加本次大會的活動，您可以在報名信箱裡的「HITCON 2021 行前通知信」中找到登入連結！"
+            "en": 'You need to log in to access the events of HITCON 2021. You can find the login link in the "HITCON 2021 One Page Personal Link" in your inbox!',
+            "zh": "需登入才能參加本次大會的活動，您可以在報名信箱裡的「HITCON 2021 專屬 One Page 線上活動連結」中找到登入連結！"
         },
         "UNAUTH_STEP_INBOX": {
             "en": "Go To Inbox",
             "zh": "前往收件夾"
         },
         "UNAUTH_STEP_SEARCH_MAIL": {
-            "en": 'Search "HITCON 2021 Pre-departure notification"',
-            "zh": "搜尋「HITCON 2021 行前通知信」"
+            "en": 'Search "HITCON 2021 One Page Personal Link"',
+            "zh": "搜尋「HITCON 2021 專屬 One Page 線上活動連結」"
         },
         "UNAUTH_STEP_LOGIN": {
             "en": "Click the link inside the mail to login",
