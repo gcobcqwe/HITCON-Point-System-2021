@@ -37,7 +37,7 @@ const Schedule = () => {
   const [user, setUser] = useContext(UserContext);
   const code = user.private_kktix_code;
   const sessionUrl = 'https://hitcon.org/2021/speaker/session.json';
-  const [counter, setCounter] = useState(60);
+  const [counter, setCounter] = useState(1);
   const [update, setUpdate] = useState(false);
   const [sourceUpdate, setSourceUpdate] = useState();
   const [currentSessions, setCurrentSessions] = useState({});
@@ -82,7 +82,7 @@ const Schedule = () => {
   useEffect(() => {
     if (sessionInfo === undefined) return;
     let _currentSessions = {};
-    let time = moment(`${testDate} ${testTime}`);
+    let time = moment(Date.now());
     if (sessionInfo) {
       for (var session of sessionInfo.sessions) {
         if (time.isAfter(session.start) && time.isBefore(session.end)) {
