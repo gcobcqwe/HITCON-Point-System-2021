@@ -231,7 +231,7 @@ const Row = styled.div`
       white-space: nowrap;
       overflow: hidden;
       font-family: monospace;
-      text-algin: center;
+      text-align: left;
       margin-right: 10px;
       padding: 0;
     }
@@ -265,6 +265,16 @@ const QRCodeWrapper = styled.div`
   text-align: center;
 `;
 
+const CodeStyle = styled.div`
+  @media(min-width: 319px) {
+    width: 1em !important;
+  }
+
+  @media(min-width: 768px) {
+    width: max-content !important;
+  }
+`;
+
 const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
   const handleShow = () => setDisplayCode(JSON.stringify({ code }));
   return (
@@ -272,7 +282,7 @@ const RedeemRow = ({ points, isUsed, code, setDisplayCode }) => {
       <div>{points}</div>
       <div className="statusText">{isUsed ? langText("REDEEM_STATE_SENT") : langText("REDEEM_STATE_AVAIABLE")}</div>
       <div>
-        <div>{code}</div>
+        <CodeStyle>{code}</CodeStyle>
         <button onClick={handleShow} disabled={isUsed}>
           <img src={isUsed ? UsedQRCodeImg : QRCodeImg} />
         </button>
