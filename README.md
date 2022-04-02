@@ -1,17 +1,31 @@
 # HITCON-Point-System-2021
+---
+![](https://github.com/gcobcqwe/HITCON-Point-System-2021/blob/master/documents/web_ui.png)
+
 ## Objective
 ---
-TBD
-### HITCON SHOP
-TBD
-### HITCON ONE PAGE
-TBD
-### POINT SYSTEM
-TBD
-
-## Architecture
+### Events
 ---
-TBD
+Join the online event through the HITCON 2021 One Page. The events include HITCON Online, Hacker Cat Adventure, Malware Playground, and Operation : Hacker Cat. You must use your personal link to access those activities.
+
+### Agenda
+---
+Watch the HITCON 2021 agenda and live streaming through the HITCON 2021 One Page. The link of live streaming is an exclusive link, please don’t share the link with others. If we find suspicious multi-access behavior, we will block your link.
+
+### Earn the points and exchange the souvenir
+---
+You can click the menu button on the right of the nickname to accumulate and redeem the limited souvenirs or HITCON discount coupons. Participate in the events. Visit the sponsors and community booths. By accumulating points, you can redeem the discount coupons of HITCON Official Store and the HITCON limited souvenirs. You can also exchange your points with other attendees. Please note that there are only a limited number of souvenirs and discount coupons available for redemption.
+
+## Instruction
+---
+See Instruction [here](https://github.com/gcobcqwe/HITCON-Point-System-2021/blob/master/documents/HITCON%202021%20One%20Page%20%E9%BB%9E%E6%95%B8%E7%B3%BB%E7%B5%B1%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97%20Point%20System%20Instructions.pdf )
+
+## Documents
+---
+See Prerequisite SPEC [here](https://github.com/gcobcqwe/HITCON-Point-System-2021/blob/master/documents/HITCON%202021%20Email%20Prerequisite%20%E8%A8%AD%E8%A8%88%E6%96%87%E4%BB%B6.pdf)
+</br>
+See System SPEC [here](https://github.com/gcobcqwe/HITCON-Point-System-2021/blob/master/documents/HITCON%202021%20%E9%BB%9E%E6%95%B8%E7%B3%BB%E7%B5%B1%20%E8%A8%AD%E8%A8%88%E6%96%87%E4%BB%B6.pdf)
+
 ## Deployment
 ---
 
